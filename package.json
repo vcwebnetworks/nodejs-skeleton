@@ -1,8 +1,8 @@
 {
-  "name": "infoa2-sc-bolivia",
+  "name": "vcwebnetworks-nodets",
   "version": "1.0.0",
   "main": "dist/server.js",
-  "repository": "git@github.com:vagnercardosoweb/infoa2-sc-bolivia.git",
+  "repository": "git@github.com:vagnercardosoweb/vcwebnetworks-nodets.git",
   "author": "Vagner Cardoso <vagnercardosoweb@gmail.com>",
   "license": "MIT",
   "scripts": {
