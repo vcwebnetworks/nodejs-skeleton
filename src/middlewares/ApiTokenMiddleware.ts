@@ -18,7 +18,7 @@ export default function ApiTokenMiddleware(
     throw new AppError('Token ausente na requisição.', 401);
   }
 
-  if (token !== process.env.API_TOKEN) {
+  if (token !== process.env.API_KEY) {
     throw new AppError('Acesso negado, token inválido.', 401);
   }
 
