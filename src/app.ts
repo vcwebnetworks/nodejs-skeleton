@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import 'dotenv/config';
+import './dotenv';
 
 import http from 'http';
 import express from 'express';
@@ -32,6 +32,7 @@ class App {
   private middlewares(): void {
     this.app.use(helmet({ hidePoweredBy: true }));
     this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
     this.app.use(CorsMiddleware);
     this.app.use(ApiTokenMiddleware);
     this.app.use(routes);
