@@ -50,7 +50,7 @@ class Encryption {
 
       return JSON.parse(decrypted);
     } catch {
-      throw new Error('"Encryption.encrypt": The data could not be decrypted.');
+      throw new Error('"Encryption.decrypt": The data could not be decrypted.');
     }
   }
 
