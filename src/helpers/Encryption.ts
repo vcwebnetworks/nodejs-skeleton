@@ -19,42 +19,45 @@ class Encryption {
   public encrypt(payload: any): string {
     try {
       const iv = crypto.randomBytes(16);
-      const key = this.generateKey(iv);
+      const key = this.getSecretKey();
       const cipher = crypto.createCipheriv(this.algorithm, key, iv);
 
       const encrypted = Buffer.concat([
         cipher.update(JSON.stringify(payload)),
         cipher.final(),
-      ]).toString('hex');
+      ]);
 
       const result = Buffer.from(
-        JSON.stringify({ iv: iv.toString('hex'), encrypted }),
+        JSON.stringify({
+          iv: iv.toString('hex'),
+          encrypted: encrypted.toString('hex'),
+        }),
       );
 
       return result.toString('base64');
-    } catch (e) {
-      throw new Error('"Encryption.encrypt": The data could not be encrypted.');
+    } catch {
+      throw new Error('The data could not be encrypted.');
     }
   }
 
-  public decrypt(encrypted: string): any {
+  public decrypt(value: string): any {
     try {
-      const payload = this.getPayloadJson(encrypted);
-      const key = this.generateKey(payload.iv);
-      const decipher = crypto.createDecipheriv(this.algorithm, key, payload.iv);
+      const key = this.getSecretKey();
+      const { iv, encrypted } = this.getJsonPayload(value);
+      const decipher = crypto.createDecipheriv(this.algorithm, key, iv);
 
       const decrypted = Buffer.concat([
-        decipher.update(payload.encrypted),
+        decipher.update(encrypted),
         decipher.final(),
-      ]).toString();
+      ]);
 
-      return JSON.parse(decrypted);
+      return JSON.parse(decrypted.toString());
     } catch {
-      throw new Error('"Encryption.decrypt": The data could not be decrypted.');
+      throw new Error('The data could not be decrypted.');
     }
   }
 
-  private getPayloadJson(value: string): { iv: Buffer; encrypted: Buffer } {
+  private getJsonPayload(value: string): { iv: Buffer; encrypted: Buffer } {
     const payload = Buffer.from(value, 'base64');
     const { iv, encrypted } = JSON.parse(payload.toString());
 
@@ -64,8 +67,13 @@ class Encryption {
     };
   }
 
-  private generateKey(salt: Buffer): Buffer {
-    return crypto.scryptSync(this.key as crypto.BinaryLike, salt, 32);
+  private getSecretKey(): string {
+    const length = this.algorithm === 'aes-128-cbc' ? 16 : 32;
+
+    return crypto
+      .createHmac('sha256', this.key)
+      .digest('hex')
+      .substr(0, length);
   }
 }
 
