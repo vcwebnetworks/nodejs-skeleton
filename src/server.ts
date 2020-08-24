@@ -1,6 +1,9 @@
-import app from './app';
+import './config/module-alias';
 
-app.listen(process.env.PORT || 3333, () => {
-  // eslint-disable-next-line no-console
-  console.log('🚀 Server started on port http://localhost:3333');
+import debugApp from '@src/config/debug';
+
+import server from './app';
+
+server.listen(process.env.PORT || 3333, () => {
+  debugApp('server')('🚀 Server started on port http://localhost:3333');
 });

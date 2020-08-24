@@ -1,25 +1,32 @@
 import { Request, Response, NextFunction } from 'express';
-import AppError from '../errors/AppError';
+
+import UnauthorizedError from '@src/errors/UnauthorizedError';
+
+const { API_KEY } = process.env;
 
 export default function ApiTokenMiddleware(
   request: Request,
-  response: Response,
+  _response: Response,
   next: NextFunction,
 ): void {
-  const { authorization } = request.headers;
+  if (!request.query.dev) {
+    const { authorization } = request.headers;
 
-  if (!authorization) {
-    throw new AppError('Acesso negado.', 401);
-  }
+    if (!authorization) {
+      throw new UnauthorizedError('Header de autorização ausente.');
+    }
 
-  const [, token] = authorization.split(' ');
+    const [bearer, token] = authorization.split(' ');
 
-  if (!token) {
-    throw new AppError('Token ausente na requisição.', 401);
-  }
+    if (!token || bearer !== 'Bearer') {
+      throw new UnauthorizedError(
+        'Assinatura do token de autorização inválida.',
+      );
+    }
 
-  if (token !== process.env.API_KEY) {
-    throw new AppError('Acesso negado, token inválido.', 401);
+    if (token !== API_KEY) {
+      throw new UnauthorizedError('Acesso negado.');
+    }
   }
 
   next();

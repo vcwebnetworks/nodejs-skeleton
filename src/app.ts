@@ -1,17 +1,20 @@
 import 'reflect-metadata';
+import './config/module-alias';
 import './dotenv';
 
-import http from 'http';
 import express from 'express';
 import 'express-async-errors';
 import helmet from 'helmet';
+import http from 'http';
 
-import CorsMiddleware from './middlewares/CorsMiddleware';
-import ApiTokenMiddleware from './middlewares/ApiTokenMiddleware';
-import ErrorHandlerMiddleware from './middlewares/ErrorHandlerMiddleware';
+import ApiTokenMiddleware from '@src/middlewares/ApiTokenMiddleware';
+import CorsMiddleware from '@src/middlewares/CorsMiddleware';
+import ErrorHandlerMiddleware from '@src/middlewares/ErrorHandlerMiddleware';
+import NotFoundMiddleware from '@src/middlewares/NotFoundMiddleware';
 
 import routes from './routes';
-import createConnection from './config/database';
+
+import '@src/database';
 
 class App {
   public app: express.Application;
@@ -21,21 +24,17 @@ class App {
     this.app = express();
     this.server = http.createServer(this.app);
 
-    this.database();
     this.middlewares();
   }
 
-  private async database(): Promise<void> {
-    this.app.databaseConnection = await createConnection();
-  }
-
   private middlewares(): void {
-    this.app.use(helmet({ hidePoweredBy: true }));
+    this.app.use(CorsMiddleware);
+    this.app.use(helmet({ hidePoweredBy: undefined }));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
-    this.app.use(CorsMiddleware);
     this.app.use(ApiTokenMiddleware);
     this.app.use(routes);
+    this.app.use(NotFoundMiddleware);
     this.app.use(ErrorHandlerMiddleware);
   }
 }

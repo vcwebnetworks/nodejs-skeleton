@@ -11,6 +11,7 @@ export class Users1587882620558 implements MigrationInterface {
             type: 'varchar',
             isPrimary: true,
             generationStrategy: 'uuid',
+            default: 'UUID()',
           },
           {
             name: 'name',
@@ -30,12 +31,12 @@ export class Users1587882620558 implements MigrationInterface {
           {
             name: 'created_at',
             type: 'datetime',
-            default: 'now()',
+            default: 'NOW()',
           },
           {
             name: 'updated_at',
             type: 'datetime',
-            default: 'now()',
+            default: 'NOW()',
           },
         ],
         indices: [

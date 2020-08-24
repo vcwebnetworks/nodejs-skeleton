@@ -1,17 +1,18 @@
 import { Request, Response, NextFunction } from 'express';
 
-import configCors from '../config/cors';
-
 export default function CorsMiddleware(
   request: Request,
   response: Response,
   next: NextFunction,
 ): Response | void {
-  const { methods, headers, origin } = configCors;
+  const allowOrigin = '*';
+  const allowMethods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'];
+  const allowHeaders = request.headers['access-control-request-headers'];
 
-  response.header('Access-Control-Allow-Origin', origin);
-  response.header('Access-Control-Allow-Methods', methods.join(','));
-  response.header('Access-Control-Allow-Headers', headers.join(','));
+  response.header('Access-Control-Allow-Origin', allowOrigin);
+  response.header('Access-Control-Allow-Methods', allowMethods.join(','));
+  response.header('Access-Control-Allow-Headers', allowHeaders);
+  response.header('Access-Control-Allow-Credentials', 'true');
 
   if (request.method.toUpperCase() === 'OPTIONS') {
     return response.sendStatus(200);

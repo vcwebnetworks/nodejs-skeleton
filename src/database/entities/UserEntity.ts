@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'users' })
-export default class UserModel extends BaseEntity {
+export default class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 

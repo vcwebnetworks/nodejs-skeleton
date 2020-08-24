@@ -1,10 +1,14 @@
 import { config } from 'dotenv';
+import { resolve } from 'path';
 
 const environments: { [key: string]: string } = {
   test: '.env.test',
   default: '.env',
 };
 
-const path = environments[process.env.NODE_ENV ?? 'default'];
+const environment = environments[process.env.NODE_ENV ?? 'default'];
 
-config({ path, encoding: 'utf-8' });
+config({
+  path: resolve(__dirname, '..', environment),
+  encoding: 'utf-8',
+});

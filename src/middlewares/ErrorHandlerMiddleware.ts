@@ -1,3 +1,4 @@
+import { isCelebrate } from 'celebrate';
 import { NextFunction, Response, Request } from 'express';
 
 interface IError extends Error {
@@ -6,19 +7,22 @@ interface IError extends Error {
 
 export default function ErrorHandlerMiddleware(
   error: IError,
-  request: Request,
+  _request: Request,
   response: Response,
-  _: NextFunction,
+  _next: NextFunction,
 ): Response {
-  let statusCode = 500;
-  const { name } = error;
-  const message = error.message || 'Internal server error';
+  const isJoi = isCelebrate(error);
+  let statusCode = isJoi ? 400 : 500;
+  const { name, message = 'Internal server error' } = error;
 
-  if ('statusCode' in error) {
-    statusCode = error.statusCode as number;
+  if (error?.statusCode) {
+    statusCode = error.statusCode;
   }
 
   return response.status(statusCode).json({
-    error: { name, statusCode, message },
+    name: isJoi ? 'ValidationError' : name,
+    statusCode,
+    message,
+    stack: error.stack?.split('\n'),
   });
 }
