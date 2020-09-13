@@ -1,5 +1,5 @@
-import { isCelebrate } from 'celebrate';
-import { NextFunction, Response, Request } from 'express';
+import { isCelebrateError } from 'celebrate';
+import { NextFunction, Request, Response } from 'express';
 
 interface IError extends Error {
   statusCode?: number;
@@ -11,7 +11,7 @@ export default function ErrorHandlerMiddleware(
   response: Response,
   _next: NextFunction,
 ): Response {
-  const isJoi = isCelebrate(error);
+  const isJoi = isCelebrateError(error);
   let statusCode = isJoi ? 400 : 500;
   const { name, message = 'Internal server error' } = error;
 

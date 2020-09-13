@@ -1,5 +1,5 @@
 import { addAliases } from 'module-alias';
-import { resolve, join } from 'path';
+import { join, resolve } from 'path';
 
 const srcDir = join(__dirname, '..');
 
