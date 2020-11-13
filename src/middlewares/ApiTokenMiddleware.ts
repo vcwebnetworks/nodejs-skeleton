@@ -4,11 +4,7 @@ import UnauthorizedError from '@src/errors/UnauthorizedError';
 
 const { API_KEY } = process.env;
 
-export default function ApiTokenMiddleware(
-  request: Request,
-  _response: Response,
-  next: NextFunction,
-): void {
+export default function ApiTokenMiddleware(request: Request, _response: Response, next: NextFunction): void {
   if (!request.query.dev) {
     const { authorization } = request.headers;
 
@@ -19,9 +15,7 @@ export default function ApiTokenMiddleware(
     const [bearer, token] = authorization.split(' ');
 
     if (!token || bearer !== 'Bearer') {
-      throw new UnauthorizedError(
-        'Assinatura do token de autorização inválida.',
-      );
+      throw new UnauthorizedError('Assinatura do token de autorização inválida.');
     }
 
     if (token !== API_KEY) {

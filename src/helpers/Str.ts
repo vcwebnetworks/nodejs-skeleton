@@ -1,6 +1,13 @@
 import crypto from 'crypto';
 
 export default class Str {
+  public static uuid(a?: string): string {
+    return a
+      ? // eslint-disable-next-line no-bitwise
+        (Number(a) ^ ((Math.random() * 16) >> (Number(a) / 4))).toString(16)
+      : (<string>([1e7] as never) + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, Str.uuid);
+  }
+
   public static random(length = 16): string {
     let string = '';
     let stringLength = string.length;
@@ -19,5 +26,49 @@ export default class Str {
     }
 
     return string;
+  }
+
+  public static randomInt(min: number, max: number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  public static removeAccents(value: string): string {
+    return value.normalize('NFD').replace(/[\u0300-\u036f|\u00b4|\u0060|\u005e|\u007e]/g, '');
+  }
+
+  public static toCamelCase(value: string): string {
+    return value.toLowerCase().replace(/^([A-Z])|[\s-_](\w)/g, (_, p1, p2) => {
+      if (p2) {
+        return p2.toUpperCase();
+      }
+      return p1.toLowerCase();
+    });
+  }
+
+  public static toTitleCase(string: string): string {
+    if (!string) {
+      return '';
+    }
+
+    return string.replace(/\w\S*/g, function replace(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
+
+  public static onlyNumber(value: string | number): string {
+    return `${value}`.replace(/[^\d]/gi, '');
+  }
+
+  public static rangeNumber(size: number, start = 0): Array<number> {
+    return [...Array(size).keys()].map(i => i + start);
+  }
+
+  public static rangeCharacters(startChar: string, endChar: string): string {
+    return String.fromCharCode(
+      ...Str.rangeNumber(endChar.charCodeAt(0) - startChar.charCodeAt(0) + 1, startChar.charCodeAt(0)),
+    );
   }
 }

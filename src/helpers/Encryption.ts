@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-import configApp from '../config/app';
+import configApp from '@src/config/app';
 
 class Encryption {
   private key: crypto.CipherKey;
@@ -22,10 +22,7 @@ class Encryption {
       const key = this.getSecretKey();
       const cipher = crypto.createCipheriv(this.algorithm, key, iv);
 
-      const encrypted = Buffer.concat([
-        cipher.update(JSON.stringify(payload)),
-        cipher.final(),
-      ]);
+      const encrypted = Buffer.concat([cipher.update(JSON.stringify(payload)), cipher.final()]);
 
       const result = Buffer.from(
         JSON.stringify({
@@ -46,10 +43,7 @@ class Encryption {
       const { iv, encrypted } = this.getJsonPayload(value);
       const decipher = crypto.createDecipheriv(this.algorithm, key, iv);
 
-      const decrypted = Buffer.concat([
-        decipher.update(encrypted),
-        decipher.final(),
-      ]);
+      const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]);
 
       return JSON.parse(decrypted.toString());
     } catch {
@@ -70,10 +64,7 @@ class Encryption {
   private getSecretKey(): string {
     const length = this.algorithm === 'aes-128-cbc' ? 16 : 32;
 
-    return crypto
-      .createHmac('sha256', this.key)
-      .digest('hex')
-      .substr(0, length);
+    return crypto.createHmac('sha256', this.key).digest('hex').substr(0, length);
   }
 }
 

@@ -22,6 +22,7 @@ export default function ErrorHandlerMiddleware(
   return response.status(statusCode).json({
     name: isJoi ? 'ValidationError' : name,
     statusCode,
+    sentry: (<any>response).sentry,
     message,
     stack: error.stack?.split('\n'),
   });

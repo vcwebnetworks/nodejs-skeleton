@@ -1,10 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-export default function CorsMiddleware(
-  request: Request,
-  response: Response,
-  next: NextFunction,
-): Response | void {
+export default function CorsMiddleware(request: Request, response: Response, next: NextFunction): Response | void {
   const allowOrigin = '*';
   const allowMethods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'];
   const allowHeaders = request.headers['access-control-request-headers'];

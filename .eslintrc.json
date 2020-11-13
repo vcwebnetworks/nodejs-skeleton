@@ -59,7 +59,7 @@
         "newlinesBetween": "always",
         "groups": [
           "module",
-          "/^@/",
+          "/^@src/",
           ["parent", "sibling", "index"]
         ],
         "alphabetize": {
