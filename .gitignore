@@ -7,3 +7,6 @@ dist
 
 .docker/mysql/*
 !.docker/mysql/.gitkeep
+
+.docker/redis/*
+!.docker/redis/.gitkeep

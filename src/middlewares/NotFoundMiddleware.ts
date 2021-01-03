@@ -1,7 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 
-import AppError from '@src/errors/AppError';
+import MethodNotAllowedError from '@src/errors/MethodNotAllowedError';
+import NotFoundError from '@src/errors/NotFoundError';
 
-export default function NotFoundMiddleware(_request: Request, _response: Response, next: NextFunction): void {
-  next(new AppError('Error 404 (Not Found)', 404));
-}
+const notFoundMiddleware = (request: Request, _response: Response, next: NextFunction) => {
+  if (request?.originalMethod && request.originalMethod.toUpperCase() !== request.method.toUpperCase()) {
+    return next(new MethodNotAllowedError(request));
+  }
+
+  return next(new NotFoundError(request));
+};
+
+export default notFoundMiddleware;

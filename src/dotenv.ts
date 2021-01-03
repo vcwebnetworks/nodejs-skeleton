@@ -7,8 +7,9 @@ const environments: { [key: string]: string } = {
 };
 
 const environment = environments[process.env.NODE_ENV ?? 'default'];
+const path = resolve(__dirname, '..', environment);
 
 config({
-  path: resolve(__dirname, '..', environment),
+  path,
   encoding: 'utf-8',
 });

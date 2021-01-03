@@ -29,11 +29,7 @@ export default class Validate {
       return String(sum % 11 < 2 ? 0 : 11 - (sum % 11));
     };
 
-    if (calculate(10) !== cpf.charAt(9) || calculate(11) !== cpf.charAt(10)) {
-      return false;
-    }
-
-    return true;
+    return !(calculate(10) !== cpf.charAt(9) || calculate(11) !== cpf.charAt(10));
   }
 
   public static cnpj(cnpj: string | number): boolean {
@@ -64,11 +60,7 @@ export default class Validate {
       return String(sum % 11 < 2 ? 0 : 11 - (sum % 11));
     };
 
-    if (calculate(12) !== cnpj.charAt(12) || calculate(13) !== cnpj.charAt(13)) {
-      return false;
-    }
-
-    return true;
+    return !(calculate(12) !== cnpj.charAt(12) || calculate(13) !== cnpj.charAt(13));
   }
 
   public static isDate(date?: Date): boolean {

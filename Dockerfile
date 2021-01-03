@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM node:14-alpine
 
 # set environments
 ENV TZ=America/Sao_Paulo

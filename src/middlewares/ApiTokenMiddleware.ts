@@ -4,24 +4,39 @@ import UnauthorizedError from '@src/errors/UnauthorizedError';
 
 const { API_KEY } = process.env;
 
-export default function ApiTokenMiddleware(request: Request, _response: Response, next: NextFunction): void {
-  if (!request.query.dev) {
-    const { authorization } = request.headers;
+export const extractTokenInRequest = (request: Request): string => {
+  let token: string;
+  const { authorization } = request.headers;
 
-    if (!authorization) {
-      throw new UnauthorizedError('Header de autorização ausente.');
-    }
+  if (authorization) {
+    const [bearer, authToken] = authorization.split(' ');
 
-    const [bearer, token] = authorization.split(' ');
-
-    if (!token || bearer !== 'Bearer') {
+    if (bearer.trim() !== 'Bearer') {
       throw new UnauthorizedError('Assinatura do token de autorização inválida.');
     }
+
+    token = authToken.trim();
+  } else {
+    token = request.query.apiToken as string;
+  }
+
+  if (!token) {
+    throw new UnauthorizedError('Token ausente na requisição.');
+  }
+
+  return token;
+};
+
+const apiTokenMiddleware = (request: Request, _response: Response, next: NextFunction) => {
+  if (!request.query.dev) {
+    const token = extractTokenInRequest(request);
 
     if (token !== API_KEY) {
       throw new UnauthorizedError('Acesso negado.');
     }
   }
 
-  next();
-}
+  return next();
+};
+
+export default apiTokenMiddleware;

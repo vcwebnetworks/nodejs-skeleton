@@ -3,19 +3,19 @@ import crypto from 'crypto';
 import configApp from '@src/config/app';
 
 class Encryption {
-  private readonly _key: crypto.BinaryLike;
-  private _algorithm = 'aes-256-gcm';
-  private _length = 32;
+  private readonly key: crypto.BinaryLike;
+  private algorithm = 'aes-256-gcm';
+  private length = 32;
 
   constructor() {
-    this._key = configApp.key;
+    this.key = configApp.appKey;
   }
 
   public encrypt(payload: any): string {
     const iv = crypto.randomBytes(16);
     const salt = crypto.randomBytes(64);
     const key = this.generateSecretKey(salt);
-    const cipher = crypto.createCipheriv(this._algorithm, key, iv);
+    const cipher = crypto.createCipheriv(this.algorithm, key, iv);
     const encrypted = Buffer.concat([cipher.update(JSON.stringify(payload)), cipher.final()]);
     const authTag = (<any>cipher).getAuthTag();
 
@@ -25,16 +25,16 @@ class Encryption {
         salt: salt.toString('hex'),
         encrypted: encrypted.toString('hex'),
         authTag: (<Buffer>authTag).toString('hex'),
-      })
+      }),
     );
 
     return result.toString('base64');
   }
 
   public decrypt(value: string): any {
-    const { iv, encrypted, salt, authTag } = this.getPayload(value);
+    const { iv, encrypted, salt, authTag } = Encryption.getPayload(value);
     const key = this.generateSecretKey(salt);
-    const decipher = crypto.createDecipheriv(this._algorithm, key, iv);
+    const decipher = crypto.createDecipheriv(this.algorithm, key, iv);
 
     (<any>decipher).setAuthTag(authTag);
 
@@ -43,7 +43,7 @@ class Encryption {
     return JSON.parse(decrypted.toString());
   }
 
-  private getPayload(value: string): { iv: Buffer; encrypted: Buffer; salt: Buffer; authTag: Buffer } {
+  private static getPayload(value: string): { iv: Buffer; encrypted: Buffer; salt: Buffer; authTag: Buffer } {
     const payload = Buffer.from(value, 'base64');
     const { iv, encrypted, salt, authTag } = JSON.parse(payload.toString());
 
@@ -56,7 +56,7 @@ class Encryption {
   }
 
   private generateSecretKey(salt: Buffer): Buffer {
-    return crypto.pbkdf2Sync(this._key, salt, 100000, this._length, 'sha512');
+    return crypto.pbkdf2Sync(this.key, salt, 100000, this.length, 'sha512');
   }
 }
 

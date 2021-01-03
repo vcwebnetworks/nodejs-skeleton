@@ -1,4 +1,4 @@
-import crypto, { BinaryLike, HexBase64Latin1Encoding } from 'crypto';
+import crypto, { BinaryLike, BinaryToTextEncoding } from 'crypto';
 
 export default class Hash {
   public static md5(value: BinaryLike): string {
@@ -9,7 +9,7 @@ export default class Hash {
     value: BinaryLike,
     key: BinaryLike,
     algorithm = 'sha256',
-    encoding: HexBase64Latin1Encoding = 'hex',
+    encoding: BinaryToTextEncoding = 'hex',
   ): string {
     return crypto.createHmac(algorithm, key).update(value).digest(encoding);
   }

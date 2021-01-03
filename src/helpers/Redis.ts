@@ -7,12 +7,8 @@ export default class Redis {
   protected client: RedisClient;
 
   constructor(options?: IORedis.RedisOptions) {
-    if (!options) {
-      options = configRedis;
-    }
-
-    this.prefix = options.keyPrefix;
-    this.client = new IORedis(options ?? configRedis);
+    this.prefix = options?.keyPrefix ?? '';
+    this.client = new IORedis({ ...configRedis, ...options });
   }
 
   set(key: IORedis.KeyType, value: IORedis.ValueType, expired?: number | string): Promise<IORedis.Ok | null> {

@@ -1,5 +1,7 @@
 import crypto from 'crypto';
 
+import Helpers from '@src/helpers/Helpers';
+
 export default class Str {
   public static uuid(a?: string): string {
     return a
@@ -28,13 +30,6 @@ export default class Str {
     return string;
   }
 
-  public static randomInt(min: number, max: number): number {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
   public static removeAccents(value: string): string {
     return value.normalize('NFD').replace(/[\u0300-\u036f|\u00b4|\u0060|\u005e|\u007e]/g, '');
   }
@@ -58,17 +53,9 @@ export default class Str {
     });
   }
 
-  public static onlyNumber(value: string | number): string {
-    return `${value}`.replace(/[^\d]/gi, '');
-  }
-
-  public static rangeNumber(size: number, start = 0): Array<number> {
-    return [...Array(size).keys()].map(i => i + start);
-  }
-
   public static rangeCharacters(startChar: string, endChar: string): string {
     return String.fromCharCode(
-      ...Str.rangeNumber(endChar.charCodeAt(0) - startChar.charCodeAt(0) + 1, startChar.charCodeAt(0)),
+      ...Helpers.rangeNumber(endChar.charCodeAt(0) - startChar.charCodeAt(0) + 1, startChar.charCodeAt(0)),
     );
   }
 }
