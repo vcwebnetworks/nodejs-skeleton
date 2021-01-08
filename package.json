@@ -13,7 +13,7 @@
     "start": "yarn build && node ./dist/server.js",
     "build": "babel ./src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
-    "lint": "eslint --ext ts ./src/**",
+    "lint": "eslint --ext ts ./src",
     "lint:fix": "yarn lint --fix",
     "docker": "docker-compose -f docker-compose.yml up"
   },
