@@ -40,10 +40,6 @@ export class App {
     });
   }
 
-  public static isSentry() {
-    return process.env.NODE_ENV === 'production' && process.env.SENTRY_DSN;
-  }
-
   private middlewares(): void {
     if (configSentry.enable) {
       this.app.use(Sentry.Handlers.requestHandler());
