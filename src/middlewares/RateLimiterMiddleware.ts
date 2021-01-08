@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import IORedis from 'ioredis';
 import { RateLimiterRedis } from 'rate-limiter-flexible';
 
-import RateLimiterErrorError from '@src/errors/RateLimiterErrorError';
+import RateLimiterError from '@src/errors/RateLimiterError';
 
 const {
   REDIS_RATE_LIMIT_HOST,
@@ -47,7 +47,7 @@ const rateLimiterMiddleware = async (request: Request, response: Response, next:
       return next();
     }
 
-    throw new RateLimiterErrorError();
+    throw new RateLimiterError();
   }
 };
 
