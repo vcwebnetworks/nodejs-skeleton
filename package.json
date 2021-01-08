@@ -40,6 +40,7 @@
     "module-alias": "^2.2.2",
     "morgan": "^1.10.0",
     "mysql2": "^2.2.5",
+    "rate-limiter-flexible": "^2.1.16",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.29",
     "winston": "^3.3.3"

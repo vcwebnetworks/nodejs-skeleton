@@ -15,6 +15,7 @@ import errorHandlerMiddleware from '@src/middlewares/ErrorHandlerMiddleware';
 import methodOverrideMiddleware from '@src/middlewares/MethodOverrideMiddleware';
 import morganMiddleware from '@src/middlewares/MorganMiddleware';
 import notFoundMiddleware from '@src/middlewares/NotFoundMiddleware';
+import rateLimiterMiddleware from '@src/middlewares/RateLimiterMiddleware';
 
 import routes from './routes';
 
@@ -48,6 +49,7 @@ export class App {
     this.app.use(helmet());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(rateLimiterMiddleware);
     this.app.use(morganMiddleware);
     this.app.use(corsMiddleware);
     this.app.use(methodOverrideMiddleware);
