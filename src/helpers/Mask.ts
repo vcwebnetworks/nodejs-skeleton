@@ -1,7 +1,7 @@
 export default class Mask {
   public static create(value: string, mask: string): string {
     const parseMask = mask.replace(/[^#]/g, '');
-    const parseValue = value.replace(/[\s\\.\-_/]/gm, '');
+    const parseValue = value.replace(/[\s\\.\-_:/]/gm, '');
 
     if (parseMask.length !== parseValue.length) {
       return value;
