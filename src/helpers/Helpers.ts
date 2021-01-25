@@ -5,24 +5,20 @@ import Hash from '@src/helpers/Hash';
 import Validate from '@src/helpers/Validate';
 
 export default class Helpers {
-  public static createDate(date?: Date | string | number, check = true): Date {
-    date = date || Date.now();
+  public static createDate(date: Date | string | number, check = true): Date {
+    if (Validate.isDate(date as Date)) {
+      return <Date>date;
+    }
 
-    if (date instanceof Date) {
-      date = date.getTime();
-    } else if (Number.isNaN(Number(date)) && (date as string).trim()) {
-      const dateSplit = date.toString().split(' ');
-      const dateTime = typeof dateSplit[1] !== 'undefined' ? ` ${dateSplit[1]}` : '';
+    if (typeof date === 'string') {
+      const [parseDate, parseHour] = date.split(' ', 2);
+      const dateTime = parseHour ? ` ${parseHour}` : '';
 
-      if (dateSplit[0].match(/^\d{1,2}\/\d{1,2}\/\d{4}$/gi)) {
-        const dateReverse = dateSplit[0].split('/').reverse().join('/');
-
-        date = `${dateReverse}${dateTime}`;
-      } else if (dateSplit[0].match(/^\d{4}\/\d{1,2}\/\d{1,2}$/gi)) {
-        date = `${dateSplit[0]}${dateTime}`;
+      if (parseDate.match(/^\d{1,2}\/\d{1,2}\/\d{4}$/gi)) {
+        date = `${parseDate.split('/').reverse().join('/')}${dateTime}`;
+      } else if (parseDate.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/gi)) {
+        date = `${parseDate}${dateTime}`;
       }
-    } else if (!Number.isNaN(Number(date))) {
-      date = Number(date);
     }
 
     const newDate = new Date(date);
