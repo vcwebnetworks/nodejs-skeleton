@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
-const routes = Router();
+import commonRoutes from '@src/modules/common/routes';
+import swaggerRoutes from '@src/modules/swagger';
 
-routes.get('/', async (request, response) => {
-  return response.json({
-    date: new Date().toLocaleString('pt-BR'),
-  });
-});
+const appRoutes = Router();
 
-export default routes;
+appRoutes.use(commonRoutes);
+appRoutes.use('/docs', swaggerRoutes);
+
+export default appRoutes;

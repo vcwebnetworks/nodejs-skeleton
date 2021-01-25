@@ -4,6 +4,19 @@ import UnauthorizedError from '@src/errors/UnauthorizedError';
 
 const { API_KEY } = process.env;
 
+function checkIfTheRouteIsAllowedInTheRequest(request: Request): boolean {
+  let allowedRoute = false;
+  const allowedRoutes = ['/docs'];
+
+  allowedRoutes.forEach(route => {
+    if (request.path.startsWith(route)) {
+      allowedRoute = true;
+    }
+  });
+
+  return allowedRoute;
+}
+
 export const extractTokenInRequest = (request: Request): string => {
   let token: string;
   const { authorization } = request.headers;
@@ -28,7 +41,7 @@ export const extractTokenInRequest = (request: Request): string => {
 };
 
 const apiTokenMiddleware = (request: Request, _response: Response, next: NextFunction) => {
-  if (!request.query.dev) {
+  if (!('dev' in request.query) && !checkIfTheRouteIsAllowedInTheRequest(request)) {
     const token = extractTokenInRequest(request);
 
     if (token !== API_KEY) {

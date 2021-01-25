@@ -5,7 +5,8 @@ ENV TZ=America/Sao_Paulo
 ENV NPM_CONFIG_LOGLEVEL=warn
 
 # create directory app and permission
-RUN mkdir -p /home/api/node_modules && chown -R node:node /home/api
+RUN mkdir -p /home/api/node_modules
+RUN chown -R node:node /home/api
 
 # set workdir application
 WORKDIR /home/api

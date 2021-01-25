@@ -9,7 +9,6 @@ import helmet from 'helmet';
 import http from 'http';
 
 import configSentry from '@src/config/sentry';
-import apiTokenMiddleware from '@src/middlewares/ApiTokenMiddleware';
 import corsMiddleware from '@src/middlewares/CorsMiddleware';
 import errorHandlerMiddleware from '@src/middlewares/ErrorHandlerMiddleware';
 import methodOverrideMiddleware from '@src/middlewares/MethodOverrideMiddleware';
@@ -17,7 +16,7 @@ import morganMiddleware from '@src/middlewares/MorganMiddleware';
 import notFoundMiddleware from '@src/middlewares/NotFoundMiddleware';
 import rateLimiterMiddleware from '@src/middlewares/RateLimiterMiddleware';
 
-import routes from './routes';
+import appRoutes from './routes';
 
 export class App {
   public app: express.Application;
@@ -53,8 +52,8 @@ export class App {
     this.app.use(morganMiddleware);
     this.app.use(corsMiddleware);
     this.app.use(methodOverrideMiddleware);
-    this.app.use(apiTokenMiddleware);
-    this.app.use(routes);
+    // this.app.use(apiTokenMiddleware);
+    this.app.use(appRoutes);
     this.app.use(notFoundMiddleware);
 
     if (configSentry.enable) {
