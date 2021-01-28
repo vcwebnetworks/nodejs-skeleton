@@ -1,6 +1,9 @@
 import { isCelebrateError } from 'celebrate';
 import { NextFunction, Request, Response } from 'express';
 
+import configApp from '@src/config/app';
+import Logger from '@src/helpers/Logger';
+
 interface IError extends Error {
   code?: string;
   statusCode?: number;
@@ -14,6 +17,14 @@ const errorHandlerMiddleware = (error: IError, _request: Request, response: Resp
 
   if (error?.statusCode) {
     statusCode = error.statusCode;
+  }
+
+  if (configApp.isDevelopment) {
+    Logger.run({
+      message,
+      level: 'error',
+      metadata: error,
+    });
   }
 
   return response.status(statusCode).json({

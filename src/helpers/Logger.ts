@@ -1,4 +1,4 @@
-import { createLogger, transports, format, Logger as WinstonLogger } from 'winston';
+import { createLogger, format, Logger as WinstonLogger, transports } from 'winston';
 
 interface ILogRequest {
   level: 'error' | 'warn' | 'info' | 'http' | 'verbose' | 'debug' | 'silly';
