@@ -16,7 +16,7 @@
     "lint": "eslint --ext ts ./src",
     "lint:fix": "yarn lint --fix",
     "docker": "docker-compose -f docker-compose.yml up",
-    "buildMigrations": "babel src/database/migrations/source --extensions \\\\\\\".js,.ts\\\\\\\" --out-dir src/database/migrations/compiled",
+    "buildMigrations": "babel src/database/migrations/source --extensions \".js,.ts\" --out-dir src/database/migrations/compiled",
     "db:migrate": "yarn buildMigrations && sequelize db:migrate"
   },
   "husky": {
