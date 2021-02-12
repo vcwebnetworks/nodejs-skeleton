@@ -6,7 +6,6 @@ const configApp = {
 
   isDevelopment,
   isProduction: !isDevelopment,
-  startServerCheckEnvironment: process.env.CHECK_ENV_FILE === 'true' || process.env.NODE_ENV === 'development',
 };
 
 export default configApp;
