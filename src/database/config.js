@@ -5,8 +5,8 @@ const sequelizeOptions = {
   username: process.env.DB_USERNAME ?? 'root',
   password: process.env.DB_PASSWORD ?? 'root',
   database: process.env.DB_NAME ?? 'development',
-  // logging: Boolean(process.env.DB_LOGGING ?? true),
-  timezone: process.env.DB_TIMEZONE ?? '+3:00',
+  storage: process.env.DB_STORAGE ?? null,
+  timezone: process.env.DB_TIMEZONE ?? 'America/Sao_Paulo',
   migrationStorageTableName: process.env.DB_MIGRATION_NAME ?? 'migrations',
   define: {
     engine: 'InnoDB',
