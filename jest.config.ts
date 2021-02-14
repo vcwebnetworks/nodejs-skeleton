@@ -12,6 +12,13 @@ export default {
   displayName: 'root-test',
   testEnvironment: 'node',
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+  coverageDirectory: '<rootDir>/tests/coverage',
   coveragePathIgnorePatterns: ['/node_modules/'],
-  testMatch: ['**/tests/**/*.(spec|test).ts', '**/src/**/*.(spec|test).ts'],
+  testMatch: ['**/*.(spec|test).ts'],
+  collectCoverageFrom: [
+    '<rootDir>/src/{helpers,middlewares,modules}/**/*.ts',
+    '<rootDir>/src/database/models/**/*.ts',
+    '!**/node_modules/**',
+    '!**/vendor/**',
+  ],
 };

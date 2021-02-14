@@ -19,7 +19,7 @@ import rateLimiterMiddleware from '@src/middlewares/RateLimiterMiddleware';
 import './database';
 import appRoutes from './routes';
 
-export class App {
+class App {
   public app: express.Application;
   public server: http.Server;
 
@@ -34,7 +34,9 @@ export class App {
     this.app.set('trust proxy', true);
     this.app.set('x-powered-by', false);
 
-    this.middlewares();
+    this.server.on('listening', () => {
+      this.middlewares();
+    });
   }
 
   private middlewares(): void {
@@ -59,6 +61,14 @@ export class App {
 
     this.app.use(errorHandlerMiddleware);
   }
+
+  public getServer(): http.Server {
+    return this.server;
+  }
+
+  public getExpress(): express.Application {
+    return this.app;
+  }
 }
 
-export default new App().server;
+export default new App();

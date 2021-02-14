@@ -11,4 +11,5 @@ dist
 .docker/redis/*
 !.docker/redis/.gitkeep
 
+tests/coverage/*
 tests/database.sqlite

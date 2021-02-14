@@ -17,7 +17,11 @@
     "lint:fix": "yarn lint --fix",
     "buildMigrations": "babel src/database/migrations/source --extensions \".js,.ts\" --out-dir src/database/migrations/compiled",
     "db:migrate": "yarn buildMigrations && sequelize db:migrate",
-    "test": "cross-env NODE_ENV=test jest --passWithNoTests"
+    "test": "cross-env NODE_ENV=test jest --passWithNoTests --runInBand --no-cache",
+    "test:unit": "yarn test --watch -c ./jest-unit.config.ts",
+    "test:integration": "yarn test --watch -c ./jest-integration.config.ts",
+    "test:staged": "yarn test --findRelatedTests",
+    "test:ci": "yarn test --coverage"
   },
   "husky": {
     "hooks": {
@@ -26,7 +30,8 @@
   },
   "lint-staged": {
     "*.ts": [
-      "yarn lint:fix"
+      "yarn lint:fix",
+      "yarn test:staged"
     ]
   },
   "dependencies": {
