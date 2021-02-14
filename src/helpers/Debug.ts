@@ -6,8 +6,10 @@ interface IRequest {
   namespace?: string;
 }
 
-export default class Debug {
-  public static run({ args, message, namespace = 'main' }: IRequest): void {
+class Debug {
+  public run({ args, message, namespace = 'main' }: IRequest): void {
     debug(`app:${namespace}`)(message, ...(args ?? []));
   }
 }
+
+export default new Debug();

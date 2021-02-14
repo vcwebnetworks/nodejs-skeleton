@@ -20,11 +20,7 @@ const errorHandlerMiddleware = (error: IError, _request: Request, response: Resp
   }
 
   if (configApp.isDevelopment) {
-    Logger.run({
-      message,
-      level: 'error',
-      metadata: error,
-    });
+    Logger.error(message, error);
   }
 
   return response.status(statusCode).json({

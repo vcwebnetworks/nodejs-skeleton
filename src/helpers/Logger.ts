@@ -1,24 +1,12 @@
-import { createLogger, format, Logger as WinstonLogger, transports } from 'winston';
+import { config, createLogger, format, transports } from 'winston';
 
-interface ILogRequest {
-  level: 'error' | 'warn' | 'info' | 'http' | 'verbose' | 'debug' | 'silly';
-  message: string;
-  metadata?: Record<string, any>;
-}
+const transportsList = [new transports.Console()];
 
-class Logger {
-  private logger: WinstonLogger;
+const Logger = createLogger({
+  format: format.combine(format.colorize(), format.simple()),
+  levels: config.syslog.levels,
+  transports: transportsList,
+  exceptionHandlers: transportsList,
+});
 
-  constructor() {
-    this.logger = createLogger({
-      format: format.combine(format.colorize(), format.simple()),
-      transports: [new transports.Console({ level: 'info' })],
-    });
-  }
-
-  public run({ level = 'info', message, metadata }: ILogRequest) {
-    this.logger.log(level, message, metadata);
-  }
-}
-
-export default new Logger();
+export default Logger;
