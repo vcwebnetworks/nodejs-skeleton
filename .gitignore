@@ -5,8 +5,10 @@ node_modules
 dist
 **/.DS_Store
 
-.docker/mysql/*
-!.docker/mysql/.gitkeep
+.docker/mysql/data/*
+!.docker/mysql/data/.gitkeep
 
 .docker/redis/*
 !.docker/redis/.gitkeep
+
+tests/database.sqlite

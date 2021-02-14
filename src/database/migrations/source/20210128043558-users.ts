@@ -2,6 +2,8 @@ import { DataTypes, literal, QueryInterface } from 'sequelize';
 
 class CreateTableUsers {
   async up(queryInterface: QueryInterface, dataTypes: typeof DataTypes) {
+    const dialect = queryInterface.sequelize.getDialect();
+
     await queryInterface.createTable('users', {
       id: {
         type: dataTypes.STRING(36),
@@ -29,7 +31,7 @@ class CreateTableUsers {
       },
       updated_at: {
         type: dataTypes.DATE,
-        defaultValue: literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+        defaultValue: literal(`CURRENT_TIMESTAMP${dialect !== 'sqlite' && ' ON UPDATE CURRENT_TIMESTAMP'}`),
         allowNull: false,
       },
     });
