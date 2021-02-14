@@ -39,8 +39,7 @@
       "ignorePackages",
       {
         "ts": "never",
-        "js": "never",
-        "json": "never"
+        "js": "never"
       }
     ],
     "@typescript-eslint/ban-types": "off",
@@ -57,11 +56,7 @@
       "warn",
       {
         "newlinesBetween": "always",
-        "groups": [
-          "module",
-          "/^@src/",
-          ["parent", "sibling", "index"]
-        ],
+        "groups": ["module", "/^@src/", ["parent", "sibling", "index"]],
         "alphabetize": {
           "order": "asc",
           "ignoreCase": true

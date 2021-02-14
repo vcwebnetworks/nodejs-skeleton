@@ -10,7 +10,9 @@ export default class Helpers {
       return <Date>date;
     }
 
-    if (typeof date === 'string') {
+    if (!Number.isNaN(Number(date))) {
+      date = Number(date);
+    } else if (typeof date === 'string') {
       const [parseDate, parseHour] = date.split(' ', 2);
       const dateTime = parseHour ? ` ${parseHour}` : '';
 

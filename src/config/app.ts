@@ -1,4 +1,4 @@
-const isDevelopment = ['development', 'testing'].includes(`${process.env.NODE_ENV}`);
+const isDevelopment = ['development', 'test'].includes(`${process.env.NODE_ENV}`);
 
 const configApp = {
   appKey: process.env.APP_KEY ?? 'app:key',
@@ -6,7 +6,6 @@ const configApp = {
 
   isDevelopment,
   isProduction: !isDevelopment,
-  startServerCheckEnvironment: process.env.CHECK_ENV_FILE === 'true' || process.env.NODE_ENV === 'development',
 };
 
 export default configApp;

@@ -16,6 +16,7 @@ import morganMiddleware from '@src/middlewares/MorganMiddleware';
 import notFoundMiddleware from '@src/middlewares/NotFoundMiddleware';
 import rateLimiterMiddleware from '@src/middlewares/RateLimiterMiddleware';
 
+import './database';
 import appRoutes from './routes';
 
 export class App {
@@ -33,11 +34,7 @@ export class App {
     this.app.set('trust proxy', true);
     this.app.set('x-powered-by', false);
 
-    this.server.on('listening', () => {
-      import('@src/database').then(() => {
-        this.middlewares();
-      });
-    });
+    this.middlewares();
   }
 
   private middlewares(): void {
