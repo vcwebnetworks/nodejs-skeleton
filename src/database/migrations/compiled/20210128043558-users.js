@@ -9,6 +9,7 @@ var _sequelize = require("sequelize");
 
 class CreateTableUsers {
   async up(queryInterface, dataTypes) {
+    const dialect = queryInterface.sequelize.getDialect();
     await queryInterface.createTable('users', {
       id: {
         type: dataTypes.STRING(36),
@@ -36,7 +37,7 @@ class CreateTableUsers {
       },
       updated_at: {
         type: dataTypes.DATE,
-        defaultValue: (0, _sequelize.literal)('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+        defaultValue: (0, _sequelize.literal)(`CURRENT_TIMESTAMP${dialect !== 'sqlite' && ' ON UPDATE CURRENT_TIMESTAMP'}`),
         allowNull: false
       }
     });

@@ -11,7 +11,7 @@ services:
     command: npm run dev
     tty: true
     depends_on:
-      - mysql
+      - mariadb
       - redis
     networks:
       - node-networks
@@ -21,21 +21,40 @@ services:
     ports:
       - 3333:3333
 
-  mysql:
-    image: mysql:8
-    container_name: node-mysql
+  # Commented because it still doesn't work on the ARM chip (M1)
+  #
+  #  mysql:
+  #    image: mysql:8
+  #    container_name: node-mysql
+  #    tty: true
+  #    networks:
+  #      - node-networks
+  #    ports:
+  #      - 3306:3306
+  #    volumes:
+  #      - .docker/mysql:/var/lib/mysql
+  #    environment:
+  #      MYSQL_USER: root
+  #      MYSQL_PASSWORD: root
+  #      MYSQL_DATABASE: development
+  #      MYSQL_ROOT_PASSWORD: root
+
+  mariadb:
+    image: mariadb
     tty: true
+    restart: always
+    container_name: node-mariadb
     networks:
       - node-networks
     ports:
-      - 3306:3306
+      - '3306:3306'
     volumes:
-      - .docker/mysql:/var/lib/mysql
+      - '.docker/mysql/config/mariadb.cnf:/etc/mysql/conf.d/custom.cnf:ro'
+      - '.docker/mysql/data:/var/lib/mysql'
     environment:
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_DATABASE: development
-      MYSQL_ROOT_PASSWORD: root
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=development
 
   redis:
     image: bitnami/redis:latest

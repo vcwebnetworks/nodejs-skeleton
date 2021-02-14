@@ -6,7 +6,7 @@ const methodOverrideMiddleware = (request: Request, _: Response, next: NextFunct
   let newMethod;
 
   const allowedMethods = configCors.methods;
-  const originalMethod = request?.originalMethod || request.method;
+  const originalMethod = (<any>request)?.originalMethod || request.method;
 
   if (!allowedMethods.includes(originalMethod)) {
     return next();
@@ -39,7 +39,7 @@ const methodOverrideMiddleware = (request: Request, _: Response, next: NextFunct
 
   if (newMethod) {
     request.method = newMethod.toUpperCase();
-    request.originalMethod = originalMethod;
+    (<any>request).originalMethod = originalMethod;
   }
 
   return next();

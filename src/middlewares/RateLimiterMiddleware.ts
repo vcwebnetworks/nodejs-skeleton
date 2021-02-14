@@ -12,7 +12,7 @@ const {
   REDIS_RATE_LIMIT_DATABASE,
 } = process.env;
 
-const rateLimiterMiddleware = async (request: Request, response: Response, next: NextFunction) => {
+const rateLimiterMiddleware = async (request: Request, _response: Response, next: NextFunction) => {
   let connectionRedisError = false;
 
   try {
