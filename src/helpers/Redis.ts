@@ -7,8 +7,13 @@ export default class Redis {
   protected client: RedisClient;
 
   constructor(options?: IORedis.RedisOptions) {
-    this.prefix = options?.keyPrefix ?? '';
-    this.client = new IORedis({ ...configRedis, ...options });
+    this.prefix = options?.keyPrefix ?? configRedis?.keyPrefix ?? '';
+
+    if (!this.prefix.endsWith(':')) {
+      this.prefix = `${this.prefix}:`;
+    }
+
+    this.client = new IORedis({ ...configRedis, ...options, keyPrefix: this.prefix });
   }
 
   set(key: IORedis.KeyType, value: IORedis.ValueType, expired?: number | string): Promise<IORedis.Ok | null> {
@@ -33,6 +38,10 @@ export default class Redis {
     return JSON.parse(data) as T;
   }
 
+  public getClient(): RedisClient {
+    return this.client;
+  }
+
   async exists(key: IORedis.KeyType): Promise<number> {
     return this.client.exists(key);
   }
@@ -42,13 +51,8 @@ export default class Redis {
   }
 
   async deletePrefix(prefix: string): Promise<void> {
-    const keys = await this.client.keys(`${this.prefix}${prefix}:*`);
-    const pipeline = this.client.pipeline();
+    const keys = await this.client.keys(`${this.prefix}${prefix}*`);
 
-    keys.forEach(key => {
-      pipeline.del(key);
-    });
-
-    await pipeline.exec();
+    await Promise.all(keys.map(key => this.delete(key.replace(`${this.prefix}`, ''))));
   }
 }
