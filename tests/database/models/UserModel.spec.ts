@@ -1,6 +1,8 @@
+import bcrypt from 'bcryptjs';
+import jsonwebtoken from 'jsonwebtoken';
+
 import sequelize from '@src/database';
 import { UserModel } from '@src/database/models/UserModel';
-import Password from '@src/helpers/Password';
 
 const fakeUser = async () =>
   UserModel.create({
@@ -9,21 +11,47 @@ const fakeUser = async () =>
     password: 'any_password',
   });
 
-describe('UserModel', () => {
+fdescribe('UserModel', () => {
   afterAll(() => sequelize.close());
   beforeEach(() => sequelize.sync({ force: true }));
 
-  it('should create a new user', async () => {
+  it('should create a new user with encrypted password.', async () => {
+    const hashSalt = 12;
+    const hashSpy = jest.spyOn(bcrypt, 'hash');
     const user = await fakeUser();
 
     expect(user.name).toBe('any_name');
     expect(user.email).toBe('any_email@mail.com');
-    expect(user.password).toMatch(/^\$2a\$12\$.+/g);
+    expect(hashSpy).toHaveBeenCalledWith('any_password', hashSalt);
   });
 
-  it('should create a new user with the encrypted password.', async () => {
+  it('should create a user and verify the encrypted password has valid.', async () => {
+    const compareSpy = jest.spyOn(bcrypt, 'compare');
     const user = await fakeUser();
 
-    expect(await Password.verify('any_password', user.password)).toBe(true);
+    const verifyPassword = await user.verifyPassword('any_password');
+
+    expect(verifyPassword).toBe(true);
+    expect(compareSpy).toHaveBeenCalledWith('any_password', user.password);
+  });
+
+  it('should create a user and verify the encrypted password has invalid.', async () => {
+    const compareSpy = jest.spyOn(bcrypt, 'compare').mockImplementationOnce(() => Promise.resolve(false));
+    const user = await fakeUser();
+
+    const verifyPassword = await user.verifyPassword('any_password');
+
+    expect(verifyPassword).toBe(false);
+    expect(compareSpy).toHaveBeenCalledWith('any_password', user.password);
+  });
+
+  it('should create a user and create a valid jwt token.', async () => {
+    const user = await fakeUser();
+
+    const signSty = jest.spyOn(jsonwebtoken, 'sign').mockImplementationOnce(() => Promise.resolve('any_token'));
+    const token = await user.generateJwtToken();
+
+    expect(signSty).toHaveBeenCalledTimes(1);
+    expect(token).toBe('any_token');
   });
 });
