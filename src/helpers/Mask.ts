@@ -1,7 +1,7 @@
 export default class Mask {
   public static create(value: string, mask: string): string {
     const parseMask = mask.replace(/[^#]/g, '');
-    const parseValue = value.replace(/[\s\\.\-_:/]/gm, '');
+    const parseValue = Mask.unmask(value);
 
     if (parseMask.length !== parseValue.length) {
       return value;
@@ -20,6 +20,10 @@ export default class Mask {
     }
 
     return result;
+  }
+
+  public static unmask(value: string): string {
+    return value.replace(/[\s\\.\-_:/]/gm, '');
   }
 
   public static cpf(value: string): string {
