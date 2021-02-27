@@ -1,8 +1,6 @@
-import sequelize from '../../src/database';
+import sequelize from '@src/database';
 
 describe('Database', () => {
-  afterAll(() => sequelize.close());
-
   it('should verify that the connection was successful.', async () => {
     await expect(sequelize.authenticate()).resolves.toBe(undefined);
   });

@@ -1,21 +1,13 @@
 import supertest from 'supertest';
 
 import app from '@src/app';
-import sequelize from '@src/database';
 import { UserModel } from '@src/database/models/UserModel';
 
-const makeUser = () =>
-  UserModel.create({
-    name: 'any_name',
-    email: 'any_email@mail.com',
-    password: 'any_password',
-  });
-
+const makeUser = () => UserModel.makeTestFake();
 const makeSupertest = () => supertest(app.getServer());
 
 describe('Authentication -> SignInController', () => {
-  afterAll(() => sequelize.close());
-  beforeEach(() => sequelize.sync({ force: true }));
+  afterAll(() => app.close());
 
   it('should log in with valid credentials.', async () => {
     const user = await makeUser();

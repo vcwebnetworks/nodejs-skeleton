@@ -13,12 +13,10 @@ class SignInController {
       throw new UnauthorizedError('Username or password is invalid.');
     }
 
+    const token = await user.generateJwtToken();
     user.setDataValue('password', undefined);
 
-    return response.json({
-      user,
-      token: await user.generateJwtToken(),
-    });
+    return response.json({ user, token });
   }
 }
 

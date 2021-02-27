@@ -4,16 +4,10 @@ import jsonwebtoken from 'jsonwebtoken';
 import sequelize from '@src/database';
 import { UserModel } from '@src/database/models/UserModel';
 
-const fakeUser = async () =>
-  UserModel.create({
-    name: 'any_name',
-    email: 'any_email@mail.com',
-    password: 'any_password',
-  });
+const fakeUser = async () => UserModel.makeTestFake();
 
 fdescribe('UserModel', () => {
   afterAll(() => sequelize.close());
-  beforeEach(() => sequelize.sync({ force: true }));
 
   it('should create a new user with encrypted password.', async () => {
     const hashSalt = 12;

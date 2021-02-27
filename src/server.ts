@@ -1,15 +1,28 @@
 import './config/module-alias';
+import { AddressInfo } from 'net';
 
-import App from './app';
-import Debug from './helpers/Debug';
+import app from '@src/app';
+import Debug from '@src/helpers/Debug';
 
-const SERVER_HOST = String(process.env.SERVER_HOST) ?? '0.0.0.0';
-const SERVER_PORT = Number(process.env.SERVER_PORT) ?? 3333;
+(async () => {
+  try {
+    const server = await app.start();
+    const { port } = server.address() as AddressInfo;
 
-App.getServer().listen(SERVER_PORT, SERVER_HOST, () => {
-  Debug.run({
-    namespace: 'server',
-    message: `🚀 Server started on port http://%s:%d`,
-    args: [SERVER_HOST, SERVER_PORT],
-  });
-});
+    Debug.run({
+      namespace: 'server',
+      message: `🚀 Server started on port http://localhost:%d`,
+      args: [port],
+    });
+  } catch (e) {
+    await app.close();
+
+    Debug.run({
+      namespace: 'server',
+      message: `Server initialization failed: %s`,
+      args: [e.message],
+    });
+
+    process.exit(0);
+  }
+})();

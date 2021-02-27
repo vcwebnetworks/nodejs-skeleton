@@ -57,18 +57,27 @@ export default class Helpers {
     return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
   }
 
-  public static onlyNumber(value: string | number): string {
-    return `${value}`.replace(/[^\d]/gi, '');
-  }
+  public static normalizeValue<T extends any>(value: any): T {
+    if (Array.isArray(value) || typeof value === 'object') {
+      return value;
+    }
 
-  public static randomInt(min: number, max: number): number {
-    min = Math.ceil(min);
-    max = Math.floor(max);
+    if (!Number.isNaN(value)) {
+      return <T>parseFloat(value);
+    }
 
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+    if (value === 'true') {
+      value = true;
+    }
 
-  public static rangeNumber(size: number, start = 0): Array<number> {
-    return [...Array(size).keys()].map(i => i + start);
+    if (value === 'false') {
+      value = false;
+    }
+
+    if (value === 'null') {
+      value = null;
+    }
+
+    return value;
   }
 }
