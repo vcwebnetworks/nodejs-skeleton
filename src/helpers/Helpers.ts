@@ -62,7 +62,7 @@ export default class Helpers {
       return value;
     }
 
-    if (!Number.isNaN(value)) {
+    if (!Number.isNaN(parseFloat(value))) {
       return <T>parseFloat(value);
     }
 

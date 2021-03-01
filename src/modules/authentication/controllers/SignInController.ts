@@ -1,20 +1,10 @@
 import { Request, Response } from 'express';
 
-import { UserModel } from '@src/database/models/UserModel';
-import UnauthorizedError from '@src/errors/UnauthorizedError';
+import authenticationSignInService from '@src/modules/authentication/services/SignInService';
 
 class SignInController {
   public async handle(request: Request, response: Response): Promise<Response> {
-    const { email, password } = request.body;
-
-    const user = await UserModel.findOne({ where: { email } });
-
-    if (!user || !(await user.verifyPassword(password))) {
-      throw new UnauthorizedError('Username or password is invalid.');
-    }
-
-    const token = await user.generateJwtToken();
-    user.setDataValue('password', undefined);
+    const { user, token } = await authenticationSignInService.run(request.body);
 
     return response.json({ user, token });
   }

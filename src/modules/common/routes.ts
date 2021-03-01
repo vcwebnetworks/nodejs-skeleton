@@ -5,5 +5,6 @@ import commonIndexController from '@src/modules/common/controllers/IndexControll
 const commonRoutes = Router();
 
 commonRoutes.get('/', commonIndexController.index);
+commonRoutes.get('/favicon.ico', (_, response) => response.sendStatus(200));
 
 export default commonRoutes;

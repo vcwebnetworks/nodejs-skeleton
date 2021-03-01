@@ -38,11 +38,11 @@ class App {
     this.app.set('x-powered-by', false);
 
     this.server.on('listening', () => {
-      this.middlewares();
+      this.registerMiddlewares();
     });
   }
 
-  private middlewares(): void {
+  public registerMiddlewares(): void {
     if (configSentry.enable) {
       this.app.use(Sentry.Handlers.requestHandler());
     }
