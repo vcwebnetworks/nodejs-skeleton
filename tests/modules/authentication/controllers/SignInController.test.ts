@@ -22,8 +22,8 @@ describe('Authentication -> SignInController', () => {
       password: 'invalid_password',
     });
 
-    expect(response.status).toBe(401);
-    expect(response.body.name).toBe('UnauthorizedError');
+    expect(response.status).toBe(404);
+    expect(response.body.name).toBe('NotFoundError');
   });
 
   it('should check if you are accessing with invalid credentials.', async () => {
