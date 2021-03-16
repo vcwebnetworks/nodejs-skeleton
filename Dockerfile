@@ -5,11 +5,11 @@ ENV TZ=America/Sao_Paulo
 ENV NPM_CONFIG_LOGLEVEL=warn
 
 # create directory app and permission
-RUN mkdir -p /home/api/node_modules && \
-    chown -R node:node /home/api
+RUN mkdir -p /home/app/node_modules && \
+    chown -R node:node /home/app
 
 # set workdir application
-WORKDIR /home/api
+WORKDIR /home/app
 
 # copy package.json and yarn lock
 COPY --chown=node:node ./package.json  ./yarn.* ./
@@ -26,7 +26,9 @@ USER node
 
 # copy all project files to working directory
 COPY --chown=node:node . .
-# RUN chown -R node:1000 /home/api
+# RUN chown -R node:1000 /home/app
+
+EXPOSE 3333
 
 # start application
 CMD ["npm", "run", "start"]
