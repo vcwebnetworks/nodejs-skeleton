@@ -1,7 +1,7 @@
 const swaggerTags = [
   {
-    name: 'Default',
-    description: '',
+    name: 'auth',
+    description: 'APIs relacionadas a autenticação.',
   },
 ];
 

@@ -4,7 +4,6 @@ const swaggerSchemasCommonError = {
   properties: {
     name: { type: 'string' },
     code: { type: 'string' },
-    level: { type: 'string' },
     message: { type: 'string' },
     statusCode: { type: 'number' },
     stack: {

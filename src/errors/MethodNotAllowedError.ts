@@ -9,5 +9,6 @@ export default class MethodNotAllowedError extends AppError {
     super(`Method not allowed in request${path ? `: [${method.toUpperCase()}] ${path}` : '.'}`, 405);
 
     this.name = 'MethodNotAllowedError';
+    this.code = 'method_not_allowed';
   }
 }

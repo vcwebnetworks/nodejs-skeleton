@@ -5,6 +5,6 @@ export default class MissingParamError extends AppError {
     super(`Missing parameters on request: ${name}`);
 
     this.name = 'MissingParamError';
-    this.code = 'validation';
+    this.code = 'missing_param';
   }
 }

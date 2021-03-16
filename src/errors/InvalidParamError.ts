@@ -5,6 +5,6 @@ export default class InvalidParamError extends AppError {
     super(`Invalid parameters on request: ${name}`);
 
     this.name = 'InvalidParamError';
-    this.code = 'validation';
+    this.code = 'invalid_param';
   }
 }

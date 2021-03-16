@@ -1,6 +1,6 @@
 const swaggerServers = [
   {
-    url: 'http://localhost:3333',
+    url: '/',
     description: 'Servidor local',
   },
 ];

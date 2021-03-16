@@ -1,10 +1,16 @@
-import swaggerComponentsErrorsDefault from './components/errors/default';
-import swaggerComponentsErrorsNotFound from './components/errors/notFound';
+import swaggerComponentsErrorsBadRequest from '@src/modules/swagger/components/errors/badRequest';
+import swaggerComponentsErrorsForbidden from '@src/modules/swagger/components/errors/forbidden';
+import swaggerComponentsErrorsNotFound from '@src/modules/swagger/components/errors/notFound';
+import swaggerComponentsErrorsServerError from '@src/modules/swagger/components/errors/serverError';
+import swaggerComponentsErrorsUnauthorized from '@src/modules/swagger/components/errors/unauthorized';
 
 const swaggerComponents = {
   errors: {
-    default: swaggerComponentsErrorsDefault,
     'not-found': swaggerComponentsErrorsNotFound,
+    'bad-request': swaggerComponentsErrorsBadRequest,
+    'server-error': swaggerComponentsErrorsServerError,
+    forbidden: swaggerComponentsErrorsForbidden,
+    unauthorized: swaggerComponentsErrorsUnauthorized,
   },
 
   securitySchemes: {

@@ -11,7 +11,7 @@ import Debug from '@src/helpers/Debug';
 
     Debug.run({
       namespace: 'server',
-      message: `🚀 Server started on port http://localhost:%d`,
+      message: `🚀 Server started on http://localhost:%d`,
       args: [port],
     });
   } catch (e) {
