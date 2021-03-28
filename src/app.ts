@@ -3,6 +3,7 @@ import './dotenv';
 import './config/module-alias';
 
 import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
 import express from 'express';
 import 'express-async-errors';
 import helmet from 'helmet';
@@ -31,7 +32,18 @@ class App {
     this.port = Number(process.env.PORT || 3333);
 
     if (configSentry.enable) {
-      Sentry.init({ dsn: process.env.SENTRY_DSN });
+      Sentry.init({
+        dsn: process.env.SENTRY_DSN,
+        tracesSampleRate: 1.0,
+        integrations: [
+          new Sentry.Integrations.Http({ tracing: true }),
+          new Tracing.Integrations.Express({
+            app: this.app,
+            router: appRoutes,
+            methods: ['all'],
+          }),
+        ],
+      });
     }
 
     this.app.set('trust proxy', true);
@@ -45,6 +57,7 @@ class App {
   public registerMiddlewares(): void {
     if (configSentry.enable) {
       this.app.use(Sentry.Handlers.requestHandler());
+      this.app.use(Sentry.Handlers.tracingHandler());
     }
 
     this.app.use(helmet());

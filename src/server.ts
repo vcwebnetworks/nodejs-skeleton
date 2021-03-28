@@ -19,7 +19,7 @@ import Debug from '@src/helpers/Debug';
 
     Debug.run({
       namespace: 'server',
-      message: `Server initialization failed: %s`,
+      message: `🚨 Server initialization failed: %s`,
       args: [e.message],
     });
 
