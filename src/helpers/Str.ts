@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-import helperNumber from '@src/helpers/Number';
+import numberHelper from '@src/helpers/Number';
 
 export default class Str {
   public static uuid(a?: string): string {
@@ -55,7 +55,7 @@ export default class Str {
 
   public static rangeCharacters(startChar: string, endChar: string): string {
     return String.fromCharCode(
-      ...helperNumber.range(endChar.charCodeAt(0) - startChar.charCodeAt(0) + 1, startChar.charCodeAt(0)),
+      ...numberHelper.range(endChar.charCodeAt(0) - startChar.charCodeAt(0) + 1, startChar.charCodeAt(0)),
     );
   }
 }

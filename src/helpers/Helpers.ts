@@ -1,43 +1,8 @@
 import { ParsedUrlQueryInput, stringify } from 'querystring';
 
-import AppError from '@src/errors/AppError';
 import Hash from '@src/helpers/Hash';
-import Validate from '@src/helpers/Validate';
 
 export default class Helpers {
-  public static createDate(date: Date | string | number, check = true): Date {
-    if (Validate.isDate(date as Date)) {
-      return <Date>date;
-    }
-
-    if (!Number.isNaN(Number(date))) {
-      date = Number(date);
-    } else if (typeof date === 'string') {
-      const [parseDate, parseHour] = date.split(' ', 2);
-      const dateTime = parseHour ? ` ${parseHour}` : '';
-
-      if (parseDate.match(/^\d{1,2}\/\d{1,2}\/\d{4}$/gi)) {
-        date = `${parseDate.split('/').reverse().join('/')}${dateTime}`;
-      } else if (parseDate.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/gi)) {
-        date = `${parseDate}${dateTime}`;
-      }
-    }
-
-    const newDate = new Date(date);
-
-    if (check && !Validate.isDate(newDate)) {
-      throw new AppError(`Invalid date ${date}`);
-    }
-
-    return newDate;
-  }
-
-  public static calculateAge(date: Date | string | number): number {
-    const birthday = +Helpers.createDate(date);
-    // eslint-disable-next-line no-bitwise
-    return ~~((Date.now() - birthday) / 3.15576e10);
-  }
-
   public static getImageGravatar(email: string, params?: ParsedUrlQueryInput): string {
     const query = params ? `?${stringify(params)}` : '';
 
