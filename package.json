@@ -22,7 +22,7 @@
     "test": "cross-env NODE_ENV=test jest --passWithNoTests --runInBand",
     "test:unit": "yarn test --watch -c ./jest-unit.config.ts",
     "test:integration": "yarn test --watch -c ./jest-integration.config.ts",
-    "test:staged": "yarn test --watch --findRelatedTests",
+    "test:staged": "yarn test --findRelatedTests",
     "test:ci": "yarn test --coverage --no-cache",
     "prepare": "husky install"
   },
