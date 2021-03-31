@@ -8,6 +8,7 @@ import express from 'express';
 import 'express-async-errors';
 import helmet from 'helmet';
 import http from 'http';
+import httpGraceFullShutdown from 'http-graceful-shutdown';
 
 import configSentry from '@src/config/sentry';
 import sequelize from '@src/database';
@@ -84,7 +85,9 @@ class App {
 
   public async start(): Promise<http.Server> {
     return new Promise(resolve => {
-      this.server.listen(this.port, () => resolve(this.server));
+      this.server = this.server.listen(this.port);
+      httpGraceFullShutdown(this.server);
+      resolve(this.server);
     });
   }
 

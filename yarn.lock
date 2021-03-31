@@ -4341,6 +4341,13 @@ http-errors@~1.7.2:
     statuses ">= 1.5.0 < 2"
     toidentifier "1.0.0"
 
+http-graceful-shutdown@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/http-graceful-shutdown/-/http-graceful-shutdown-3.0.1.tgz#8c3994983676d99f9f1a32bf41cca14533d25d01"
+  integrity sha512-F9jj3ditZXXdeJgrLDHcE19Kit1AR9uLpMze3UMvu85ieDbvs5FqJowJsujr37zgX9KuP1Og3FuOyQxED9YFFg==
+  dependencies:
+    debug "^4.1.1"
+
 http-signature@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/http-signature/-/http-signature-1.2.0.tgz#9aecd925114772f3d95b65a60abb8f7c18fbace1"
