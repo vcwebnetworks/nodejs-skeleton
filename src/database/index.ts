@@ -15,6 +15,15 @@ const sequelize = new Sequelize({
   ...(sequelizeOptions as SequelizeOptions),
   dialect: process.env.DB_TYPE as SequelizeOptions['dialect'],
   models: [path.resolve(__dirname, 'models')],
+  minifyAliases: true,
+  define: {
+    ...sequelizeOptions.define,
+    paranoid: true,
+    underscored: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    deletedAt: 'deleted_at',
+  },
 });
 
 export default sequelize;
