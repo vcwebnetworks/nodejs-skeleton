@@ -93,6 +93,7 @@ class App {
 
   public async close(): Promise<void> {
     await sequelize.close();
+    await sequelize.connectionManager.close();
 
     if (!this.server.listening) {
       return;
