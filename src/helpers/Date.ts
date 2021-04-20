@@ -32,7 +32,7 @@ class DateHelper {
     return date instanceof Date && !Number.isNaN(date.getTime());
   }
 
-  public format(date: number | Date | string | undefined, options?: Intl.DateTimeFormatOptions): string {
+  public format(date: number | Date | string, options?: Intl.DateTimeFormatOptions): string {
     const defaultOptions = {
       year: 'numeric',
       month: 'numeric',
@@ -47,9 +47,7 @@ class DateHelper {
       ...(options ?? {}),
     });
 
-    const parseDate = typeof date === 'string' ? new Date(date) : date;
-
-    return formatter.format(parseDate);
+    return formatter.format(this.parse(date));
   }
 
   public calculateAge(date: Date | string | number): number {
