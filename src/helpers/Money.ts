@@ -1,5 +1,8 @@
 class MoneyHelper {
-  public format(value: number | string, options?: Intl.NumberFormatOptions): string {
+  public format(
+    value: number | string,
+    options?: Intl.NumberFormatOptions,
+  ): string {
     const defaultOptions = {
       style: 'currency',
       currency: 'BRL',
@@ -32,5 +35,5 @@ class MoneyHelper {
   }
 }
 
-const moneyHelper = new MoneyHelper();
-export default moneyHelper;
+const helperMoney = new MoneyHelper();
+export default helperMoney;

@@ -15,5 +15,5 @@ class NumberHelper {
   }
 }
 
-const numberHelper = new NumberHelper();
-export default numberHelper;
+const helperNumber = new NumberHelper();
+export default helperNumber;

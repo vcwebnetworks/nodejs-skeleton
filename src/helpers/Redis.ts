@@ -1,6 +1,6 @@
 import IORedis, { Redis as RedisClient } from 'ioredis';
 
-import configRedis from '@src/config/redis';
+import configRedis from '@config/redis';
 
 export default class Redis {
   protected prefix?: string;
@@ -13,10 +13,18 @@ export default class Redis {
       this.prefix = `${this.prefix}:`;
     }
 
-    this.client = new IORedis({ ...configRedis, ...options, keyPrefix: this.prefix });
+    this.client = new IORedis({
+      ...configRedis,
+      ...options,
+      keyPrefix: this.prefix,
+    });
   }
 
-  set(key: IORedis.KeyType, value: IORedis.ValueType, expired?: number | string): Promise<IORedis.Ok | null> {
+  set(
+    key: IORedis.KeyType,
+    value: IORedis.ValueType,
+    expired?: number | string,
+  ): Promise<IORedis.Ok | null> {
     if (value) {
       value = JSON.stringify(value);
     }
@@ -53,6 +61,8 @@ export default class Redis {
   async deletePrefix(prefix: string): Promise<void> {
     const keys = await this.client.keys(`${this.prefix}${prefix}*`);
 
-    await Promise.all(keys.map(key => this.delete(key.replace(`${this.prefix}`, ''))));
+    await Promise.all(
+      keys.map(key => this.delete(key.replace(`${this.prefix}`, ''))),
+    );
   }
 }

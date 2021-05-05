@@ -1,16 +1,19 @@
 import crypto from 'crypto';
 
-import numberHelper from '@src/helpers/Number';
+import helperNumber from '@src/helpers/Number';
 
-export default class Str {
-  public static uuid(a?: string): string {
+class Str {
+  public uuid(a?: string): string {
     return a
       ? // eslint-disable-next-line no-bitwise
         (Number(a) ^ ((Math.random() * 16) >> (Number(a) / 4))).toString(16)
-      : (<string>([1e7] as never) + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, Str.uuid);
+      : (<string>([1e7] as never) + -1e3 + -4e3 + -8e3 + -1e11).replace(
+          /[018]/g,
+          this.uuid,
+        );
   }
 
-  public static random(length = 16): string {
+  public random(length = 16): string {
     let string = '';
     let stringLength = string.length;
 
@@ -30,11 +33,13 @@ export default class Str {
     return string;
   }
 
-  public static removeAccents(value: string): string {
-    return value.normalize('NFD').replace(/[\u0300-\u036f|\u00b4|\u0060|\u005e|\u007e]/g, '');
+  public removeAccents(value: string): string {
+    return value
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f|\u00b4|\u0060|\u005e|\u007e]/g, '');
   }
 
-  public static toCamelCase(value: string): string {
+  public toCamelCase(value: string): string {
     return value.toLowerCase().replace(/^([A-Z])|[\s-_](\w)/g, (_, p1, p2) => {
       if (p2) {
         return p2.toUpperCase();
@@ -43,7 +48,7 @@ export default class Str {
     });
   }
 
-  public static toTitleCase(string: string): string {
+  public toTitleCase(string: string): string {
     if (!string) {
       return '';
     }
@@ -53,9 +58,15 @@ export default class Str {
     });
   }
 
-  public static rangeCharacters(startChar: string, endChar: string): string {
+  public rangeCharacters(startChar: string, endChar: string): string {
     return String.fromCharCode(
-      ...numberHelper.range(endChar.charCodeAt(0) - startChar.charCodeAt(0) + 1, startChar.charCodeAt(0)),
+      ...helperNumber.range(
+        endChar.charCodeAt(0) - startChar.charCodeAt(0) + 1,
+        startChar.charCodeAt(0),
+      ),
     );
   }
 }
+
+const helperStr = new Str();
+export default helperStr;

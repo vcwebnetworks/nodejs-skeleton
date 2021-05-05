@@ -9,7 +9,9 @@ class CpfHelper {
     }
 
     const validTenDigit = CpfHelper.calculate(value, 10) !== value.charAt(9);
-    const validElevenDigit = CpfHelper.calculate(value, 11) !== value.charAt(10);
+
+    const validElevenDigit =
+      CpfHelper.calculate(value, 11) !== value.charAt(10);
 
     return !validTenDigit || !validElevenDigit;
   }
@@ -35,5 +37,5 @@ class CpfHelper {
   }
 }
 
-const cpfHelper = new CpfHelper();
-export default cpfHelper;
+const helperCpf = new CpfHelper();
+export default helperCpf;

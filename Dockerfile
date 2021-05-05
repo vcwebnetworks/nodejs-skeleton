@@ -3,13 +3,11 @@ FROM node:14-alpine
 # set environments
 ENV TZ=America/Sao_Paulo
 ENV NPM_CONFIG_LOGLEVEL=warn
+ENV WORKDIR=/home/app
 
 # create directory app and permission
 RUN mkdir -p /home/app/node_modules && \
     chown -R node:node /home/app
-
-# set workdir application
-WORKDIR /home/app
 
 # copy package.json and yarn lock
 COPY --chown=node:node ./package.json  ./yarn.* ./
@@ -21,14 +19,13 @@ RUN apk add --update --no-cache tzdata python alpine-sdk && \
     yarn cache clean && \
     rm -rf /var/cache/apk/*
 
-# set user
-USER node
-
 # copy all project files to working directory
 COPY --chown=node:node . .
-# RUN chown -R node:1000 /home/app
+RUN chown -R 1000.1000 ${WORKDIR}
 
 EXPOSE 3333
 
 # start application
+USER node
+WORKDIR ${WORKDIR}
 CMD ["npm", "run", "start"]

@@ -7,5 +7,5 @@ class EmailHelper {
   }
 }
 
-const emailHelper = new EmailHelper();
-export default emailHelper;
+const helperEmail = new EmailHelper();
+export default helperEmail;

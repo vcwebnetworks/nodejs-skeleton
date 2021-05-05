@@ -8,8 +8,11 @@ class CnpjHelper {
       return false;
     }
 
-    const validTwelveDigit = CnpjHelper.calculate(value, 12) !== value.charAt(12);
-    const validThirteenDigit = CnpjHelper.calculate(value, 13) !== value.charAt(13);
+    const validTwelveDigit =
+      CnpjHelper.calculate(value, 12) !== value.charAt(12);
+
+    const validThirteenDigit =
+      CnpjHelper.calculate(value, 13) !== value.charAt(13);
 
     return !validTwelveDigit || !validThirteenDigit;
   }
@@ -40,5 +43,5 @@ class CnpjHelper {
   }
 }
 
-const cnpjHelper = new CnpjHelper();
-export default cnpjHelper;
+const helperCnpj = new CnpjHelper();
+export default helperCnpj;

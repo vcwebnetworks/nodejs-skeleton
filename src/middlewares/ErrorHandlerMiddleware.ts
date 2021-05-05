@@ -1,4 +1,4 @@
-import { isCelebrateError } from 'celebrate';
+import { CelebrateError, isCelebrateError } from 'celebrate';
 import { NextFunction, Request, Response } from 'express';
 
 import Logger from '@src/helpers/Logger';
@@ -8,27 +8,40 @@ interface IError extends Error {
   statusCode?: number;
 }
 
-const errorHandlerMiddleware = (error: IError, _request: Request, response: Response, _next: NextFunction) => {
+const errorHandlerMiddleware = (
+  error: IError,
+  _request: Request,
+  response: Response,
+  _next: NextFunction,
+) => {
   const isJoi = isCelebrateError(error);
-  const { name, message = 'Internal server error' } = error;
 
-  let statusCode = isJoi ? 400 : 500;
+  let statusCode = 400;
+  const validations: any[] = [];
 
   if (error?.statusCode) {
     statusCode = error.statusCode;
   }
 
+  if (error instanceof CelebrateError) {
+    error.details.forEach(value => {
+      error.message = value.message;
+      validations.push(value.details);
+    });
+  }
+
   if (process.env.NODE_ENV === 'development') {
-    Logger.error(message, error);
+    Logger.error(error.message, error);
   }
 
   return response.status(statusCode).json({
-    name: isJoi ? 'CelebrateError' : name,
+    name: isJoi ? 'CelebrateError' : error.name,
     statusCode,
     sentry: (<any>response).sentry,
-    message,
+    message: error.message,
     stack: error.stack?.split('\n'),
     code: error?.code ?? 'default',
+    validations,
   });
 };
 

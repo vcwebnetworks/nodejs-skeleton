@@ -31,7 +31,11 @@ class CreateTableUsers {
       },
       updated_at: {
         type: dataTypes.DATE,
-        defaultValue: literal(`CURRENT_TIMESTAMP${dialect !== 'sqlite' && ' ON UPDATE CURRENT_TIMESTAMP'}`),
+        defaultValue: literal(
+          `CURRENT_TIMESTAMP${
+            dialect !== 'sqlite' && ' ON UPDATE CURRENT_TIMESTAMP'
+          }`,
+        ),
         allowNull: false,
       },
     });

@@ -1,15 +1,15 @@
 import { ParsedUrlQueryInput, stringify } from 'querystring';
 
-import Hash from '@src/helpers/Hash';
+import helperHash from '@helpers/Hash';
 
-export default class Helpers {
-  public static getImageGravatar(email: string, params?: ParsedUrlQueryInput): string {
+class Index {
+  public getImageGravatar(email: string, params?: ParsedUrlQueryInput): string {
     const query = params ? `?${stringify(params)}` : '';
 
-    return `https://www.gravatar.com/avatar/${Hash.md5(email)}${query}`;
+    return `https://www.gravatar.com/avatar/${helperHash.md5(email)}${query}`;
   }
 
-  public static bytesToSize(bytes: number, decimals = 2) {
+  public bytesToSize(bytes: number, decimals = 2) {
     if (bytes === 0) {
       return '0 Bytes';
     }
@@ -22,7 +22,7 @@ export default class Helpers {
     return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
   }
 
-  public static normalizeValue<T extends any>(value: any): T {
+  public normalizeValue<T extends any>(value: any): T {
     if (Array.isArray(value) || typeof value === 'object') {
       return value;
     }
@@ -46,3 +46,6 @@ export default class Helpers {
     return value;
   }
 }
+
+const helper = new Index();
+export default helper;

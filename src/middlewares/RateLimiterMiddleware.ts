@@ -2,8 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 import IORedis from 'ioredis';
 import { RateLimiterRedis } from 'rate-limiter-flexible';
 
-import configApp from '@src/config/app';
 import RateLimiterError from '@src/errors/RateLimiterError';
+
+import configApp from '@config/app';
 
 const {
   REDIS_RATE_LIMIT_HOST,
@@ -12,7 +13,11 @@ const {
   REDIS_RATE_LIMIT_DATABASE,
 } = process.env;
 
-const rateLimiterMiddleware = async (request: Request, _response: Response, next: NextFunction) => {
+const rateLimiterMiddleware = async (
+  request: Request,
+  _response: Response,
+  next: NextFunction,
+) => {
   let connectionRedisError = false;
 
   try {

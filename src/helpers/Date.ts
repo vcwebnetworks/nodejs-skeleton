@@ -32,7 +32,10 @@ class DateHelper {
     return date instanceof Date && !Number.isNaN(date.getTime());
   }
 
-  public format(date: number | Date | string, options?: Intl.DateTimeFormatOptions): string {
+  public format(
+    date: number | Date | string,
+    options?: Intl.DateTimeFormatOptions,
+  ): string {
     const defaultOptions = {
       year: 'numeric',
       month: 'numeric',
@@ -57,5 +60,5 @@ class DateHelper {
   }
 }
 
-const dateHelper = new DateHelper();
-export default dateHelper;
+const helperDate = new DateHelper();
+export default helperDate;

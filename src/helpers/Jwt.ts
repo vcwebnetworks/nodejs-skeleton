@@ -1,9 +1,13 @@
 import jwt from 'jsonwebtoken';
 
-import configApp from '@src/config/app';
+import configApp from '@config/app';
 
 class Jwt {
-  public encode(payload: any, secretKey?: jwt.Secret, options?: jwt.SignOptions): Promise<string> {
+  public encode(
+    payload: any,
+    secretKey?: jwt.Secret,
+    options?: jwt.SignOptions,
+  ): Promise<string> {
     return new Promise((resolve, reject) => {
       try {
         resolve(
@@ -18,7 +22,11 @@ class Jwt {
     });
   }
 
-  public decode<T extends string>(token: string, secretKey?: jwt.Secret, options?: jwt.VerifyOptions): Promise<T> {
+  public decode<T extends string>(
+    token: string,
+    secretKey?: jwt.Secret,
+    options?: jwt.VerifyOptions,
+  ): Promise<T> {
     return new Promise((resolve, reject) => {
       try {
         resolve(jwt.verify(token, Jwt.getSecretKey(secretKey), options) as T);
@@ -33,4 +41,5 @@ class Jwt {
   }
 }
 
-export default new Jwt();
+const helperJwt = new Jwt();
+export default helperJwt;

@@ -25,10 +25,11 @@
     "paths": {
       "@src/*": ["src/*"],
       "@tests/*": ["tests/*"],
-      "@modules/*": ["src/modules/*"],
-      "@database/*": ["src/database/*"],
+      "@config/*": ["src/config/*"],
       "@errors/*": ["src/errors/*"],
+      "@modules/*": ["src/modules/*"],
       "@helpers/*": ["src/helpers/*"],
+      "@database/*": ["src/database/*"],
       "@middlewares/*": ["src/middlewares/*"]
     }
   },

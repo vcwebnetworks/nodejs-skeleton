@@ -1,4 +1,4 @@
-import configApp from '@src/config/app';
+import configApp from '@config/app';
 
 const dsn = process.env.SENTRY_DSN;
 

@@ -1,5 +1,14 @@
 import { Optional } from 'sequelize';
-import { BeforeSave, Column, CreatedAt, DataType, Index, Model, Table, UpdatedAt } from 'sequelize-typescript';
+import {
+  BeforeSave,
+  Column,
+  CreatedAt,
+  DataType,
+  Index,
+  Model,
+  Table,
+  UpdatedAt,
+} from 'sequelize-typescript';
 
 import Jwt from '@src/helpers/Jwt';
 import Password from '@src/helpers/Password';

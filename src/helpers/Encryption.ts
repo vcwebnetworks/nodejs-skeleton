@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-import configApp from '@src/config/app';
+import configApp from '@config/app';
 
 class Encryption {
   private readonly key: crypto.BinaryLike;
@@ -16,7 +16,12 @@ class Encryption {
     const salt = crypto.randomBytes(64);
     const key = this.generateSecretKey(salt);
     const cipher = crypto.createCipheriv(this.algorithm, key, iv);
-    const encrypted = Buffer.concat([cipher.update(JSON.stringify(payload)), cipher.final()]);
+
+    const encrypted = Buffer.concat([
+      cipher.update(JSON.stringify(payload)),
+      cipher.final(),
+    ]);
+
     const authTag = (<any>cipher).getAuthTag();
 
     const result = Buffer.from(
@@ -38,12 +43,17 @@ class Encryption {
 
     (<any>decipher).setAuthTag(authTag);
 
-    const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]);
+    const decrypted = Buffer.concat([
+      decipher.update(encrypted),
+      decipher.final(),
+    ]);
 
     return JSON.parse(decrypted.toString());
   }
 
-  private static getPayload(value: string): { iv: Buffer; encrypted: Buffer; salt: Buffer; authTag: Buffer } {
+  private static getPayload(
+    value: string,
+  ): { iv: Buffer; encrypted: Buffer; salt: Buffer; authTag: Buffer } {
     const payload = Buffer.from(value, 'base64');
     const { iv, encrypted, salt, authTag } = JSON.parse(payload.toString());
 
@@ -60,4 +70,5 @@ class Encryption {
   }
 }
 
-export default new Encryption();
+const helperEncryption = new Encryption();
+export default helperEncryption;

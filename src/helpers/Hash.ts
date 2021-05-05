@@ -1,11 +1,11 @@
 import crypto, { BinaryLike, BinaryToTextEncoding } from 'crypto';
 
-export default class Hash {
-  public static md5(value: BinaryLike): string {
+class Hash {
+  public md5(value: BinaryLike): string {
     return crypto.createHash('md5').update(value).digest('hex');
   }
 
-  public static hmac(
+  public hmac(
     value: BinaryLike,
     key: BinaryLike,
     algorithm = 'sha256',
@@ -14,3 +14,6 @@ export default class Hash {
     return crypto.createHmac(algorithm, key).update(value).digest(encoding);
   }
 }
+
+const helperHash = new Hash();
+export default helperHash;

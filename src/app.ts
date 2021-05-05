@@ -4,23 +4,28 @@ import './config/module-alias';
 
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import 'express-async-errors';
 import helmet from 'helmet';
 import http from 'http';
 import httpGraceFullShutdown from 'http-graceful-shutdown';
 
-import configSentry from '@src/config/sentry';
 import sequelize from '@src/database';
-import Helpers from '@src/helpers/Helpers';
-import apiTokenMiddleware from '@src/middlewares/ApiTokenMiddleware';
-import corsMiddleware from '@src/middlewares/CorsMiddleware';
-import errorHandlerMiddleware from '@src/middlewares/ErrorHandlerMiddleware';
-import methodOverrideMiddleware from '@src/middlewares/MethodOverrideMiddleware';
-import morganMiddleware from '@src/middlewares/MorganMiddleware';
-import notFoundMiddleware from '@src/middlewares/NotFoundMiddleware';
-import rateLimiterMiddleware from '@src/middlewares/RateLimiterMiddleware';
 import appRoutes from '@src/routes';
+
+import configApp from '@config/app';
+import configSentry from '@config/sentry';
+
+import apiTokenMiddleware from '@middlewares/ApiTokenMiddleware';
+import corsMiddleware from '@middlewares/CorsMiddleware';
+import errorHandlerMiddleware from '@middlewares/ErrorHandlerMiddleware';
+import methodOverrideMiddleware from '@middlewares/MethodOverrideMiddleware';
+import morganMiddleware from '@middlewares/MorganMiddleware';
+import notFoundMiddleware from '@middlewares/NotFoundMiddleware';
+import rateLimiterMiddleware from '@middlewares/RateLimiterMiddleware';
+
+import helper from '@helpers/index';
 
 class App {
   protected app: express.Application;
@@ -64,12 +69,15 @@ class App {
     this.app.use(helmet());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(cookieParser(configApp.appKey));
     this.app.use(rateLimiterMiddleware);
     this.app.use(morganMiddleware);
     this.app.use(corsMiddleware);
     this.app.use(methodOverrideMiddleware);
 
-    if (Helpers.normalizeValue<boolean>(process.env.PROTECT_ALL_ROUTES_WITH_TOKEN)) {
+    if (
+      helper.normalizeValue<boolean>(process.env.PROTECT_ALL_ROUTES_WITH_TOKEN)
+    ) {
       this.app.use(apiTokenMiddleware);
     }
 

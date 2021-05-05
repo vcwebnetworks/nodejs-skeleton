@@ -16,8 +16,8 @@ services:
     networks:
       - node-networks
     volumes:
-      - .:/home/app
-      - /home/app/node_modules
+      - .:/home/app:z
+      - ./node_modules:/home/app/node_modules:z
     ports:
       - 3333:3333
 
@@ -33,7 +33,7 @@ services:
       - "80:80"
       - "433:433"
     volumes:
-      - .:/home/app
+      - .:/home/app:z
     networks:
       - node-networks
 
@@ -65,8 +65,8 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - '.docker/mysql/config/mariadb.cnf:/etc/mysql/conf.d/custom.cnf:ro'
-      - '.docker/mysql/data:/var/lib/mysql'
+      - .docker/mysql/config/mariadb.cnf:/etc/mysql/conf.d/custom.cnf:z
+      - .docker/mysql/data:/var/lib/mysql:z
     environment:
       - MYSQL_PASSWORD=root
       - MYSQL_ROOT_PASSWORD=root
@@ -81,7 +81,7 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - .docker/redis:/bitnami/redis/data
+      - .docker/redis:/bitnami/redis/data:z
     environment:
       REDIS_PASSWORD: redis
       ALLOW_EMPTY_PASSWORD: 'no'

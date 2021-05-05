@@ -9,6 +9,6 @@ const FOLDER = process.env.NODE_ENV === 'production' ? 'dist' : 'src';
 module.exports = {
   config: resolve(__dirname, FOLDER, 'database', 'config.js'),
   'models-path': resolve(__dirname, FOLDER, 'database', 'models'),
-  'seeders-path': resolve(__dirname, FOLDER, 'database', 'seeders'),
+  'seeders-path': resolve(__dirname, FOLDER, 'database', 'seeders', 'compiled'),
   'migrations-path': resolve(__dirname, FOLDER, 'database', 'migrations', 'compiled'),
 };
