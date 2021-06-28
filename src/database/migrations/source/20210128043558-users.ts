@@ -24,6 +24,11 @@ class CreateTableUsers {
         type: dataTypes.STRING,
         allowNull: false,
       },
+      deleted_at: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        defaultValue: null,
+      },
       created_at: {
         type: dataTypes.DATE,
         defaultValue: literal('CURRENT_TIMESTAMP'),
@@ -44,6 +49,7 @@ class CreateTableUsers {
     await queryInterface.addIndex('users', ['email'], { unique: true });
     await queryInterface.addIndex('users', ['created_at']);
     await queryInterface.addIndex('users', ['updated_at']);
+    await queryInterface.addIndex('users', ['deleted_at']);
   }
 
   async down(queryInterface: QueryInterface) {

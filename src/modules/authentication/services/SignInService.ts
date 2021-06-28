@@ -1,6 +1,7 @@
-import { UserModel } from '@src/database/models/UserModel';
-import NotFoundError from '@src/errors/NotFoundError';
-import UnauthorizedError from '@src/errors/UnauthorizedError';
+import { UserModel } from '@database/models/UserModel';
+
+import NotFoundError from '@errors/NotFoundError';
+import UnauthorizedError from '@errors/UnauthorizedError';
 
 interface IRequest {
   email: string;

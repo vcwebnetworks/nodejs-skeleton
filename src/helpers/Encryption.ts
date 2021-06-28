@@ -51,9 +51,12 @@ class Encryption {
     return JSON.parse(decrypted.toString());
   }
 
-  private static getPayload(
-    value: string,
-  ): { iv: Buffer; encrypted: Buffer; salt: Buffer; authTag: Buffer } {
+  private static getPayload(value: string): {
+    iv: Buffer;
+    encrypted: Buffer;
+    salt: Buffer;
+    authTag: Buffer;
+  } {
     const payload = Buffer.from(value, 'base64');
     const { iv, encrypted, salt, authTag } = JSON.parse(payload.toString());
 

@@ -4,6 +4,7 @@ import {
   Column,
   CreatedAt,
   DataType,
+  DeletedAt,
   Index,
   Model,
   Table,
@@ -46,6 +47,10 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
   @Index
   @UpdatedAt
   public updated_at: Date;
+
+  @Index
+  @DeletedAt
+  public deleted_at: Date;
 
   @BeforeSave
   static async hashedPassword(row: UserModel) {

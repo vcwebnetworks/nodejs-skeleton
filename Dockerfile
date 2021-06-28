@@ -21,7 +21,7 @@ RUN apk add --update --no-cache tzdata python alpine-sdk && \
 
 # copy all project files to working directory
 COPY --chown=node:node . .
-RUN chown -R 1000.1000 ${WORKDIR}
+RUN chown -R node:1000 ${WORKDIR}
 
 EXPOSE 3333
 
