@@ -5,7 +5,7 @@ import './config/module-alias';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
 import cookieParser from 'cookie-parser';
-import express from 'express';
+import express, { ErrorRequestHandler, RequestHandler } from 'express';
 import 'express-async-errors';
 import helmet from 'helmet';
 import http from 'http';
@@ -62,16 +62,16 @@ class App {
 
   public registerMiddlewares(): void {
     if (configSentry.enable) {
-      this.app.use(Sentry.Handlers.requestHandler());
-      this.app.use(Sentry.Handlers.tracingHandler());
+      this.app.use(Sentry.Handlers.requestHandler() as RequestHandler);
+      this.app.use(Sentry.Handlers.tracingHandler() as RequestHandler);
     }
 
-    this.app.use(helmet());
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(helmet() as RequestHandler);
+    this.app.use(express.json() as RequestHandler);
+    this.app.use(express.urlencoded({ extended: true }) as RequestHandler);
     this.app.use(cookieParser(configApp.appKey));
     this.app.use(rateLimiterMiddleware);
-    this.app.use(morganMiddleware);
+    this.app.use(morganMiddleware as RequestHandler);
     this.app.use(corsMiddleware);
     this.app.use(methodOverrideMiddleware);
 
@@ -85,7 +85,7 @@ class App {
     this.app.use(notFoundMiddleware);
 
     if (configSentry.enable) {
-      this.app.use(Sentry.Handlers.errorHandler());
+      this.app.use(Sentry.Handlers.errorHandler() as ErrorRequestHandler);
     }
 
     this.app.use(errorHandlerMiddleware);
