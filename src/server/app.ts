@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import './dotenv';
-import './config/module-alias';
+import '@config/dotenv';
+import '@config/module-alias';
 
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -12,7 +12,8 @@ import http from 'http';
 import httpGraceFullShutdown from 'http-graceful-shutdown';
 
 import sequelize from '@src/database';
-import appRoutes from '@src/routes';
+import helper from '@src/helpers';
+import appRoutes from '@src/server/routes';
 
 import configApp from '@config/app';
 import configSentry from '@config/sentry';
@@ -24,8 +25,6 @@ import methodOverrideMiddleware from '@middlewares/MethodOverrideMiddleware';
 import morganMiddleware from '@middlewares/MorganMiddleware';
 import notFoundMiddleware from '@middlewares/NotFoundMiddleware';
 import rateLimiterMiddleware from '@middlewares/RateLimiterMiddleware';
-
-import helper from '@helpers/index';
 
 class App {
   protected app: express.Application;
@@ -101,7 +100,7 @@ class App {
 
   public async close(): Promise<void> {
     await sequelize.close();
-    await sequelize.connectionManager.close();
+    // await sequelize.connectionManager.close();
 
     if (!this.server.listening) {
       return;

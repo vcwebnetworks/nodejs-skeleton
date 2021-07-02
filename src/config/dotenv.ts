@@ -9,7 +9,7 @@ const environments: { [key: string]: string } = {
 };
 
 const environment = environments[process.env.NODE_ENV ?? 'development'];
-const path = resolve(__dirname, '..', environment);
+const path = resolve(__dirname, '..', '..', environment);
 
 if (!existsSync(path)) {
   throw new Error(`File ${path} doest not exists.`);

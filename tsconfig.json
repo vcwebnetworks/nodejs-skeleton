@@ -26,11 +26,12 @@
       "@src/*": ["src/*"],
       "@tests/*": ["tests/*"],
       "@config/*": ["src/config/*"],
-      "@errors/*": ["src/errors/*"],
-      "@modules/*": ["src/modules/*"],
       "@helpers/*": ["src/helpers/*"],
+      "@errors/*": ["src/errors/*"],
       "@database/*": ["src/database/*"],
-      "@middlewares/*": ["src/middlewares/*"]
+      "@middlewares/*": ["src/middlewares/*"],
+      "@modules/*": ["src/modules/*"],
+      "@server/*": ["src/server/*"]
     }
   },
   "exclude": ["node_modules", "dist", ".docker"],

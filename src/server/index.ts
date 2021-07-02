@@ -1,8 +1,9 @@
-import './config/module-alias';
+import '../config/module-alias';
 import { AddressInfo } from 'net';
 
-import app from '@src/app';
-import Debug from '@src/helpers/Debug';
+import Debug from '@helpers/Debug';
+
+import app from './app';
 
 (async () => {
   try {

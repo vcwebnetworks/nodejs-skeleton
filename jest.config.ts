@@ -10,7 +10,9 @@ export default {
   clearMocks: true,
   displayName: 'root-test',
   testEnvironment: 'node',
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: '<rootDir>/',
+  }),
   coverageDirectory: '<rootDir>/tests/coverage',
   coveragePathIgnorePatterns: ['/node_modules/'],
   testMatch: ['**/*.(spec|test).ts'],

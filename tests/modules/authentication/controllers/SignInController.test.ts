@@ -1,10 +1,12 @@
 import { makeServerSupertest } from '@tests/utils';
 
-import app from '@src/app';
 import { UserModel } from '@src/database/models/UserModel';
+import app from '@src/server/app';
 
 describe('Authentication -> SignInController', () => {
-  afterAll(() => app.close());
+  afterAll(async () => {
+    await app.close();
+  });
 
   it('should log in with valid credentials.', async () => {
     const user = await UserModel.makeTestFake();

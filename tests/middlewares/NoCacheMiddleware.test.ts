@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 
-import App from '@src/app';
+import App from '@src/server/app';
 
 import noCacheMiddleware from '@middlewares/NoCacheMiddleware';
 

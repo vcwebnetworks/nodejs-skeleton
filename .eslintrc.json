@@ -60,11 +60,12 @@
           "module",
           "/^@src/",
           "/^@config/",
-          "/^@modules/",
-          "/^@database/",
-          "/^@middlewares/",
           "/^@errors/",
           "/^@helpers/",
+          "/^@database/",
+          "/^@middlewares/",
+          "/^@modules/",
+          "/^@server/",
           ["parent", "sibling", "index"]
         ],
         "alphabetize": {

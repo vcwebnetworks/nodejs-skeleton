@@ -8,6 +8,9 @@ dist
 .docker/mysql/data/*
 !.docker/mysql/data/.gitkeep
 
+.docker/postgres/dbdata/*
+!.docker/postgres/.gitkeep
+
 .docker/redis/*
 !.docker/redis/.gitkeep
 

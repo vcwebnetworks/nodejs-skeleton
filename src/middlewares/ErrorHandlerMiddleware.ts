@@ -1,4 +1,4 @@
-import { CelebrateError, isCelebrateError } from 'celebrate';
+import { isCelebrateError } from 'celebrate';
 import { NextFunction, Request, Response } from 'express';
 
 import Logger from '@src/helpers/Logger';
@@ -14,8 +14,7 @@ const errorHandlerMiddleware = (
   response: Response,
   _next: NextFunction,
 ) => {
-  const isJoi = isCelebrateError(error);
-
+  let isJoi = false;
   let statusCode = 400;
   const validations: any[] = [];
 
@@ -23,7 +22,9 @@ const errorHandlerMiddleware = (
     statusCode = error.statusCode;
   }
 
-  if (error instanceof CelebrateError) {
+  if (isCelebrateError(error)) {
+    isJoi = true;
+
     error.details.forEach(value => {
       error.message = value.message;
       validations.push(value.details);
@@ -38,7 +39,7 @@ const errorHandlerMiddleware = (
     name: isJoi ? 'CelebrateError' : error.name,
     statusCode,
     sentry: (<any>response).sentry,
-    message: error.message,
+    message: error?.name ? error.message : error,
     stack: error.stack?.split('\n'),
     code: error?.code ?? 'default',
     validations,

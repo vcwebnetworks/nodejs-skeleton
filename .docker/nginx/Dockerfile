@@ -1,6 +1,6 @@
 FROM nginx:1.19.7-alpine
 
-WORKDIR /home/app
+WORKDIR /home/node/app
 
 ENV TZ=America/Sao_Paulo
 

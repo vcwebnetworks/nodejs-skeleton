@@ -3,29 +3,19 @@ FROM node:14-alpine
 # set environments
 ENV TZ=America/Sao_Paulo
 ENV NPM_CONFIG_LOGLEVEL=warn
-ENV WORKDIR=/home/app
-
-# create directory app and permission
-RUN mkdir -p /home/app/node_modules && \
-    chown -R node:node /home/app
-
-# copy package.json and yarn lock
-COPY --chown=node:node ./package.json  ./yarn.* ./
 
 # update system and install tz
-# install node_modules and clean cache
-RUN apk add --update --no-cache tzdata python alpine-sdk && \
-    yarn install && \
-    yarn cache clean && \
-    rm -rf /var/cache/apk/*
+RUN apk add --update --no-cache bash tzdata python alpine-sdk && rm -rf /var/cache/apk/*
 
-# copy all project files to working directory
-COPY --chown=node:node . .
-RUN chown -R node:1000 ${WORKDIR}
+# install dockerize
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-EXPOSE 3333
-
-# start application
+# set non-root user
 USER node
+
+# set workdir
+ENV WORKDIR=/home/node/app
 WORKDIR ${WORKDIR}
-CMD ["npm", "run", "start"]

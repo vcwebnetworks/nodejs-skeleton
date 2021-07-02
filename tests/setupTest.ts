@@ -1,2 +1,2 @@
-import '@src/dotenv';
+import '@config/dotenv';
 import '@config/module-alias';

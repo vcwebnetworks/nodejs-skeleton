@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
-import authRoutes from '@src/modules/authentication/routes';
-import commonRoutes from '@src/modules/common/routes';
-import swaggerRoutes from '@src/modules/swagger';
+import authRoutes from '@modules/authentication/routes';
+import commonRoutes from '@modules/common/routes';
+import swaggerRoutes from '@modules/swagger';
 
 const appRoutes = Router();
 
