@@ -6,8 +6,14 @@ describe('Database', () => {
   });
 
   it('should verify that the connection has failed.', async () => {
-    jest.spyOn(sequelize, 'authenticate').mockImplementationOnce(() => Promise.reject(new Error('failed connection.')));
+    jest
+      .spyOn(sequelize, 'authenticate')
+      .mockImplementationOnce(() =>
+        Promise.reject(new Error('failed connection.')),
+      );
 
-    await expect(sequelize.authenticate()).rejects.toThrow('failed connection.');
+    await expect(sequelize.authenticate()).rejects.toThrow(
+      'failed connection.',
+    );
   });
 });

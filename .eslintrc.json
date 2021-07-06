@@ -61,6 +61,7 @@
           "/^@src/",
           "/^@config/",
           "/^@errors/",
+          "/^@shared/",
           "/^@helpers/",
           "/^@database/",
           "/^@middlewares/",

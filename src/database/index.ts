@@ -1,7 +1,7 @@
-import path from 'path';
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 
-import sequelizeOptions from '@src/database/config';
+import sequelizeOptions from './config';
+import * as models from './models';
 
 if (process.env.DB_TYPE === 'sqlite') {
   delete (<any>sequelizeOptions).timezone;
@@ -13,8 +13,8 @@ if (process.env.NODE_ENV === 'test') {
 
 const sequelize = new Sequelize({
   ...(sequelizeOptions as SequelizeOptions),
+  models: Object.values(models),
   dialect: process.env.DB_TYPE as SequelizeOptions['dialect'],
-  models: [path.resolve(__dirname, 'models')],
   minifyAliases: true,
   define: {
     ...sequelizeOptions.define,

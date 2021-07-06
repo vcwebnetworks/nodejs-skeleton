@@ -1,13 +1,13 @@
 import { Router } from 'express';
 
-import authRoutes from '@modules/authentication/routes';
+import authRoutes from '@modules/auth/routes';
 import commonRoutes from '@modules/common/routes';
 import swaggerRoutes from '@modules/swagger';
 
-const appRoutes = Router();
+const routes = Router({ mergeParams: true });
 
-appRoutes.use('/auth', authRoutes);
-appRoutes.use('/docs', swaggerRoutes);
-appRoutes.use(commonRoutes);
+routes.use('/auth', authRoutes);
+routes.use('/docs', swaggerRoutes);
+routes.use(commonRoutes);
 
-export default appRoutes;
+export default routes;

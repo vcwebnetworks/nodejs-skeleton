@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import swagger from 'swagger-ui-express';
 
-import noCacheMiddleware from '@middlewares/NoCacheMiddleware';
+import { noCacheMiddleware } from '@src/middlewares';
 
 import swaggerComponents from './components';
 import swaggerInfo from './info';
@@ -10,9 +10,9 @@ import swaggerSchemas from './schemas';
 import swaggerServers from './servers';
 import swaggerTags from './tags';
 
-const swaggerRoutes = Router();
+const routes = Router({ mergeParams: true });
 
-swaggerRoutes.use(
+routes.use(
   noCacheMiddleware,
   swagger.serve,
   swagger.setup({
@@ -28,4 +28,4 @@ swaggerRoutes.use(
   }),
 );
 
-export default swaggerRoutes;
+export default routes;

@@ -1,14 +1,15 @@
+require('./dist/config/module-alias')
+
 require('dotenv').config({
   path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
   encoding: 'utf-8',
 });
 
 const { resolve } = require('path');
-const FOLDER = process.env.NODE_ENV === 'production' ? 'dist' : 'src';
 
 module.exports = {
-  config: resolve(__dirname, FOLDER, 'database', 'config.js'),
-  'models-path': resolve(__dirname, FOLDER, 'database', 'models'),
-  'seeders-path': resolve(__dirname, FOLDER, 'database', 'seeders', 'compiled'),
-  'migrations-path': resolve(__dirname, FOLDER, 'database', 'migrations', 'compiled'),
+  config: resolve(__dirname, 'dist', 'database', 'config.js'),
+  'models-path': resolve(__dirname, 'dist', 'database', 'models'),
+  'seeders-path': resolve(__dirname, 'dist', 'database', 'seeders', 'compiled'),
+  'migrations-path': resolve(__dirname, 'dist', 'database', 'migrations', 'compiled'),
 };

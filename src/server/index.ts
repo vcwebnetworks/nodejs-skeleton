@@ -1,7 +1,7 @@
 import '../config/module-alias';
 import { AddressInfo } from 'net';
 
-import Debug from '@helpers/Debug';
+import debug from '@shared/debug';
 
 import app from './app';
 
@@ -10,7 +10,7 @@ import app from './app';
     const server = await app.start();
     const { port } = server.address() as AddressInfo;
 
-    Debug.run({
+    debug({
       namespace: 'server',
       message: `🚀 Server started on http://localhost:%d`,
       args: [port],
@@ -18,7 +18,7 @@ import app from './app';
   } catch (e) {
     await app.close();
 
-    Debug.run({
+    debug({
       namespace: 'server',
       message: `🚨 Server initialization failed: %s`,
       args: [e.message],
