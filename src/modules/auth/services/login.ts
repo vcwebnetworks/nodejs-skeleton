@@ -1,4 +1,4 @@
-import NotFoundError from '@errors/not.found';
+import NotFoundError from '@errors/not-found';
 import UnauthorizedError from '@errors/unauthorized';
 
 import { UserModel } from '@modules/users/models/user';

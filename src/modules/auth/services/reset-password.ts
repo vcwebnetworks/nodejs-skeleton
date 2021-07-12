@@ -1,6 +1,6 @@
 import number from '@src/utils/number';
 
-import NotFoundError from '@errors/not.found';
+import NotFoundError from '@errors/not-found';
 
 import { UserModel } from '@modules/users/models';
 import { UserResetPasswordModel } from '@modules/users/models/reset-password';
