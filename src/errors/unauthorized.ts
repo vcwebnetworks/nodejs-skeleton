@@ -1,10 +1,10 @@
 import AppError from './app';
 
 export default class UnauthorizedError extends AppError {
-  constructor(message = 'Unauthorized') {
+  constructor(message = 'Unauthorized', code?: string) {
     super(message, 401);
 
     this.name = 'UnauthorizedError';
-    this.code = 'unauthorized';
+    this.code = code ?? 'unauthorized';
   }
 }

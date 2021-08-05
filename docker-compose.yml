@@ -29,8 +29,8 @@ services:
       - app
       - mariadb
     ports:
-      - "80:80"
-      - "433:433"
+      - '80:80'
+      - '433:433'
     volumes:
       - .:/home/node/app:z
     networks:

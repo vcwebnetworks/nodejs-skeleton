@@ -3,6 +3,7 @@ FROM node:14-alpine
 # set environments
 ENV TZ=America/Sao_Paulo
 ENV NPM_CONFIG_LOGLEVEL=warn
+ENV WORKDIR=/home/node/app
 
 # update system and install tz
 RUN apk add --update --no-cache bash tzdata python alpine-sdk && rm -rf /var/cache/apk/*
@@ -11,7 +12,6 @@ RUN apk add --update --no-cache bash tzdata python alpine-sdk && rm -rf /var/cac
 USER node
 
 # set workdir
-ENV WORKDIR=/home/node/app
 WORKDIR ${WORKDIR}
 
 # create directory app and permission
@@ -24,7 +24,7 @@ COPY --chown=node:node ./package.json ./
 RUN npm install --production
 
 # copy all project files to working directory
-COPY --chown=node:node ./ .
+COPY --chown=node:node ./ ./
 #RUN chown -R node:1000 ${WORKDIR}
 
 # expose port

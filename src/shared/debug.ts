@@ -1,5 +1,3 @@
-import externalDebug from 'debug';
-
 interface IRequest {
   args?: any[];
   message: any;
@@ -7,7 +5,7 @@ interface IRequest {
 }
 
 const debug = ({ args, message, namespace = 'main' }: IRequest) => {
-  externalDebug(`app:${namespace}`)(message, ...(args ?? []));
+  return require('debug')(`app:${namespace}`)(message, ...(args ?? []));
 };
 
 export default debug;
