@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import commonIndexController from '@src/modules/common/controllers/IndexController';
+import commonHomeController from '@modules/common/controllers/home';
 
 const commonRoutes = Router();
 
-commonRoutes.get('/', commonIndexController.index);
+commonRoutes.get('/', commonHomeController.index);
 commonRoutes.get('/favicon.ico', (_, response) => response.sendStatus(200));
 commonRoutes.get('/sw.js', (_, response) => response.sendStatus(200));
 

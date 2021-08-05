@@ -12,19 +12,20 @@ import http from 'http';
 import httpGraceFullShutdown from 'http-graceful-shutdown';
 
 import sequelize from '@src/database';
-import helper from '@src/helpers';
+import {
+  apiTokenMiddleware,
+  corsMiddleware,
+  errorHandlerMiddleware,
+  methodOverrideMiddleware,
+  morganMiddleware,
+  notFoundMiddleware,
+  rateLimiterMiddleware,
+} from '@src/middlewares';
 import appRoutes from '@src/server/routes';
+import normalizeValue from '@src/utils/normalize-value';
 
 import configApp from '@config/app';
 import configSentry from '@config/sentry';
-
-import apiTokenMiddleware from '@middlewares/ApiTokenMiddleware';
-import corsMiddleware from '@middlewares/CorsMiddleware';
-import errorHandlerMiddleware from '@middlewares/ErrorHandlerMiddleware';
-import methodOverrideMiddleware from '@middlewares/MethodOverrideMiddleware';
-import morganMiddleware from '@middlewares/MorganMiddleware';
-import notFoundMiddleware from '@middlewares/NotFoundMiddleware';
-import rateLimiterMiddleware from '@middlewares/RateLimiterMiddleware';
 
 class App {
   protected app: express.Application;
@@ -74,9 +75,7 @@ class App {
     this.app.use(corsMiddleware);
     this.app.use(methodOverrideMiddleware);
 
-    if (
-      helper.normalizeValue<boolean>(process.env.PROTECT_ALL_ROUTES_WITH_TOKEN)
-    ) {
+    if (normalizeValue<boolean>(process.env.PROTECT_ALL_ROUTES_WITH_TOKEN)) {
       this.app.use(apiTokenMiddleware);
     }
 

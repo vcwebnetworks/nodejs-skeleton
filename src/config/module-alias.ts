@@ -8,6 +8,7 @@ addAliases({
   '@config': resolve(srcDir, 'config'),
   '@errors': resolve(srcDir, 'errors'),
   '@helpers': resolve(srcDir, 'helpers'),
+  '@shared': resolve(srcDir, 'shared'),
   '@database': resolve(srcDir, 'database'),
   '@middlewares': resolve(srcDir, 'middlewares'),
   '@modules': resolve(srcDir, 'modules'),
