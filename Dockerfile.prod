@@ -4,27 +4,30 @@ FROM node:14-alpine
 ENV TZ=America/Sao_Paulo
 ENV NPM_CONFIG_LOGLEVEL=warn
 ENV WORKDIR=/home/node/app
+ENV USER=node
 
 # update system and install tz
-RUN apk add --update --no-cache bash tzdata python alpine-sdk && rm -rf /var/cache/apk/*
+RUN apk add --update --no-cache bash tzdata python alpine-sdk && \
+    rm -rf /var/cache/apk/*
 
 # set non-root user
-USER node
+USER ${USER}
 
 # set workdir
 WORKDIR ${WORKDIR}
 
 # create directory app and permission
-RUN mkdir -p ${WORKDIR}/node_modules && chown -R node:node ${WORKDIR}
+RUN mkdir -p ${WORKDIR}/node_modules && \
+    chown -R ${USER}:${USER} ${WORKDIR}
 
 # copy package.json and yarn lock
-COPY --chown=node:node ./package.json ./
+COPY --chown=${USER}:${USER} ./package.json ./
 
 # install node dependencies
 RUN npm install --production
 
 # copy all project files to working directory
-COPY --chown=node:node ./ ./
+COPY --chown=${USER}:${USER} ./ ./
 #RUN chown -R node:1000 ${WORKDIR}
 
 # expose port

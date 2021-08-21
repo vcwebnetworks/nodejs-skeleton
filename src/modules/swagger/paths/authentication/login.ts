@@ -1,4 +1,4 @@
-const swaggerPathsAuthenticationSignIn = {
+const swaggerPathsAuthenticationLogin = {
   post: {
     tags: ['auth'],
     summary: 'API para realizar autenticação do usuário.',
@@ -44,4 +44,4 @@ const swaggerPathsAuthenticationSignIn = {
   },
 };
 
-export default swaggerPathsAuthenticationSignIn;
+export default swaggerPathsAuthenticationLogin;

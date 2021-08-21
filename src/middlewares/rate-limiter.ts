@@ -2,8 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import IORedis from 'ioredis';
 import { RateLimiterRedis } from 'rate-limiter-flexible';
 
-import configApp from '@config/app';
-
+import configRateLimiter from '@config/rate-limiter';
 import RateLimiterError from '@errors/rate-limiter';
 
 const {
@@ -21,7 +20,7 @@ export const rateLimiterMiddleware = async (
   let connectionRedisError = false;
 
   try {
-    if (configApp.isProduction) {
+    if (configRateLimiter.enable) {
       const storeClient = new IORedis({
         host: REDIS_RATE_LIMIT_HOST,
         port: Number(REDIS_RATE_LIMIT_PORT),
@@ -39,9 +38,7 @@ export const rateLimiterMiddleware = async (
 
       const rateLimiter = new RateLimiterRedis({
         storeClient,
-        points: 10,
-        duration: 60,
-        keyPrefix: 'rt',
+        ...configRateLimiter,
       });
 
       await rateLimiter.consume(request.ip);

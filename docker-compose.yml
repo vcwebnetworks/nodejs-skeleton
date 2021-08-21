@@ -7,7 +7,7 @@ networks:
 services:
   app:
     build: .
-    entrypoint: dockerize -wait tcp://mariadb:3306 -wait tcp://redis:6379 -timeout 10s ./.docker/scripts/entrypoint.sh
+    entrypoint: dockerize -wait tcp://mariadb:3306 -wait tcp://redis:6379 -timeout 60s ./.docker/scripts/entrypoint.sh
     container_name: node.app
     tty: true
     depends_on:
@@ -18,7 +18,7 @@ services:
     volumes:
       - .:/home/node/app:z
     ports:
-      - 3333:3333
+      - "3333:3333"
 
   nginx:
     build: .docker/nginx
@@ -94,7 +94,7 @@ services:
     networks:
       - node.networks
     ports:
-      - 6379:6379
+      - "6379:6379"
     volumes:
       - .docker/redis:/bitnami/redis/data:z
     environment:

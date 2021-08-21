@@ -1,2 +1,2 @@
-export { UserModel } from './user';
-export { UserResetPasswordModel } from './reset-password';
+export { UserModel } from '@database/models/user';
+export { ForgotPasswordModel } from '@database/models/forgot-password';

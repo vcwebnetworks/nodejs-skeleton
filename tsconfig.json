@@ -28,7 +28,7 @@
       "@config/*": ["src/config/*"],
       "@errors/*": ["src/errors/*"],
       "@shared/*": ["src/shared/*"],
-      "@helpers/*": ["src/helpers/*"],
+      "@utils/*": ["src/utils/*"],
       "@database/*": ["src/database/*"],
       "@middlewares/*": ["src/middlewares/*"],
       "@modules/*": ["src/modules/*"],

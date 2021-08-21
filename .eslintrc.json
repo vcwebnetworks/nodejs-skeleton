@@ -58,15 +58,8 @@
         "newlinesBetween": "always",
         "groups": [
           "module",
-          "/^@src/",
-          "/^@config/",
-          "/^@errors/",
-          "/^@shared/",
-          "/^@helpers/",
-          "/^@database/",
-          "/^@middlewares/",
-          "/^@modules/",
-          "/^@server/",
+          "/^@(src|server|config|shared|errors)/",
+          "/^@(utils|database|middlewares|modules)/",
           ["parent", "sibling", "index"]
         ],
         "alphabetize": {

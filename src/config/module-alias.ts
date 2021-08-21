@@ -7,7 +7,7 @@ addAliases({
   '@src': resolve(srcDir),
   '@config': resolve(srcDir, 'config'),
   '@errors': resolve(srcDir, 'errors'),
-  '@helpers': resolve(srcDir, 'helpers'),
+  '@utils': resolve(srcDir, 'utils'),
   '@shared': resolve(srcDir, 'shared'),
   '@database': resolve(srcDir, 'database'),
   '@middlewares': resolve(srcDir, 'middlewares'),

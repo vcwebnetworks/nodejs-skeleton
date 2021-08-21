@@ -1,6 +1,9 @@
 import 'reflect-metadata';
+
 import '@config/dotenv';
 import '@config/module-alias';
+import '@config/moment-timezone';
+import '@config/yup-locale';
 
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -11,6 +14,8 @@ import helmet from 'helmet';
 import http from 'http';
 import httpGraceFullShutdown from 'http-graceful-shutdown';
 
+import configApp from '@config/app';
+import configSentry from '@config/sentry';
 import sequelize from '@src/database';
 import {
   apiTokenMiddleware,
@@ -23,9 +28,6 @@ import {
 } from '@src/middlewares';
 import appRoutes from '@src/server/routes';
 import normalizeValue from '@src/utils/normalize-value';
-
-import configApp from '@config/app';
-import configSentry from '@config/sentry';
 
 class App {
   protected app: express.Application;
@@ -70,10 +72,10 @@ class App {
     this.app.use(express.json() as RequestHandler);
     this.app.use(express.urlencoded({ extended: true }) as RequestHandler);
     this.app.use(cookieParser(configApp.appKey));
-    this.app.use(rateLimiterMiddleware);
     this.app.use(morganMiddleware as RequestHandler);
     this.app.use(corsMiddleware);
     this.app.use(methodOverrideMiddleware);
+    this.app.use(rateLimiterMiddleware);
 
     if (normalizeValue<boolean>(process.env.PROTECT_ALL_ROUTES_WITH_TOKEN)) {
       this.app.use(apiTokenMiddleware);

@@ -1,5 +1,7 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 
+import debug from '@shared/debug';
+
 import sequelizeOptions from './config';
 import * as models from './models';
 
@@ -16,6 +18,15 @@ const sequelize = new Sequelize({
   models: Object.values(models),
   dialect: process.env.DB_TYPE as SequelizeOptions['dialect'],
   minifyAliases: true,
+  logging:
+    process.env.DB_LOGGING === 'true'
+      ? false
+      : (sql: string) => {
+          debug({
+            namespace: 'sequelize:log',
+            message: { sql },
+          });
+        },
   define: {
     ...sequelizeOptions.define,
     paranoid: true,

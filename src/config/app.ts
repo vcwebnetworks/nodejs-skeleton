@@ -8,6 +8,11 @@ const configApp = {
 
   isDevelopment,
   isProduction: !isDevelopment,
-};
+
+  locale: process.env.LOCALE ?? 'pt-br',
+  timezone: process.env.TZ ?? 'America/Sao_Paulo',
+
+  debugNamespace: 'app',
+} as const;
 
 export default configApp;

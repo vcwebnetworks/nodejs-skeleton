@@ -1,49 +1,47 @@
-import number from '@src/utils/number';
+import sequelize from '@src/database';
+import { ForbiddenError, InvalidParamError } from '@src/errors';
 
-import NotFoundError from '@errors/not-found';
+import { ForgotPasswordModel, UserModel } from '@modules/users/models';
 
-import { UserModel } from '@modules/users/models';
-import { UserResetPasswordModel } from '@modules/users/models/reset-password';
+interface IRequest {
+  hash: string;
+  password: string;
+}
 
-class ResetPassword {
-  public async sendCodeToMail(email: string): Promise<void> {
-    const rowUser = await UserModel.findOne({ where: { email } });
+class ResetPasswordService {
+  public async run({ hash, password }: IRequest): Promise<void> {
+    const transaction = await sequelize.transaction();
 
-    if (!rowUser) {
-      throw new NotFoundError('E-mail não encontrado no sistema.');
+    try {
+      const rowResetPassword = await ForgotPasswordModel.findOne({
+        where: { hash },
+        include: [UserModel],
+      });
+
+      if (!rowResetPassword) {
+        throw new InvalidParamError('hash');
+      }
+
+      if (rowResetPassword.validated_in === null) {
+        throw new ForbiddenError('Unconfirmed recovery link.');
+      }
+
+      await rowResetPassword.destroy({
+        force: true,
+        transaction,
+      });
+
+      rowResetPassword.user.password = password;
+      await rowResetPassword.user.save({ transaction });
+
+      await transaction.commit();
+    } catch (e) {
+      await transaction.rollback();
+
+      throw e;
     }
-
-    await UserResetPasswordModel.destroy({
-      force: true,
-      where: { user_id: rowUser.id },
-    });
-
-    const code = await this.createRandomCode();
-
-    const expiredAt = new Date();
-    expiredAt.setHours(expiredAt.getHours() + 2);
-
-    await UserResetPasswordModel.create({
-      code,
-      user_id: rowUser.id,
-      expired_at: expiredAt,
-    });
-  }
-
-  protected async createRandomCode(): Promise<number> {
-    const randomCode = number.random(111111, 999999);
-
-    const checkExistCode = await UserResetPasswordModel.findOne({
-      where: { code: randomCode },
-    });
-
-    if (checkExistCode) {
-      return this.createRandomCode();
-    }
-
-    return randomCode;
   }
 }
 
-const authResetPasswordService = new ResetPassword();
+const authResetPasswordService = new ResetPasswordService();
 export default authResetPasswordService;

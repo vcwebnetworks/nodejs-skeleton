@@ -1,7 +1,7 @@
 import NotFoundError from '@errors/not-found';
 import UnauthorizedError from '@errors/unauthorized';
 
-import { UserModel } from '@modules/users/models/user';
+import { UserModel } from '@database/models/user';
 
 interface IRequest {
   email: string;
@@ -15,20 +15,20 @@ interface IResponse {
 
 class Login {
   public async run({ email, password }: IRequest): Promise<IResponse> {
-    const user = await UserModel.findOne({ where: { email } });
+    const rowUser = await UserModel.findOne({ where: { email } });
 
-    if (!user) {
+    if (!rowUser) {
       throw new NotFoundError('User not found.');
     }
 
-    if (!(await user.verifyPassword(password))) {
-      throw new UnauthorizedError('Username or password is invalid.');
+    if (!(await rowUser.verifyPassword(password))) {
+      throw new UnauthorizedError('Username or password is not valid.');
     }
 
-    const token = await user.generateJwtToken();
-    user.setDataValue('password', undefined);
+    const token = await rowUser.generateJwtToken();
+    rowUser.setDataValue('password', undefined);
 
-    return { user, token };
+    return { user: rowUser, token };
   }
 }
 
