@@ -4,6 +4,10 @@ declare namespace Express {
   }
 
   export interface Request {
+    loggedUser: import('@database/models').UserModel;
     originalMethod?: string;
+    jwtDecode?: {
+      sub: string;
+    };
   }
 }

@@ -1,6 +1,5 @@
-import { BadRequestError } from '@errors/bad-request';
-
 import { UserDto, UserModel } from '@database/models/user';
+import userCheckExistMailService from '@modules/users/services/check-exist-mail';
 
 interface IResponse {
   user: UserModel;
@@ -9,7 +8,7 @@ interface IResponse {
 
 class RegisterService {
   public async run({ name, email, password }: UserDto): Promise<IResponse> {
-    await this.validateEmail(email);
+    await userCheckExistMailService.run(email);
 
     const newUser = await UserModel.create({
       name,
@@ -21,16 +20,6 @@ class RegisterService {
     newUser.setDataValue('password', undefined);
 
     return { user: newUser, token };
-  }
-
-  protected async validateEmail(email: string): Promise<void> {
-    const rowExistEmail = await UserModel.findOne({
-      where: { email },
-    });
-
-    if (rowExistEmail) {
-      throw new BadRequestError('This email is already in use.');
-    }
   }
 }
 

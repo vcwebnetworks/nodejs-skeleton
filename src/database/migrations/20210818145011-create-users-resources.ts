@@ -2,7 +2,7 @@ import { DataTypes, literal, QueryInterface } from 'sequelize';
 
 import configTables from '@config/tables';
 
-const tableName = configTables.admin.userResource;
+const tableName = configTables.userResource;
 
 export default {
   up: async (queryInterface: QueryInterface) => {
@@ -19,7 +19,7 @@ export default {
         allowNull: false,
         references: {
           key: 'id',
-          model: configTables.admin.user,
+          model: configTables.user,
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
@@ -29,7 +29,7 @@ export default {
         allowNull: false,
         references: {
           key: 'id',
-          model: configTables.admin.resource,
+          model: configTables.resource,
         },
         onDelete: 'RESTRICT',
         onUpdate: 'CASCADE',

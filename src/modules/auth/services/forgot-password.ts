@@ -5,8 +5,7 @@ import NotFoundError from '@errors/not-found';
 import mailer from '@shared/mailer';
 import sequelize from '@src/database';
 
-import { ForgotPasswordModel } from '@database/models/forgot-password';
-import { UserModel } from '@modules/users/models';
+import { UserModel, ForgotPasswordModel } from '@database/models';
 
 class ForgotPasswordService {
   public async sendToMail(email: string): Promise<void> {

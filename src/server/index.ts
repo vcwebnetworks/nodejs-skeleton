@@ -1,8 +1,7 @@
 import '../config/module-alias';
 import { AddressInfo } from 'net';
 
-import debug from '@shared/debug';
-
+import debug from '../shared/debug';
 import app from './app';
 
 (async () => {

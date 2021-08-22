@@ -1,4 +1,4 @@
-import { makeServerSupertest } from '@tests/utils';
+import { makeAppSupertest, makeServerSupertest } from '@tests/utils';
 
 import app from '@src/server/app';
 
@@ -11,7 +11,7 @@ describe('Authentication -> SignInController', () => {
 
   it('should log in with valid credentials.', async () => {
     const user = await UserModel.makeTestFake();
-    const response = await makeServerSupertest().post('/auth/login').send({
+    const response = await makeAppSupertest().post('/auth/login').send({
       email: user.email,
       password: 'any_password',
     });

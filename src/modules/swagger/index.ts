@@ -10,7 +10,7 @@ import swaggerSchemas from './schemas';
 import swaggerServers from './servers';
 import swaggerTags from './tags';
 
-const routes = Router({ mergeParams: true });
+const routes = Router();
 
 routes.use(
   noCacheMiddleware,

@@ -2,7 +2,7 @@ import { DataTypes, literal, QueryInterface } from 'sequelize';
 
 import configTables from '@config/tables';
 
-const tableName = configTables.admin.resource;
+const tableName = configTables.resource;
 
 export default {
   up: async (queryInterface: QueryInterface) => {
@@ -52,7 +52,7 @@ export default {
 
     await queryInterface.addConstraint(tableName, {
       type: 'check',
-      where: { method: ['get', 'post', 'put', 'delete', 'patch'] },
+      where: { method: ['get', 'post', 'put', 'delete', 'patch', 'head'] },
       name: `${tableName}_method_ck`,
       fields: ['method'],
     });

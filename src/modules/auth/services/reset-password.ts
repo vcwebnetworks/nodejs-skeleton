@@ -1,7 +1,7 @@
 import sequelize from '@src/database';
 import { ForbiddenError, InvalidParamError } from '@src/errors';
 
-import { ForgotPasswordModel, UserModel } from '@modules/users/models';
+import { ForgotPasswordModel, UserModel } from '@database/models';
 
 interface IRequest {
   hash: string;

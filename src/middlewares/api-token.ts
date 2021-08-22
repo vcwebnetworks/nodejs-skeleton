@@ -1,12 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
+import { TokenExpiredError } from 'jsonwebtoken';
 
 import UnauthorizedError from '@errors/unauthorized';
+import jwt from '@shared/jwt';
 
 const { API_KEY } = process.env;
 
 function checkIfTheRouteIsAllowedInTheRequest(request: Request): boolean {
   let allowedRoute = false;
-  const allowedRoutes = ['/docs', '/favicon.ico', '/sw.js', '/socket.io'];
+  const allowedRoutes = ['/swagger', '/favicon.ico', '/sw.js', '/socket.io'];
 
   allowedRoutes.forEach(route => {
     if (request.path.startsWith(route)) {
@@ -40,7 +42,7 @@ export const extractTokenInRequest = (request: Request): string => {
   return token;
 };
 
-export const apiTokenMiddleware = (
+export const apiTokenMiddleware = async (
   request: Request,
   _response: Response,
   next: NextFunction,
@@ -52,7 +54,17 @@ export const apiTokenMiddleware = (
     const token = extractTokenInRequest(request);
 
     if (token !== API_KEY) {
-      throw new UnauthorizedError('Access denied.');
+      try {
+        request.jwtDecode = await jwt.decode<Request['jwtDecode']>(token);
+      } catch (e) {
+        let errorCode = 'token.invalid';
+
+        if (e instanceof TokenExpiredError) {
+          errorCode = 'token.expired';
+        }
+
+        throw new UnauthorizedError('Access denied.', errorCode);
+      }
     }
   }
 

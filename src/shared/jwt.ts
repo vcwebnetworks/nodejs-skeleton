@@ -1,17 +1,19 @@
-import { Secret, sign, SignOptions, verify, VerifyOptions } from 'jsonwebtoken';
+import { sign, SignOptions, verify, VerifyOptions } from 'jsonwebtoken';
 
 import configApp from '@config/app';
 
-class Jwt {
-  public encode(
-    payload: any,
-    secretKey?: Secret,
-    options?: SignOptions,
-  ): Promise<string> {
+export class Jwt {
+  protected secretKey: string;
+
+  constructor(secretKey: string) {
+    this.secretKey = secretKey;
+  }
+
+  public encode(payload: any, options?: SignOptions): Promise<string> {
     return new Promise((resolve, reject) => {
       try {
         resolve(
-          sign(payload, Jwt.getSecretKey(secretKey), {
+          sign(payload, this.secretKey, {
             expiresIn: '7d',
             ...options,
           }),
@@ -22,24 +24,19 @@ class Jwt {
     });
   }
 
-  public decode<T extends string>(
+  public decode<T = string>(
     token: string,
-    secretKey?: Secret,
     options?: VerifyOptions,
   ): Promise<T> {
     return new Promise((resolve, reject) => {
       try {
-        resolve(verify(token, Jwt.getSecretKey(secretKey), options) as T);
+        resolve(verify(token, this.secretKey, options) as T);
       } catch (err) {
         reject(err);
       }
     });
   }
-
-  private static getSecretKey(secretKey?: Secret): Secret {
-    return secretKey ?? configApp.appKey;
-  }
 }
 
-const jwt = new Jwt();
+const jwt = new Jwt(configApp.appKey);
 export default jwt;
