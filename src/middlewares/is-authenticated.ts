@@ -6,7 +6,10 @@ import { ResourceModel, UserModel, UserResourceModel } from '@database/models';
 
 const validateLoggedUser = async (request: Request) => {
   if (!request.jwtDecode?.sub) {
-    throw new UnauthorizedError('Jwt invalid.', 'token.invalid');
+    throw new UnauthorizedError(
+      'Access denied, login and try again.',
+      'token.invalid',
+    );
   }
 
   const rowUser = await UserModel.findOne({

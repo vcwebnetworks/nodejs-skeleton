@@ -1,6 +1,8 @@
 export { default as AppError } from './app';
 export { BadRequestError } from './bad-request';
 export { ConflictError } from './conflict';
+export { NotAcceptableError } from './not-acceptable';
+export { InternalServerError } from './internal-server';
 export { default as ForbiddenError } from './fobidden';
 export { default as InvalidParamError } from './invalid-param';
 export { default as MethodNotAllowedError } from './method-not-allowed';

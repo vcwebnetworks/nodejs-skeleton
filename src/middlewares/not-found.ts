@@ -5,9 +5,13 @@ import PageNotFoundError from '@errors/page-not-found';
 
 export const notFoundMiddleware = (
   request: Request,
-  _response: Response,
+  response: Response,
   next: NextFunction,
 ) => {
+  if (response.headersSent) {
+    return next();
+  }
+
   if (
     request?.originalMethod &&
     request.originalMethod.toUpperCase() !== request.method.toUpperCase()

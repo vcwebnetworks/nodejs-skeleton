@@ -24,11 +24,14 @@ RUN mkdir -p ${WORKDIR}/node_modules && \
 COPY --chown=${USER}:${USER} ./package.json ./
 
 # install node dependencies
-RUN npm install --production
+RUN npm install
 
 # copy all project files to working directory
 COPY --chown=${USER}:${USER} ./ ./
 #RUN chown -R node:1000 ${WORKDIR}
+
+# run build
+RUN npm run build
 
 # expose port
 EXPOSE ${PORT:-3333}

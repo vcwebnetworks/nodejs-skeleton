@@ -2,7 +2,7 @@ import { Route } from '@src/@types/route';
 
 const userRouteMapping: Route[] = [
   {
-    path: '/users/profile',
+    path: '/users/me',
     isAuthenticated: true,
     handler: (request, response) => {
       request.loggedUser.setDataValue('password', undefined);

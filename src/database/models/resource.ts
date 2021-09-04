@@ -52,7 +52,9 @@ export class ResourceModel extends Model<ResourceAttributes, ResourceDto> {
   public path: string;
 
   @Index
-  @Column
+  @Column({
+    type: DataTypes.STRING,
+  })
   public method: ResourceMethod;
 
   @Index

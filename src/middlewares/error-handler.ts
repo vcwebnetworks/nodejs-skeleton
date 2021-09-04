@@ -14,7 +14,7 @@ export const errorHandlerMiddleware = (
   _next: NextFunction,
 ) => {
   let statusCode = 400;
-  const validations: any[] = [];
+  let errors: any[] = [];
 
   if (error?.statusCode) {
     statusCode = error.statusCode;
@@ -24,6 +24,14 @@ export const errorHandlerMiddleware = (
     logger.error(error.message, error);
   }
 
+  if (error.name === 'SequelizeValidationError') {
+    error.message = (<any>error).errors?.[0]?.message ?? error.message;
+  }
+
+  if ('errors' in error) {
+    errors = (<any>error).errors;
+  }
+
   return response.status(statusCode).json({
     name: error.name,
     statusCode,
@@ -31,6 +39,6 @@ export const errorHandlerMiddleware = (
     message: error?.name ? error.message : error,
     stack: error.stack?.split('\n'),
     code: error?.code ?? 'default',
-    validations,
+    errors,
   });
 };
