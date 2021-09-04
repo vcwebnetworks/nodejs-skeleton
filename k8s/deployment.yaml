@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: node-app
+  labels:
+    app: backend
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  replicas: 1
+  template:
+    metadata:
+      namespace: node-app
+      labels:
+        app: backend
+    spec:
+      serviceAccountName: backend
+      containers:
+        - name: backend
+          image: "IMAGE_NAME:TAG"
+          imagePullPolicy: Always
+          ports:
+            - name: backend
+              containerPort: 3333
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: backend

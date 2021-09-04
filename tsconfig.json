@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2015",
     "module": "commonjs",
     "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
     "sourceMap": true,
@@ -20,6 +20,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
@@ -36,5 +38,5 @@
     }
   },
   "exclude": ["node_modules", "dist", ".docker"],
-  "include": ["./src", "./tests"]
+  "include": ["./src"]
 }

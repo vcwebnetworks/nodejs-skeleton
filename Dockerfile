@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:15-alpine
 
 # set environments
 ENV TZ=America/Sao_Paulo
@@ -10,11 +10,12 @@ RUN apk add --update --no-cache bash tzdata python alpine-sdk && rm -rf /var/cac
 # install dockerize
 ENV DOCKERIZE_VERSION v0.6.1
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-  && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-  && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 # set non-root user
-USER node
+ENV USER=node
+USER ${USER}
 
 # set workdir
 ENV WORKDIR=/home/node/app
