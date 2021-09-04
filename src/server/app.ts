@@ -1,6 +1,9 @@
 import 'reflect-metadata';
+
 import '@config/dotenv';
 import '@config/module-alias';
+import '@config/moment-timezone';
+import '@config/yup-locale';
 
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -11,9 +14,11 @@ import helmet from 'helmet';
 import http from 'http';
 import httpGraceFullShutdown from 'http-graceful-shutdown';
 
+import configApp from '@config/app';
+import configRoutes from '@config/routes';
+import configSentry from '@config/sentry';
 import sequelize from '@src/database';
 import {
-  apiTokenMiddleware,
   corsMiddleware,
   errorHandlerMiddleware,
   methodOverrideMiddleware,
@@ -21,13 +26,8 @@ import {
   notFoundMiddleware,
   rateLimiterMiddleware,
 } from '@src/middlewares';
-import appRoutes from '@src/server/routes';
-import normalizeValue from '@src/utils/normalize-value';
 
-import configApp from '@config/app';
-import configSentry from '@config/sentry';
-
-class App {
+export class App {
   protected app: express.Application;
   protected server: http.Server;
   protected port: number;
@@ -45,7 +45,7 @@ class App {
           new Sentry.Integrations.Http({ tracing: true }),
           new Tracing.Integrations.Express({
             app: this.app,
-            router: appRoutes,
+            router: configRoutes,
             methods: ['all'],
           }),
         ],
@@ -70,16 +70,12 @@ class App {
     this.app.use(express.json() as RequestHandler);
     this.app.use(express.urlencoded({ extended: true }) as RequestHandler);
     this.app.use(cookieParser(configApp.appKey));
-    this.app.use(rateLimiterMiddleware);
     this.app.use(morganMiddleware as RequestHandler);
     this.app.use(corsMiddleware);
     this.app.use(methodOverrideMiddleware);
+    this.app.use(rateLimiterMiddleware);
 
-    if (normalizeValue<boolean>(process.env.PROTECT_ALL_ROUTES_WITH_TOKEN)) {
-      this.app.use(apiTokenMiddleware);
-    }
-
-    this.app.use(appRoutes);
+    this.app.use(configRoutes);
     this.app.use(notFoundMiddleware);
 
     if (configSentry.enable) {
@@ -125,4 +121,5 @@ class App {
   }
 }
 
-export default new App();
+const app = new App();
+export default app;

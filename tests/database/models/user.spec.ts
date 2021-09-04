@@ -3,7 +3,7 @@ import jsonwebtoken from 'jsonwebtoken';
 
 import sequelize from '@src/database';
 
-import { UserModel } from '@modules/users/models';
+import { UserModel } from '@database/models';
 
 const fakeUser = async () => UserModel.makeTestFake();
 

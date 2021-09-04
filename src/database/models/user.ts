@@ -1,38 +1,43 @@
-import { Optional } from 'sequelize';
+import { DataTypes, Optional } from 'sequelize';
 import {
   BeforeSave,
   Column,
   CreatedAt,
-  DataType,
   DeletedAt,
+  HasMany,
   Index,
   Model,
   Table,
   UpdatedAt,
 } from 'sequelize-typescript';
 
+import configTables from '@config/tables';
 import jwt from '@shared/jwt';
 import passwordBcrypt from '@shared/password-bcrypt';
 
-export interface IUserAttributes {
+import { UserResourceModel } from '.';
+
+export interface UserAttributes {
   id: string;
   name: string;
   email: string;
-  password: string | undefined;
-  created_at?: Date;
-  readonly updated_at?: Date;
+  password?: string;
+  readonly created_at: Date;
+  readonly updated_at: Date;
   deleted_at?: Date;
 }
 
-export type ICreateUserDto = Optional<IUserAttributes, 'id'>;
+export type UserDto = Optional<
+  Omit<UserAttributes, 'id'>,
+  'created_at' | 'updated_at'
+>;
 
-@Table({ tableName: 'users' })
-export class UserModel extends Model<IUserAttributes, ICreateUserDto> {
+@Table({ tableName: configTables.user })
+export class UserModel extends Model<UserAttributes, UserDto> {
   @Index
   @Column({
     primaryKey: true,
-    defaultValue: DataType.UUIDV4,
-    unique: true,
+    defaultValue: DataTypes.UUIDV4,
   })
   public id: string;
 
@@ -41,7 +46,7 @@ export class UserModel extends Model<IUserAttributes, ICreateUserDto> {
   public name: string;
 
   @Index({ unique: true })
-  @Column({ unique: true })
+  @Column
   public email: string;
 
   @Column
@@ -49,15 +54,18 @@ export class UserModel extends Model<IUserAttributes, ICreateUserDto> {
 
   @Index
   @CreatedAt
-  public created_at: Date;
+  public readonly created_at: Date;
 
   @Index
   @UpdatedAt
-  public updated_at: Date;
+  public readonly updated_at: Date;
 
   @Index
   @DeletedAt
   public deleted_at: Date;
+
+  @HasMany(() => UserResourceModel)
+  public resources?: UserResourceModel[];
 
   @BeforeSave
   static async hashedPassword(row: UserModel) {

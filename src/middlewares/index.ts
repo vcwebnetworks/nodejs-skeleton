@@ -6,3 +6,4 @@ export { morganMiddleware } from './morgan';
 export { noCacheMiddleware } from './no-cache';
 export { notFoundMiddleware } from './not-found';
 export { rateLimiterMiddleware } from './rate-limiter';
+export { isAuthenticated } from './is-authenticated';

@@ -1,4 +1,4 @@
-import { makeServerSupertest } from '@tests/utils';
+import { makeAppSupertest, makeServerSupertest } from '@tests/utils';
 
 import app from '@src/server/app';
 
@@ -11,7 +11,7 @@ describe('Authentication -> SignInController', () => {
 
   it('should log in with valid credentials.', async () => {
     const user = await UserModel.makeTestFake();
-    const response = await makeServerSupertest().post('/auth/sign-in').send({
+    const response = await makeAppSupertest().post('/auth/login').send({
       email: user.email,
       password: 'any_password',
     });
@@ -20,7 +20,7 @@ describe('Authentication -> SignInController', () => {
   });
 
   it('should check if you are trying to login with an invalid user.', async () => {
-    const response = await makeServerSupertest().post('/auth/sign-in').send({
+    const response = await makeServerSupertest().post('/auth/login').send({
       email: 'invalid_email@mail.com',
       password: 'invalid_password',
     });
@@ -31,7 +31,7 @@ describe('Authentication -> SignInController', () => {
 
   it('should check if you are accessing with invalid credentials.', async () => {
     const user = await UserModel.makeTestFake();
-    const response = await makeServerSupertest().post('/auth/sign-in').send({
+    const response = await makeServerSupertest().post('/auth/login').send({
       email: user.email,
       password: 'any_password_wrong',
     });
@@ -42,7 +42,7 @@ describe('Authentication -> SignInController', () => {
 
   it('should return a jwt token for authentication.', async () => {
     const user = await UserModel.makeTestFake();
-    const response = await makeServerSupertest().post('/auth/sign-in').send({
+    const response = await makeServerSupertest().post('/auth/login').send({
       email: user.email,
       password: 'any_password',
     });
@@ -52,7 +52,7 @@ describe('Authentication -> SignInController', () => {
 
   it('should return with the correct properties.', async () => {
     const user = await UserModel.makeTestFake();
-    const response = await makeServerSupertest().post('/auth/sign-in').send({
+    const response = await makeServerSupertest().post('/auth/login').send({
       email: user.email,
       password: 'any_password',
     });

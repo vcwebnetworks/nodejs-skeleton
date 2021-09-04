@@ -1,13 +1,22 @@
 import { DataTypes, literal, QueryInterface } from 'sequelize';
 
-class CreateTableUsers {
+import configTables from '@config/tables';
+
+const tableName = configTables.user;
+
+export default {
   async up(queryInterface: QueryInterface) {
-    await queryInterface.createTable('users', {
+    await queryInterface.sequelize.query(
+      'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";',
+    );
+
+    await queryInterface.createTable(tableName, {
       id: {
-        type: DataTypes.STRING(36),
-        primaryKey: true,
+        type: DataTypes.UUID,
         unique: true,
-        defaultValue: literal('(uuid())'),
+        allowNull: false,
+        primaryKey: true,
+        defaultValue: literal('uuid_generate_v4()'),
       },
       name: {
         type: DataTypes.STRING,
@@ -39,16 +48,14 @@ class CreateTableUsers {
       },
     });
 
-    await queryInterface.addIndex('users', ['id'], { unique: true });
-    await queryInterface.addIndex('users', ['email'], { unique: true });
-    await queryInterface.addIndex('users', ['created_at']);
-    await queryInterface.addIndex('users', ['updated_at']);
-    await queryInterface.addIndex('users', ['deleted_at']);
-  }
+    await queryInterface.addIndex(tableName, ['id'], { unique: true });
+    await queryInterface.addIndex(tableName, ['email'], { unique: true });
+    await queryInterface.addIndex(tableName, ['created_at']);
+    await queryInterface.addIndex(tableName, ['updated_at']);
+    await queryInterface.addIndex(tableName, ['deleted_at']);
+  },
 
   async down(queryInterface: QueryInterface) {
-    await queryInterface.dropTable('users');
-  }
-}
-
-export default new CreateTableUsers();
+    await queryInterface.dropTable(tableName, { cascade: true });
+  },
+};

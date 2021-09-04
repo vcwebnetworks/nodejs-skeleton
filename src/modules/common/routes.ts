@@ -1,11 +1,13 @@
 import { Router } from 'express';
 
-import commonHomeController from '@modules/common/controllers/home';
+import swaggerRoutes from '@modules/swagger';
 
-const commonRoutes = Router();
+const routes = Router({ mergeParams: true });
 
-commonRoutes.get('/', commonHomeController.index);
-commonRoutes.get('/favicon.ico', (_, response) => response.sendStatus(200));
-commonRoutes.get('/sw.js', (_, response) => response.sendStatus(200));
+routes.get('/', (_, res) => res.sendStatus(200));
+routes.get('/favicon.ico', (_, res) => res.sendStatus(200));
+routes.get('/sw.js', (_, res) => res.sendStatus(200));
 
-export default commonRoutes;
+routes.use('/swagger', swaggerRoutes);
+
+export default routes;

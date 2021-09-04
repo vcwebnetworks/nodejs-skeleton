@@ -1,38 +1,37 @@
-import { celebrate, Joi, Segments } from 'celebrate';
-import { Router } from 'express';
+import { Route } from '@src/@types/route';
 
-import authLoginController from '@modules/auth/controllers/login';
-import authResetPasswordController from '@modules/auth/controllers/reset-password';
+import authForgotPasswordController from './controllers/forgot-password';
+import authLoginController from './controllers/login';
+import authRegisterController from './controllers/register';
+import authResetPasswordController from './controllers/reset-password';
+import authLoginValidator from './validators/login';
+import authRegisterValidator from './validators/register';
+import authResetPasswordValidator from './validators/reset-password';
 
-const routes = Router({ mergeParams: true });
+const authRouteMapping: Route[] = [
+  {
+    path: ['post', '/auth/login'],
+    handler: authLoginController.handle,
+    middlewares: [authLoginValidator.body],
+  },
+  {
+    path: ['post', '/auth/register'],
+    handler: authRegisterController.handle,
+    middlewares: [authRegisterValidator.body],
+  },
+  {
+    path: ['post', '/auth/forgot-password/send-mail'],
+    handler: authForgotPasswordController.sendMail,
+  },
+  {
+    path: ['post', '/auth/forgot-password/validate/:hash'],
+    handler: authForgotPasswordController.validateHash,
+  },
+  {
+    path: ['post', '/auth/reset-password/:hash'],
+    handler: authResetPasswordController.handle,
+    middlewares: [authResetPasswordValidator.body],
+  },
+];
 
-routes.post(
-  '/sign-in',
-  celebrate({
-    [Segments.BODY]: {
-      email: Joi.string().required().email().messages({
-        'any.required': 'Por favor digite seu e-mail.',
-        'string.email': 'O e-mail informado não tem um formato válido.',
-      }),
-      password: Joi.string().required().messages({
-        'any.required': 'Por favor digite sua senha.',
-      }),
-    },
-  }),
-  authLoginController.handle,
-);
-
-routes.post(
-  '/reset-password/send-code',
-  celebrate({
-    [Segments.BODY]: {
-      email: Joi.string().required().email().messages({
-        'any.required': 'Por favor digite seu e-mail.',
-        'string.email': 'O e-mail informado não tem um formato válido.',
-      }),
-    },
-  }),
-  authResetPasswordController.sendCode,
-);
-
-export default routes;
+export default authRouteMapping;

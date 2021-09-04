@@ -1,7 +1,7 @@
-import swaggerPathsAuthenticationSignIn from '@src/modules/swagger/paths/authentication/signIn';
+import swaggerPathsAuthenticationLogin from '@modules/swagger/paths/authentication/login';
 
 const swaggerPaths = {
-  '/auth/sign-in': swaggerPathsAuthenticationSignIn,
+  '/auth/login': swaggerPathsAuthenticationLogin,
 };
 
 export default swaggerPaths;

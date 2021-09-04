@@ -7,18 +7,18 @@ networks:
 services:
   app:
     build: .
-    entrypoint: dockerize -wait tcp://mariadb:3306 -wait tcp://redis:6379 -timeout 10s ./.docker/scripts/entrypoint.sh
+    entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://redis:6379 -timeout 60s ./.docker/scripts/entrypoint.sh
     container_name: node.app
     tty: true
     depends_on:
       - redis
-      - mariadb
+      - postgres
     networks:
       - node.networks
     volumes:
       - .:/home/node/app:z
     ports:
-      - 3333:3333
+      - "3333:3333"
 
   nginx:
     build: .docker/nginx
@@ -27,7 +27,7 @@ services:
     tty: true
     depends_on:
       - app
-      - mariadb
+      - postgres
     ports:
       - '80:80'
       - '433:433'
@@ -47,45 +47,46 @@ services:
   #    ports:
   #      - 3306:3306
   #    volumes:
-  #      - .docker/mysql:/var/lib/mysql
+  #      - .docker/mysql/config/mysql.cnf:/etc/mysql/conf.d/custom.cnf:z
+  #      - .docker/mysql/data:/var/lib/mysql:z
   #    environment:
   #      MYSQL_USER: root
   #      MYSQL_PASSWORD: root
   #      MYSQL_DATABASE: development
   #      MYSQL_ROOT_PASSWORD: root
 
-  mariadb:
-    image: mariadb
-    tty: true
-    restart: always
-    container_name: node.mariadb
-    networks:
-      - node.networks
-    ports:
-      - '3306:3306'
-    volumes:
-      - .docker/mysql/config/mariadb.cnf:/etc/mysql/conf.d/custom.cnf:z
-      - .docker/mysql/data:/var/lib/mysql:z
-    environment:
-      - MYSQL_PASSWORD=root
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=development
-
-  #  postgres:
-  #    build: .docker/postgres
+  #  mariadb:
+  #    image: mariadb
   #    tty: true
   #    restart: always
-  #    container_name: node.postgres
+  #    container_name: node.mariadb
   #    networks:
   #      - node.networks
   #    ports:
-  #      - '5432:5432'
+  #      - '3306:3306'
   #    volumes:
-  #      - .docker/postgres/dbdata:/var/lib/postgresql/data:z
+  #      - .docker/mysql/config/mariadb.cnf:/etc/mysql/conf.d/custom.cnf:z
+  #      - .docker/mysql/data:/var/lib/mysql:z
   #    environment:
-  #      - POSTGRES_USER=root
-  #      - POSTGRES_PASSWORD=root
-  #      - POSTGRES_DB=development
+  #      - MYSQL_PASSWORD=root
+  #      - MYSQL_ROOT_PASSWORD=root
+  #      - MYSQL_DATABASE=development
+
+  postgres:
+    build: .docker/postgres
+    tty: true
+    restart: always
+    container_name: node.postgres
+    networks:
+      - node.networks
+    ports:
+      - "5432:5432"
+    volumes:
+      - .docker/postgres/dbdata:/var/lib/postgresql/data:z
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=development
 
   redis:
     image: bitnami/redis:latest
@@ -94,7 +95,7 @@ services:
     networks:
       - node.networks
     ports:
-      - 6379:6379
+      - "6379:6379"
     volumes:
       - .docker/redis:/bitnami/redis/data:z
     environment:

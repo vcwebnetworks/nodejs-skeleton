@@ -10,6 +10,6 @@ const { resolve } = require('path');
 module.exports = {
   config: resolve(__dirname, 'dist', 'database', 'config.js'),
   'models-path': resolve(__dirname, 'dist', 'database', 'models'),
-  'seeders-path': resolve(__dirname, 'dist', 'database', 'seeders', 'compiled'),
-  'migrations-path': resolve(__dirname, 'dist', 'database', 'migrations', 'compiled'),
+  'seeders-path': resolve(__dirname, 'dist', 'database', 'seeders'),
+  'migrations-path': resolve(__dirname, 'dist', 'database', 'migrations'),
 };
