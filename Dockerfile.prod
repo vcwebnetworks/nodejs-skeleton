@@ -4,13 +4,13 @@ FROM node:15-alpine as builder
 ENV NPM_CONFIG_LOGLEVEL=warn
 
 RUN apk add \
-    --update \
-    --no-cache \
-    bash  \
-    tzdata  \
-    python  \
-    alpine-sdk  \
-    && rm -rf /var/cache/apk/*
+  --update \
+  --no-cache \
+  bash  \
+  tzdata  \
+  python  \
+  alpine-sdk  \
+  && rm -rf /var/cache/apk/*
 
 ENV WORKDIR=/home/app
 WORKDIR ${WORKDIR}
@@ -21,7 +21,7 @@ COPY ./tsconfig.json ./
 COPY ./package.json yarn.lock ./
 
 RUN yarn install --ignore-scripts --frozen-lockfile --non-interactive
-RUN yarn build:tsc
+RUN yarn build
 
 # build stage 2
 FROM node:15-alpine as finish
