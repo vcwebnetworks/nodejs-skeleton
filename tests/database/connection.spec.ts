@@ -5,7 +5,7 @@ describe('Database', () => {
     await expect(sequelize.authenticate()).resolves.toBe(undefined);
   });
 
-  it('should verify that the connection has failed.', async () => {
+  it('should verify that the connection has failed..', async () => {
     jest
       .spyOn(sequelize, 'authenticate')
       .mockImplementationOnce(() =>

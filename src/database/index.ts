@@ -19,11 +19,11 @@ const sequelize = new Sequelize({
   dialect: process.env.DB_TYPE as SequelizeOptions['dialect'],
   minifyAliases: true,
   logging:
-    process.env.DB_LOGGING === 'true'
+    process.env.DB_LOGGING === 'false'
       ? false
       : (sql: string) => {
           debug({
-            namespace: 'sequelize:log',
+            namespace: 'query',
             message: { sql },
           });
         },
