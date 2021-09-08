@@ -1,8 +1,8 @@
-import AppError from './app';
+import { BadRequestError } from '@errors/bad-request';
 
-export default class InvalidParamError extends AppError {
-  constructor(name: string) {
-    super(`Invalid parameters on request: ${name}`);
+export default class InvalidParamError extends BadRequestError {
+  constructor(message: string) {
+    super(message);
 
     this.name = 'InvalidParamError';
     this.code = 'invalid_param';

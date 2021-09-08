@@ -20,7 +20,7 @@ COPY ./.sequelizerc ./
 COPY ./tsconfig.json ./
 COPY ./package.json yarn.lock ./
 
-RUN yarn install --ignore-scripts --frozen-lockfile --non-interactive
+RUN yarn install --ignore-scripts --frozen-lockfile --non-interactive --silent
 RUN yarn build
 
 # build stage 2

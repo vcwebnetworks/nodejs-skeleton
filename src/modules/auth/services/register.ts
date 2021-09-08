@@ -7,17 +7,24 @@ interface IResponse {
 }
 
 class RegisterService {
-  public async run({ name, email, password }: UserDto): Promise<IResponse> {
+  public async run({
+    name,
+    email,
+    password,
+    role_id,
+  }: UserDto): Promise<IResponse> {
     await userCheckExistMailService.run(email);
 
     const newUser = await UserModel.create({
       name,
       email,
       password,
+      status: 'online',
+      role_id,
     });
 
     const token = await newUser.generateJwtToken();
-    newUser.setDataValue('password', undefined);
+    newUser.setDataValue<any>('password', undefined);
 
     return { user: newUser, token };
   }

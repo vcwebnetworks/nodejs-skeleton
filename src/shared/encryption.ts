@@ -11,6 +11,23 @@ class Encryption {
     this.key = configApp.appKey;
   }
 
+  private static getPayload(value: string): {
+    iv: Buffer;
+    encrypted: Buffer;
+    salt: Buffer;
+    authTag: Buffer;
+  } {
+    const payload = Buffer.from(value, 'base64');
+    const { iv, encrypted, salt, authTag } = JSON.parse(payload.toString());
+
+    return {
+      iv: Buffer.from(iv, 'hex'),
+      encrypted: Buffer.from(encrypted, 'hex'),
+      salt: Buffer.from(salt, 'hex'),
+      authTag: Buffer.from(authTag, 'hex'),
+    };
+  }
+
   public encrypt(payload: any): string {
     const iv = crypto.randomBytes(16);
     const salt = crypto.randomBytes(64);
@@ -49,23 +66,6 @@ class Encryption {
     ]);
 
     return JSON.parse(decrypted.toString());
-  }
-
-  private static getPayload(value: string): {
-    iv: Buffer;
-    encrypted: Buffer;
-    salt: Buffer;
-    authTag: Buffer;
-  } {
-    const payload = Buffer.from(value, 'base64');
-    const { iv, encrypted, salt, authTag } = JSON.parse(payload.toString());
-
-    return {
-      iv: Buffer.from(iv, 'hex'),
-      encrypted: Buffer.from(encrypted, 'hex'),
-      salt: Buffer.from(salt, 'hex'),
-      authTag: Buffer.from(authTag, 'hex'),
-    };
   }
 
   private generateSecretKey(salt: Buffer): Buffer {

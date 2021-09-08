@@ -11,7 +11,7 @@ import {
 
 import configTables from '@config/tables';
 
-import { UserModel } from '@database/models/user';
+import { UserModel } from './index';
 
 export interface ForgotPasswordAttributes {
   id: string;
@@ -23,8 +23,8 @@ export interface ForgotPasswordAttributes {
 }
 
 export type ForgotPasswordDto = Optional<
-  Omit<ForgotPasswordAttributes, 'id'>,
-  'created_at' | 'hash' | 'validated_in'
+  ForgotPasswordAttributes,
+  'id' | 'created_at' | 'hash' | 'validated_in'
 >;
 
 @Table({

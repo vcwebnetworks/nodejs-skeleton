@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import * as Yup from 'yup';
 
-class ResetPassword {
+class Change {
   public async body(request: Request, _response: Response, next: NextFunction) {
     await Yup.object()
       .shape({
@@ -20,5 +20,5 @@ class ResetPassword {
   }
 }
 
-const authResetPasswordValidator = new ResetPassword();
-export default authResetPasswordValidator;
+const forgotPasswordChangeValidator = new Change();
+export default forgotPasswordChangeValidator;

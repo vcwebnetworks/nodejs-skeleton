@@ -1,6 +1,6 @@
-import sequelize from '@src/database';
 import { ForbiddenError, InvalidParamError } from '@src/errors';
 
+import dashboardDatabase from '@database/index';
 import { ForgotPasswordModel, UserModel } from '@database/models';
 
 interface IRequest {
@@ -8,9 +8,9 @@ interface IRequest {
   password: string;
 }
 
-class ResetPasswordService {
+class Change {
   public async run({ hash, password }: IRequest): Promise<void> {
-    const transaction = await sequelize.transaction();
+    const transaction = await dashboardDatabase.transaction();
 
     try {
       const rowResetPassword = await ForgotPasswordModel.findOne({
@@ -19,11 +19,11 @@ class ResetPasswordService {
       });
 
       if (!rowResetPassword) {
-        throw new InvalidParamError('hash');
+        throw new InvalidParamError('hash invalid');
       }
 
       if (rowResetPassword.validated_in === null) {
-        throw new ForbiddenError('Unconfirmed recovery link.');
+        throw new ForbiddenError('unconfirmed recovery link.');
       }
 
       await rowResetPassword.destroy({
@@ -43,5 +43,5 @@ class ResetPasswordService {
   }
 }
 
-const authResetPasswordService = new ResetPasswordService();
-export default authResetPasswordService;
+const forgotPasswordChangeService = new Change();
+export default forgotPasswordChangeService;

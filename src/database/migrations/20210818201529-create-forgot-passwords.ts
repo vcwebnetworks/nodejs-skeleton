@@ -41,8 +41,8 @@ export default {
       },
       created_at: {
         type: DataTypes.DATE,
-        defaultValue: literal('CURRENT_TIMESTAMP'),
         allowNull: false,
+        defaultValue: literal('CURRENT_TIMESTAMP'),
       },
     });
 

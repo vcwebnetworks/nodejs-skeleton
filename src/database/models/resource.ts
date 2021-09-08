@@ -1,4 +1,4 @@
-import { DataTypes, Optional } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import {
   Column,
   CreatedAt,
@@ -10,33 +10,19 @@ import {
 
 import configTables from '@config/tables';
 
-export type ResourceMethod =
-  | 'get'
-  | 'post'
-  | 'put'
-  | 'delete'
-  | 'patch'
-  | 'head';
+export type ResourceMethod = 'get' | 'post' | 'put' | 'delete' | 'patch';
 
-export interface ResourceAttributes {
-  id: string;
+export interface ResourceDto {
   name: string;
   path: string;
   method: ResourceMethod;
-  readonly created_at: Date;
-  readonly updated_at: Date;
 }
-
-export type ResourceDto = Optional<
-  Omit<ResourceAttributes, 'id'>,
-  'created_at' | 'updated_at'
->;
 
 @Table({
   tableName: configTables.resource,
   paranoid: false,
 })
-export class ResourceModel extends Model<ResourceAttributes, ResourceDto> {
+export class ResourceModel extends Model<ResourceModel, ResourceDto> {
   @Index
   @Column({
     primaryKey: true,
@@ -64,4 +50,8 @@ export class ResourceModel extends Model<ResourceAttributes, ResourceDto> {
   @Index
   @CreatedAt
   public readonly created_at: Date;
+
+  public static getValidMethod(): ResourceMethod[] {
+    return ['get', 'post', 'put', 'delete', 'patch'];
+  }
 }

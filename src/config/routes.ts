@@ -1,21 +1,21 @@
-import { Router } from 'express';
+import { Route } from '@src/@types/route';
 
-import { apiTokenMiddleware } from '@src/middlewares';
-
-import authRouteMapping from '@modules/auth/routes';
+import authRoutes from '@modules/auth/routes';
 import commonRoutes from '@modules/common/routes';
-import userRouteMapping from '@modules/users/routes';
-import mappingRoutes from '@utils/mapping-routes';
-import normalizeValue from '@utils/normalize-value';
+import forgotPasswordRoutes from '@modules/forgot-passwords/routes';
+import resourceRoutes from '@modules/resources/routes';
+import roleRoutes from '@modules/roles/routes';
+import userResourceRoutes from '@modules/users-resources/routes';
+import userRoutes from '@modules/users/routes';
 
-const routes = Router({ mergeParams: true });
+const configRoutes: Route[] = [
+  ...authRoutes,
+  ...commonRoutes,
+  ...forgotPasswordRoutes,
+  ...userRoutes,
+  ...roleRoutes,
+  ...resourceRoutes,
+  ...userResourceRoutes,
+];
 
-routes.use(commonRoutes);
-
-if (normalizeValue<boolean>(process.env.PROTECT_ALL_ROUTES_WITH_TOKEN)) {
-  routes.use(apiTokenMiddleware);
-}
-
-[...authRouteMapping, ...userRouteMapping].map(mappingRoutes(routes));
-
-export default routes;
+export default configRoutes;

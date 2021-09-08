@@ -37,6 +37,6 @@
       "@server/*": ["src/server/*"]
     }
   },
-  "exclude": ["node_modules", "dist", ".docker"],
+  "exclude": ["node_modules", "dist", ".docker", "./tests"],
   "include": ["./src"]
 }

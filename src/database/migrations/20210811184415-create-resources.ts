@@ -6,6 +6,10 @@ const tableName = configTables.resource;
 
 export default {
   up: async (queryInterface: QueryInterface) => {
+    await queryInterface.sequelize.query(
+      'CREATE EXTENSION IF NOT EXISTS "uuid-ossp";',
+    );
+
     await queryInterface.createTable(tableName, {
       id: {
         type: DataTypes.UUID,
@@ -28,13 +32,13 @@ export default {
       },
       updated_at: {
         type: DataTypes.DATE,
-        defaultValue: literal('CURRENT_TIMESTAMP'),
         allowNull: false,
+        defaultValue: literal('CURRENT_TIMESTAMP'),
       },
       created_at: {
         type: DataTypes.DATE,
-        defaultValue: literal('CURRENT_TIMESTAMP'),
         allowNull: false,
+        defaultValue: literal('CURRENT_TIMESTAMP'),
       },
     });
 

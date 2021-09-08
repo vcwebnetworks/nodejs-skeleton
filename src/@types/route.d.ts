@@ -7,5 +7,6 @@ export interface Route {
   method?: Method;
   handler: RequestHandler;
   middlewares?: RequestHandler[];
-  isAuthenticated?: boolean;
+  admin?: boolean;
+  auth?: boolean;
 }

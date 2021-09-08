@@ -45,6 +45,12 @@ export default {
     await queryInterface.addIndex(tableName, ['user_id']);
     await queryInterface.addIndex(tableName, ['resource_id']);
     await queryInterface.addIndex(tableName, ['created_at']);
+
+    await queryInterface.addConstraint(tableName, {
+      type: 'unique',
+      fields: ['user_id', 'resource_id'],
+      name: `${tableName}_user_id_resource_id_uk`,
+    });
   },
 
   down: async (queryInterface: QueryInterface) => {

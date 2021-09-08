@@ -1,12 +1,12 @@
 import supertest from 'supertest';
 
-import App from '@src/server/app';
+import app from '@src/server/app';
 
 import { noCacheMiddleware } from '@middlewares/no-cache';
 
 describe('Middleware -> no-cache', () => {
   it('should return the configured headers', async () => {
-    const express = App.getInstance();
+    const express = app.getInstance();
     express.get('/no-cache', noCacheMiddleware, (_, response) =>
       response.sendStatus(200),
     );

@@ -1,4 +1,4 @@
-const normalizeValue = <T extends any>(value: any): T => {
+const normalizeValue = <T extends any = any>(value: any): T => {
   if (Array.isArray(value) || typeof value === 'object') {
     return value;
   }

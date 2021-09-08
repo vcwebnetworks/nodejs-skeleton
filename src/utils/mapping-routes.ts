@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { Route } from '@src/@types/route';
-import { isAuthenticated } from '@src/middlewares';
+import { isAdmin, isAuthenticated } from '@src/middlewares';
 
 const mappingRoutes = (router: Router) => (route: Route) => {
   if (Array.isArray(route.path)) {
@@ -13,11 +13,19 @@ const mappingRoutes = (router: Router) => (route: Route) => {
 
   const middleware = route.middlewares ?? [];
 
-  if (route.isAuthenticated) {
+  if ((route.auth || route.auth === undefined) && !route.admin) {
     middleware.unshift(isAuthenticated);
   }
 
-  router[route.method ?? 'get'](route.path, ...middleware, route.handler);
+  if (route.admin === true) {
+    middleware.unshift(isAdmin);
+  }
+
+  router[route.method ?? 'get'].apply(router, [
+    route.path,
+    ...middleware,
+    route.handler,
+  ]);
 };
 
 export default mappingRoutes;

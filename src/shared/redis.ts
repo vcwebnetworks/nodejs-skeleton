@@ -4,6 +4,7 @@ import configRedis from '@config/redis';
 
 class Redis {
   protected prefix?: string;
+
   protected client: RedisClient;
 
   constructor(options?: IORedis.RedisOptions) {

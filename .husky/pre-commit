@@ -3,4 +3,5 @@
 
 . "$(dirname "$0")/_/husky.sh"
 
-yarn lint-staged
+yarn lint:fix
+yarn test:staged

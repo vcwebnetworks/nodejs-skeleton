@@ -15,8 +15,8 @@ import http from 'http';
 import httpGraceFullShutdown from 'http-graceful-shutdown';
 
 import configApp from '@config/app';
-import configRoutes from '@config/routes';
 import configSentry from '@config/sentry';
+import routes from '@server/routes';
 import sequelize from '@src/database';
 import {
   corsMiddleware,
@@ -45,7 +45,7 @@ export class App {
           new Sentry.Integrations.Http({ tracing: true }),
           new Tracing.Integrations.Express({
             app: this.app,
-            router: configRoutes,
+            router: routes,
             methods: ['all'],
           }),
         ],
@@ -75,7 +75,7 @@ export class App {
     this.app.use(methodOverrideMiddleware);
     this.app.use(rateLimiterMiddleware);
 
-    this.app.use(configRoutes);
+    this.app.use(routes);
     this.app.use(notFoundMiddleware);
 
     if (configSentry.enable) {

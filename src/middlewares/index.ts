@@ -1,4 +1,4 @@
-export { apiTokenMiddleware } from './api-token';
+export { isBearerToken } from './is-bearer-token';
 export { corsMiddleware } from './cors';
 export { errorHandlerMiddleware } from './error-handler';
 export { methodOverrideMiddleware } from './method-override';
@@ -7,3 +7,4 @@ export { noCacheMiddleware } from './no-cache';
 export { notFoundMiddleware } from './not-found';
 export { rateLimiterMiddleware } from './rate-limiter';
 export { isAuthenticated } from './is-authenticated';
+export { isAdmin } from './is-admin';

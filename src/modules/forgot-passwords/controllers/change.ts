@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 
-import authResetPasswordService from '@modules/auth/services/reset-password';
+import forgotPasswordChangeService from '@modules/forgot-passwords/service/change';
 
-class ResetPasswordController {
+class Change {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { hash } = request.params;
     const { password } = request.body;
 
-    await authResetPasswordService.run({
+    await forgotPasswordChangeService.run({
       hash,
       password,
     });
@@ -16,5 +16,5 @@ class ResetPasswordController {
   }
 }
 
-const authResetPasswordController = new ResetPasswordController();
-export default authResetPasswordController;
+const forgotPasswordChangeController = new Change();
+export default forgotPasswordChangeController;

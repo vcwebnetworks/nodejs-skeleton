@@ -11,3 +11,4 @@ export { default as NotFoundError } from './not-found';
 export { default as PageNotFoundError } from './page-not-found';
 export { default as RateLimiterError } from './rate-limiter';
 export { default as UnauthorizedError } from './unauthorized';
+export { UnprocessableEntityError } from './unprocessable-entity';

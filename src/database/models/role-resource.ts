@@ -1,8 +1,7 @@
-import { DataTypes, Optional } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import {
   BelongsTo,
   Column,
-  CreatedAt,
   ForeignKey,
   Index,
   Model,
@@ -11,25 +10,22 @@ import {
 
 import configTables from '@config/tables';
 
-import { ResourceModel, UserModel } from '.';
+import { ResourceModel, RoleModel } from './index';
 
-export interface UserResourceAttributes {
+export interface RoleResourceDto {
   id: string;
-  user_id: string;
+  role_id: string;
   resource_id: string;
-  created_at: Date;
 }
 
-export type UserResourceDto = Optional<UserResourceAttributes, 'id'>;
-
 @Table({
-  tableName: configTables.userResource,
+  tableName: configTables.roleResource,
   timestamps: false,
   paranoid: false,
 })
-export class UserResourceModel extends Model<
-  UserResourceAttributes,
-  UserResourceDto
+export class RoleResourceModel extends Model<
+  RoleResourceModel,
+  RoleResourceDto
 > {
   @Index
   @Column({
@@ -40,17 +36,16 @@ export class UserResourceModel extends Model<
 
   @Column
   @Index
-  @ForeignKey(() => UserModel)
-  user_id: string;
+  @ForeignKey(() => RoleModel)
+  role_id: string;
 
   @Column
   @Index
   @ForeignKey(() => ResourceModel)
   resource_id: string;
 
-  @Index
-  @CreatedAt
-  public readonly created_at: Date;
+  @BelongsTo(() => RoleModel)
+  public role?: RoleModel;
 
   @BelongsTo(() => ResourceModel)
   public resource?: ResourceModel;

@@ -1,15 +1,24 @@
 import { Route } from '@src/@types/route';
 
-const userRouteMapping: Route[] = [
-  {
-    path: '/users/me',
-    isAuthenticated: true,
-    handler: (request, response) => {
-      request.loggedUser.setDataValue('password', undefined);
+import userCreateController from '@modules/users/controllers/create';
+import userDeleteController from '@modules/users/controllers/delete';
+import userFindController from '@modules/users/controllers/find';
+import userCreateValidator from '@modules/users/validators/create';
 
-      return response.json(request.loggedUser);
-    },
+const routes: Route[] = [
+  {
+    path: ['get', '/users'],
+    handler: userFindController.index,
+  },
+  {
+    path: ['post', '/users'],
+    handler: userCreateController.handle,
+    middlewares: [userCreateValidator.body],
+  },
+  {
+    path: ['delete', '/users/:id'],
+    handler: userDeleteController.handle,
   },
 ];
 
-export default userRouteMapping;
+export default routes;
