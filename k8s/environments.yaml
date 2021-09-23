@@ -11,6 +11,7 @@ data:
   NODE_ENV: "development"
   ADMIN_URL: "http://localhost:3000"
   CHECK_ENVFILE: "false"
+  UPLOAD_PATH: "/storage/uploads"
 
   APP_KEY: "appkey"
   API_KEY: "apikey"

@@ -10,6 +10,7 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development ts-node-dev --poll --respawn --transpile-only --ignore-watch './node_modules' './src/server/index.ts'",
+    "dev:debug": "cross-env NODE_ENV=development ts-node-dev --inspect=0.0.0.0:9229 --poll --respawn --transpile-only './src/server/index.ts'",
     "dev:docker": "docker-compose -f docker-compose.yml up",
     "start": "node ./dist/server/index.js",
     "build": "tsc",

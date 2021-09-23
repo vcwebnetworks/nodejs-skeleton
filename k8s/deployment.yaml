@@ -9,7 +9,13 @@ spec:
   selector:
     matchLabels:
       app: backend
-  replicas: 1
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
   template:
     metadata:
       namespace: node-app
@@ -28,3 +34,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: backend
+          volumeMounts:
+            - mountPath: "/storage/uploads"
+              name: pvc-backend
+      volumes:
+        - name: pvc-backend
+          persistentVolumeClaim:
+            claimName: pvc-backend
