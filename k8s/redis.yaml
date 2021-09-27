@@ -29,6 +29,8 @@ spec:
       labels:
         app: redis
     spec:
+      securityContext:
+        fsGroup: 1001
       containers:
         - name: redis
           image: bitnami/redis:latest
@@ -38,6 +40,14 @@ spec:
           envFrom:
             - configMapRef:
                 name: redis
+          volumeMounts:
+            - mountPath: /bitnami/redis/data
+              subPath: data
+              name: redis
+      volumes:
+        - name: redis
+          persistentVolumeClaim:
+            claimName: pvc-storage
 ---
 apiVersion: v1
 kind: Service
