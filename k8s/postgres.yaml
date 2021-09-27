@@ -37,6 +37,14 @@ spec:
           envFrom:
             - configMapRef:
                 name: postgres
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              subPath: data
+              name: postgres
+      volumes:
+        - name: postgres
+          persistentVolumeClaim:
+            claimName: pvc-storage
 ---
 apiVersion: v1
 kind: Service

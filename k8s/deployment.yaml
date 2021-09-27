@@ -35,9 +35,9 @@ spec:
             - configMapRef:
                 name: backend
           volumeMounts:
-            - mountPath: "/storage/uploads"
-              name: pvc-backend
+            - mountPath: /storage/uploads
+              name: uploads
       volumes:
-        - name: pvc-backend
+        - name: uploads
           persistentVolumeClaim:
-            claimName: pvc-backend
+            claimName: pvc-storage
