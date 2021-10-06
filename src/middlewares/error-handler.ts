@@ -20,7 +20,7 @@ export const errorHandlerMiddleware = (
     statusCode = error.statusCode;
   }
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'production') {
     logger.error(error.message, error);
   }
 
@@ -28,7 +28,7 @@ export const errorHandlerMiddleware = (
     error.message = (<any>error).errors?.[0]?.message ?? error.message;
   }
 
-  if ('errors' in error) {
+  if ((<any>error)?.errors) {
     errors = (<any>error).errors;
   }
 

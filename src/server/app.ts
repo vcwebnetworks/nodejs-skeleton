@@ -17,7 +17,7 @@ import httpGraceFullShutdown from 'http-graceful-shutdown';
 import configApp from '@config/app';
 import configSentry from '@config/sentry';
 import routes from '@server/routes';
-import sequelize from '@src/database';
+import database from '@src/database';
 import {
   corsMiddleware,
   errorHandlerMiddleware,
@@ -75,6 +75,10 @@ export class App {
     this.app.use(methodOverrideMiddleware);
     this.app.use(rateLimiterMiddleware);
 
+    if (configApp.enableUpload) {
+      this.app.use('/uploads', express.static(configApp.uploadDir));
+    }
+
     this.app.use(routes);
     this.app.use(notFoundMiddleware);
 
@@ -94,7 +98,7 @@ export class App {
   }
 
   public async close(): Promise<void> {
-    await sequelize.close();
+    await database.close();
     // await sequelize.connectionManager.close();
 
     if (!this.server.listening) {

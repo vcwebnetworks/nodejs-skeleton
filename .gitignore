@@ -5,6 +5,8 @@ node_modules
 dist
 **/.DS_Store
 
+src/uploads/*
+
 .docker/mysql/data/*
 !.docker/mysql/data/.gitkeep
 

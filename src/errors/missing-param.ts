@@ -1,8 +1,8 @@
-import AppError from './app';
+import { BadRequestError } from '@errors/bad-request';
 
-export default class MissingParamError extends AppError {
-  constructor(name: string) {
-    super(`Missing parameters on request: ${name}`);
+export class MissingParamError extends BadRequestError {
+  constructor(message: string) {
+    super(message);
 
     this.name = 'MissingParamError';
     this.code = 'missing_param';

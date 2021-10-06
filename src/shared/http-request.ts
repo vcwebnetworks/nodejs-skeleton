@@ -1,18 +1,18 @@
 import https, { RequestOptions } from 'https';
 
-interface Request extends RequestOptions {
+export interface HttpRequest extends RequestOptions {
   url: string;
   body?: string;
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS';
 }
 
-interface Response<T = any> {
+interface Response<T = Buffer | any> {
   body: T;
   statusCode: number;
 }
 
-export default async function httpRequest<T = any>(
-  options: Request,
+export default async function httpRequest<T = Buffer | any>(
+  options: HttpRequest,
 ): Promise<Response<T>> {
   const { url, body, ...rest } = options;
 
@@ -23,30 +23,33 @@ export default async function httpRequest<T = any>(
   const response = await new Promise<Response>((resolve, reject) => {
     const chunks: any[] = [];
 
-    const clientRequest = https.request(url, rest, res => {
-      res.on('error', reject);
-      res.on('data', chunk => chunks.push(chunk));
-      res.on('end', () => {
-        let result = Buffer.concat(chunks).toString();
+    const request = https.request(url, rest, httpResponse => {
+      httpResponse.on('error', reject);
+      httpResponse.on('data', chunk => chunks.push(chunk));
+
+      httpResponse.on('end', () => {
+        let buffer = Buffer.concat(chunks);
 
         try {
-          result = JSON.parse(result);
+          buffer = JSON.parse(buffer.toString());
         } catch {
           //
         }
 
         resolve({
-          body: result,
-          statusCode: res.statusCode ?? 500,
+          body: buffer,
+          statusCode: httpResponse.statusCode ?? 500,
         });
       });
     });
 
+    request.on('error', reject);
+
     if (['POST', 'PUT', 'PATCH'].includes(rest.method) && body) {
-      clientRequest.write(body);
+      request.write(body);
     }
 
-    clientRequest.end();
+    request.end();
   });
 
   if (response.statusCode >= 400) {

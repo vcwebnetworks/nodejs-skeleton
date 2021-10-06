@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'test') {
   (<any>sequelizeOptions).logging = false;
 }
 
-const sequelize = new Sequelize({
+const database = new Sequelize({
   ...(sequelizeOptions as SequelizeOptions),
   models: Object.values(models),
   dialect: process.env.DB_TYPE as SequelizeOptions['dialect'],
@@ -37,4 +37,4 @@ const sequelize = new Sequelize({
   },
 });
 
-export default sequelize;
+export default database;
