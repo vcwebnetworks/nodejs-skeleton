@@ -5,6 +5,10 @@ export const addValuesToModel = (
   values: Record<string, any>,
   excludeTimestamps = true,
 ) => {
+  if (!values) {
+    return;
+  }
+
   Object.entries(values).forEach(([column, value]) => {
     if (excludeTimestamps) {
       ['created_at', 'updated_at', 'deleted_at'].forEach(timestamp => {
@@ -14,7 +18,7 @@ export const addValuesToModel = (
       });
     }
 
-    if (value?.toString()?.trim() || value === null) {
+    if (value === '' || value?.toString()?.trim() || value === null) {
       model.setDataValue<any>(column, value);
     }
   });

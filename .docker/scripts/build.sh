@@ -1,16 +1,17 @@
 #!/usr/bin/env sh
 
 read -p "URL Registry: " registry
-read -p "Image Name: " image
+read -p "Image Name: " name
 
 tag=$(date +"%Y.%m.%d.%Hh.%Mm")
-hub="$registry/$image"
+image="$registry/$name"
 
-echo "building image $hub:$tag..."
-docker build -f Dockerfile.prod -t "$hub:$tag" .
+echo "building name $image:$tag..."
+docker build -f Dockerfile.prod -t "$image:$tag" .
+docker tag "$image:$tag" "$name:latest"
 
-echo "send build to docker hub $hub:$tag..."
-docker push "$hub:$tag"
-docker push "$hub:latest"
+echo "send build to docker image $image:$tag..."
+docker push "$image:$tag"
+docker push "$image:latest"
 
 echo 'finish build and push'

@@ -3,3 +3,6 @@ export { ucFirst } from './uc-first';
 export { addValuesToModel } from './add-values-to-model';
 export { getOrderByModel } from './get-orderby-model';
 export { multerFileFilter } from './multer-file-filter';
+export { paginationFromRequest } from './pagination-from-request';
+export { findAttributesWithoutTimestamps } from './find-attributes-without-timestamps';
+export { migrationAddDefaultColumns } from './migration-utils';

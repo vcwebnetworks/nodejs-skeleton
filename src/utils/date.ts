@@ -10,7 +10,7 @@ class DateUtil {
       date = Number(date);
     } else if (typeof date === 'string') {
       const [parseDate, parseHour] = date.split(' ', 2);
-      const dateTime = parseHour ? ` ${parseHour}` : '';
+      const dateTime = parseHour ? ` ${parseHour}` : ' 00:00:00';
 
       if (parseDate.match(/^\d{1,2}\/\d{1,2}\/\d{4}$/gi)) {
         date = `${parseDate.split('/').reverse().join('/')}${dateTime}`;

@@ -8,6 +8,7 @@ services:
   app:
     build: .
     entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://redis:6379 -timeout 60s ./.docker/scripts/entrypoint.sh
+    working_dir: /home/node/app
     container_name: node.app
     tty: true
     depends_on:

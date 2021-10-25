@@ -1,13 +1,20 @@
 import cnpj from './cnpj';
 import cpf from './cpf';
+import number from './number';
 
 class Validator {
-  public isValidCpf(value: string): boolean {
+  public isDocumentPhysical(value: string): boolean {
     return cpf.isValid(value);
   }
 
-  public isValidCnpj(value: string): boolean {
+  public isDocumentCompany(value: string): boolean {
     return cnpj.isValid(value);
+  }
+
+  public isPhone(value: string): boolean {
+    const phone = number.only(value);
+
+    return phone.length === 11;
   }
 
   public isCompleteName(value: string): boolean {
