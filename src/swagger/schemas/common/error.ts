@@ -1,4 +1,4 @@
-const swaggerSchemasCommonError = {
+const commonError = {
   type: 'object',
   required: ['*'],
   properties: {
@@ -6,6 +6,18 @@ const swaggerSchemasCommonError = {
     code: { type: 'string' },
     message: { type: 'string' },
     statusCode: { type: 'number' },
+    errors: {
+      type: 'array',
+      required: false,
+      items: {
+        type: 'object',
+        properties: {
+          type: { type: 'string' },
+          path: { type: 'string' },
+          message: { type: 'string' },
+        },
+      },
+    },
     stack: {
       type: 'array',
       items: {
@@ -15,4 +27,4 @@ const swaggerSchemasCommonError = {
   },
 };
 
-export default swaggerSchemasCommonError;
+export default commonError;

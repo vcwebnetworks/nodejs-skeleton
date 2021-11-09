@@ -1,10 +1,10 @@
-const normalizeValue = <T extends any = any>(value: any): T => {
+const normalizeValue = <T = any>(value: any): T => {
   if (Array.isArray(value) || typeof value === 'object') {
     return value;
   }
 
   if (!Number.isNaN(parseFloat(value))) {
-    return <T>parseFloat(value);
+    value = parseFloat(value);
   }
 
   if (value === 'true') {

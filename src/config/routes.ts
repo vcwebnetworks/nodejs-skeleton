@@ -1,4 +1,4 @@
-import { Route } from '@src/types/route';
+import { Route } from '@src/@types/route';
 
 const configRoutes: Route[] = [];
 
