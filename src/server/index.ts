@@ -1,8 +1,6 @@
-import '../config/module-alias';
 import { AddressInfo } from 'net';
 
-import database from '@database/index';
-
+import database from '../database';
 import debug from '../shared/debug';
 import app from './app';
 

@@ -1,3 +1,6 @@
+import '../config/dotenv';
+import '../config/module-alias';
+
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 
 import debug from '@shared/debug';
@@ -31,10 +34,13 @@ const database = new Sequelize({
     ...sequelizeOptions.define,
     paranoid: true,
     underscored: true,
+    timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
     deletedAt: 'deleted_at',
   },
-});
+}) as Sequelize & {
+  models: typeof models;
+};
 
 export default database;
