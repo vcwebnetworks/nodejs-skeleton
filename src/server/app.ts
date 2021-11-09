@@ -17,7 +17,6 @@ import httpGraceFullShutdown from 'http-graceful-shutdown';
 import configApp from '@config/app';
 import configSentry from '@config/sentry';
 import routes from '@server/routes';
-import database from '@src/database';
 import {
   corsMiddleware,
   errorHandlerMiddleware,
@@ -98,9 +97,6 @@ export class App {
   }
 
   public async close(): Promise<void> {
-    await database.close();
-    // await sequelize.connectionManager.close();
-
     if (!this.server.listening) {
       return;
     }

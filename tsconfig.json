@@ -35,7 +35,8 @@
       "@database/*": ["src/database/*"],
       "@middlewares/*": ["src/middlewares/*"],
       "@modules/*": ["src/modules/*"],
-      "@server/*": ["src/server/*"]
+      "@server/*": ["src/server/*"],
+      "@swagger/*": ["src/swagger/*"]
     }
   },
   "exclude": ["node_modules", "dist", ".docker", "./tests"],

@@ -9,9 +9,6 @@ const sequelizeOptions = {
   timezone: process.env.DB_TIMEZONE ?? 'America/Sao_Paulo',
   migrationStorageTableName: process.env.DB_MIGRATION_NAME ?? 'migrations',
   define: {
-    engine: 'InnoDB',
-    timestamps: true,
-    underscored: true,
     charset: process.env.DB_CHARSET ?? 'utf8mb4',
     collate: process.env.DB_COLLATE ?? 'utf8mb4_general_ci',
   },

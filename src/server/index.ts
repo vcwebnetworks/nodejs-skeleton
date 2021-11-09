@@ -1,6 +1,8 @@
 import '../config/module-alias';
 import { AddressInfo } from 'net';
 
+import database from '@database/index';
+
 import debug from '../shared/debug';
 import app from './app';
 
@@ -16,6 +18,7 @@ import app from './app';
     });
   } catch (e) {
     await app.close();
+    await database.close();
 
     debug({
       namespace: 'server',

@@ -11,6 +11,7 @@ addAliases({
   '@shared': resolve(srcDir, 'shared'),
   '@database': resolve(srcDir, 'database'),
   '@middlewares': resolve(srcDir, 'middlewares'),
+  '@swagger': resolve(srcDir, 'swagger'),
   '@modules': resolve(srcDir, 'modules'),
   '@server': resolve(srcDir, 'server'),
 });
