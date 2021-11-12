@@ -6,7 +6,7 @@ require('dotenv').config({
 });
 
 const { resolve, join } = require('path');
-const databaseDirectory = join(__dirname, 'dist', 'database', 'dashboard');
+const databaseDirectory = join(__dirname, 'dist', 'database');
 
 module.exports = {
   config: resolve(databaseDirectory, 'config.js'),
