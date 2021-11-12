@@ -1,3 +1,5 @@
+import '../config/module-alias';
+
 import { AddressInfo } from 'net';
 
 import database from '../database';

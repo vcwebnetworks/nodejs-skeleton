@@ -1,7 +1,7 @@
 import 'reflect-metadata';
+import '../config/module-alias';
 
 import '@config/dotenv';
-import '@config/module-alias';
 import '@config/moment-timezone';
 import '@config/yup-locale';
 
