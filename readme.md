@@ -17,6 +17,8 @@ The architecture defined for the backend consists of defining a set of folders a
   - stores files responsible for the initialization and configuration of the rest full api
 - shared
   - stores libraries, functions, auxiliary classes for every project.
+- swagger
+  - documentation of every api, when creating a route the documentation should be added.
 - utils
   - stores useful functions and classes for system use.
 

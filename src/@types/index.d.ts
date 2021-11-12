@@ -5,7 +5,7 @@ declare namespace Express {
 
   export interface Request {
     isAdmin: boolean;
-    loggedUser: import('@database/models').UserModel;
+    userData: import('@database/models').UserModel;
     bearerToken: string;
     originalMethod: string;
     jwtDecode: {

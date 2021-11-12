@@ -18,7 +18,11 @@ export const addValuesToModel = (
       });
     }
 
-    if (value === '' || value?.toString()?.trim() || value === null) {
+    if (
+      value === '' ||
+      value === null ||
+      value?.toString()?.trim() !== 'undefined'
+    ) {
       model.setDataValue<any>(column, value);
     }
   });

@@ -3,11 +3,11 @@ import cpf from './cpf';
 import number from './number';
 
 class Validator {
-  public isDocumentPhysical(value: string): boolean {
+  public isValidCpf(value: string): boolean {
     return cpf.isValid(value);
   }
 
-  public isDocumentCompany(value: string): boolean {
+  public isValidCnpj(value: string): boolean {
     return cnpj.isValid(value);
   }
 

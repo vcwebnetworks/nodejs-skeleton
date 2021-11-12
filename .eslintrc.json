@@ -20,13 +20,14 @@
   "rules": {
     "camelcase": "off",
     "global-require": "off",
+    "no-shadow": "off",
     "prettier/prettier": "error",
     "no-useless-constructor": "off",
     "no-prototype-builtins": "off",
     "no-param-reassign": "off",
     "no-restricted-syntax": "off",
     "no-unused-vars": [
-      "error",
+      "off",
       {
         "argsIgnorePattern": "^_"
       }
@@ -56,7 +57,7 @@
       }
     ],
     "import-helpers/order-imports": [
-      "warn",
+      "off",
       {
         "newlinesBetween": "always",
         "groups": [

@@ -14,7 +14,7 @@ const configApp = {
   isDevelopment,
   isProduction: !isDevelopment,
 
-  locale: process.env.LOCALE ?? 'pt-br',
+  locale: process.env.LOCALE ?? 'pt_BR',
   timezone: process.env.TZ ?? 'America/Sao_Paulo',
 
   debugNamespace: 'app',
