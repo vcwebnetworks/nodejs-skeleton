@@ -1,15 +1,16 @@
 import { HttpStatusCode } from '@src/enums';
 
-import AppError from './app';
+import { AppError, Options } from './app';
 
 export class InternalServerError extends AppError {
-  constructor(message?: string) {
-    super(
-      message ?? 'Internal Server Error',
-      HttpStatusCode.INTERNAL_SERVER_ERROR,
-    );
+  constructor(options: Partial<Options>) {
+    super({
+      code: 'internal_server_error',
+      statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+      message: 'Internal server error',
+      ...options,
+    });
 
     this.name = 'InternalServerError';
-    this.code = 'internal_server';
   }
 }

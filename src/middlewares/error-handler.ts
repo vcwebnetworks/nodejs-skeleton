@@ -1,48 +1,37 @@
 import { NextFunction, Request, Response } from 'express';
-import { ValidationError as SequelizeValidationError } from 'sequelize';
-import { ValidationError as YupValidationError } from 'yup';
 
 import logger from '@shared/logger';
+import { errorToObject, hideKeysFromAnObject } from '@src/utils';
 
-const mapperValidationError = (item: any) => ({
-  type: item.type,
-  path: item.path,
-  message: item.message,
-});
+const loggerRequestInformation = (request: Request) => {
+  logger.error('request information ->', {
+    path: request.path,
+    method: request.method,
+    cookies: request.cookies,
+    headers: request.headers,
+    params: request.params,
+    query: request.query,
+    body: hideKeysFromAnObject(request.body),
+  });
+};
 
 export const errorHandlerMiddleware = (
   error: any,
-  _request: Request,
+  request: Request,
   response: Response,
-  _next: NextFunction,
+  next: NextFunction,
 ) => {
-  let { message, errors } = error;
-  const statusCode = error.statusCode ?? 400;
-
-  if (error.name.startsWith('Sequelize')) {
-    message = (<any>error).errors?.[0]?.message ?? error.message;
+  if (response.headersSent) {
+    return next(error);
   }
 
-  if (error instanceof YupValidationError) {
-    message = error.errors[0] ?? message;
-    errors = error.inner.map(mapperValidationError);
+  if (request?.bearerToken && process.env.NODE_ENV === 'production') {
+    loggerRequestInformation(request);
   }
 
-  if (error instanceof SequelizeValidationError) {
-    errors = error.errors.map(mapperValidationError);
-  }
+  const errorObject = errorToObject(error);
 
-  if (process.env.NODE_ENV === 'production') {
-    logger.error(error.message, error);
-  }
+  response.statusCode = errorObject.statusCode;
 
-  return response.status(statusCode).json({
-    name: error.name,
-    statusCode,
-    sentry: (<any>response).sentry,
-    message: message ?? error,
-    stack: error.stack?.split('\n'),
-    code: error?.code ?? 'default',
-    errors,
-  });
+  return response.json(errorObject);
 };

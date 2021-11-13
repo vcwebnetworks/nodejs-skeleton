@@ -1,12 +1,15 @@
 import { HttpStatusCode } from '@src/enums';
 
-import AppError from './app';
+import { AppError, Options } from './app';
 
-export default class ForbiddenError extends AppError {
-  constructor(message = 'Forbidden', code?: string) {
-    super(message, HttpStatusCode.FORBIDDEN);
+export class ForbiddenError extends AppError {
+  constructor(options: Options) {
+    super({
+      code: 'forbidden',
+      statusCode: HttpStatusCode.FORBIDDEN,
+      ...options,
+    });
 
     this.name = 'ForbiddenError';
-    this.code = code ?? 'forbidden';
   }
 }

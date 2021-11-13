@@ -1,12 +1,15 @@
 import { HttpStatusCode } from '@src/enums';
 
-import AppError from './app';
+import { AppError, Options } from './app';
 
 export class NotAcceptableError extends AppError {
-  constructor(message: string) {
-    super(message, HttpStatusCode.NOT_ACCEPTABLE);
+  constructor(options: Options) {
+    super({
+      code: 'not_acceptable',
+      statusCode: HttpStatusCode.NOT_ACCEPTABLE,
+      ...options,
+    });
 
     this.name = 'NotAcceptableError';
-    this.code = 'not_acceptable';
   }
 }

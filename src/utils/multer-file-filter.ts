@@ -14,9 +14,9 @@ export const multerFileFilter =
       if (!mimeTypes.includes(file.mimetype)) {
         const extensions = mimeTypes.map(row => row.split('/')[1]);
 
-        throw new ForbiddenError(
-          `Only ${extensions.join(',')} extensions are allowed.`,
-        );
+        throw new ForbiddenError({
+          message: `Only ${extensions.join(',')} extensions are allowed.`,
+        });
       }
 
       callback(null, true);

@@ -1,10 +1,11 @@
 import { BadRequestError } from '@errors/bad-request';
 
-export default class InvalidParamError extends BadRequestError {
-  constructor(message: string) {
-    super(message);
+import { Options } from './app';
+
+export class InvalidParamError extends BadRequestError {
+  constructor(options: Options) {
+    super({ code: 'invalid_param', ...options });
 
     this.name = 'InvalidParamError';
-    this.code = 'invalid_param';
   }
 }

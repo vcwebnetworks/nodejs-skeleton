@@ -1,4 +1,4 @@
-import AppError from '@errors/app';
+import { AppError } from '@errors/app';
 
 class DateUtil {
   public parse(date: Date | string | number, check = true): Date {
@@ -22,7 +22,7 @@ class DateUtil {
     const newDate = new Date(date);
 
     if (check && !this.isValid(newDate)) {
-      throw new AppError(`Invalid date ${date}`);
+      throw new AppError({ message: `Invalid date ${date}` });
     }
 
     return newDate;

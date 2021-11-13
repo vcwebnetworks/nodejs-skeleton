@@ -1,12 +1,15 @@
 import { HttpStatusCode } from '@src/enums';
 
-import AppError from './app';
+import { AppError, Options } from './app';
 
 export class ConflictError extends AppError {
-  constructor(message: string) {
-    super(message, HttpStatusCode.CONFLICT);
+  constructor(options: Options) {
+    super({
+      code: 'conflict',
+      statusCode: HttpStatusCode.CONFLICT,
+      ...options,
+    });
 
     this.name = 'ConflictError';
-    this.code = 'conflict';
   }
 }

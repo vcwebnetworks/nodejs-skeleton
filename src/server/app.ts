@@ -20,6 +20,7 @@ import routes from '@server/routes';
 import {
   corsMiddleware,
   errorHandlerMiddleware,
+  i18nextMiddleware,
   methodOverrideMiddleware,
   morganMiddleware,
   notFoundMiddleware,
@@ -65,11 +66,12 @@ export class App {
       this.app.use(Sentry.Handlers.tracingHandler() as RequestHandler);
     }
 
-    this.app.use(helmet() as RequestHandler);
     this.app.use(express.json() as RequestHandler);
     this.app.use(express.urlencoded({ extended: true }) as RequestHandler);
     this.app.use(cookieParser(configApp.appKey));
+    this.app.use(helmet() as RequestHandler);
     this.app.use(morganMiddleware as RequestHandler);
+    this.app.use(i18nextMiddleware);
     this.app.use(corsMiddleware);
     this.app.use(methodOverrideMiddleware);
     this.app.use(rateLimiterMiddleware);

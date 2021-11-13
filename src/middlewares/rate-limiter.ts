@@ -3,7 +3,7 @@ import IORedis from 'ioredis';
 import { RateLimiterRedis } from 'rate-limiter-flexible';
 
 import configRateLimiter from '@config/rate-limiter';
-import RateLimiterError from '@errors/rate-limiter';
+import { RateLimiterError } from '@src/errors';
 
 const {
   REDIS_RATE_LIMIT_HOST,

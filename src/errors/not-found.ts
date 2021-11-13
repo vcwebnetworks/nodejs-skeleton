@@ -1,12 +1,15 @@
 import { HttpStatusCode } from '@src/enums';
 
-import AppError from './app';
+import { AppError, Options } from './app';
 
-export default class NotFoundError extends AppError {
-  constructor(message: string) {
-    super(message, HttpStatusCode.NOT_FOUND);
+export class NotFoundError extends AppError {
+  constructor(options: Options) {
+    super({
+      code: 'not_found',
+      statusCode: HttpStatusCode.NOT_FOUND,
+      ...options,
+    });
 
     this.name = 'NotFoundError';
-    this.code = 'not_found';
   }
 }

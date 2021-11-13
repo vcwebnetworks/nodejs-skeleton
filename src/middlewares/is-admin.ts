@@ -4,7 +4,7 @@ import { UnauthorizedError } from '@src/errors';
 
 export const isAdmin = (request: Request, _: Response, next: NextFunction) => {
   if (request.bearerToken !== process.env.ADMIN_KEY) {
-    throw new UnauthorizedError('Access denied.');
+    throw new UnauthorizedError({ message: 'Access denied.' });
   }
 
   request.isAdmin = true;

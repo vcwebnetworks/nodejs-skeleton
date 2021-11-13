@@ -1,12 +1,15 @@
 import { HttpStatusCode } from '@src/enums';
 
-import AppError from './app';
+import { AppError, Options } from './app';
 
 export class BadRequestError extends AppError {
-  constructor(message = 'BadRequest') {
-    super(message, HttpStatusCode.BAD_REQUEST);
+  constructor(options: Options) {
+    super({
+      code: 'bad_request',
+      statusCode: HttpStatusCode.BAD_REQUEST,
+      ...options,
+    });
 
     this.name = 'BadRequestError';
-    this.code = 'badrequest';
   }
 }

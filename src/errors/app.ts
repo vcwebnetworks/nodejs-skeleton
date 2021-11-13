@@ -1,19 +1,43 @@
 import { HttpStatusCode } from '@src/enums';
 
-export default class AppError extends Error {
-  constructor(
-    public message: string,
-    public statusCode = HttpStatusCode.BAD_REQUEST,
-    public code = 'default',
-  ) {
-    super(message);
+export interface Options {
+  code?: string;
+  message: string;
+  description?: string;
+  metadata?: Record<string, any>;
+  statusCode?: HttpStatusCode;
+  originalError?: Error;
+}
+
+export class AppError extends Error {
+  constructor(options: Options) {
+    super(options.message);
 
     Object.setPrototypeOf(this, AppError.prototype);
 
-    this.code = code;
+    const {
+      code = 'default',
+      description = null,
+      metadata,
+      originalError,
+      statusCode = HttpStatusCode.BAD_REQUEST,
+    } = options;
+
     this.name = 'AppError';
-    this.statusCode = statusCode;
+
+    this.defineProperty('code', code);
+    this.defineProperty('metadata', metadata);
+    this.defineProperty('statusCode', statusCode);
+    this.defineProperty('description', description);
+    this.defineProperty('originalError', originalError);
 
     Error.captureStackTrace(this, this.constructor);
+  }
+
+  protected defineProperty(key: string, value: any) {
+    Object.defineProperty(this, key, {
+      writable: false,
+      value,
+    });
   }
 }

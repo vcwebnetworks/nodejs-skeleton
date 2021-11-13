@@ -1,10 +1,11 @@
 import { BadRequestError } from '@errors/bad-request';
 
+import { Options } from './app';
+
 export class MissingParamError extends BadRequestError {
-  constructor(message: string) {
-    super(message);
+  constructor(options: Options) {
+    super({ code: 'missing_param', ...options });
 
     this.name = 'MissingParamError';
-    this.code = 'missing_param';
   }
 }

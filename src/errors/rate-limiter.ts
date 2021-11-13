@@ -1,12 +1,16 @@
 import { HttpStatusCode } from '@src/enums';
 
-import AppError from './app';
+import { AppError, Options } from './app';
 
-export default class RateLimiterError extends AppError {
-  constructor(message = 'To many requests') {
-    super(message, HttpStatusCode.MANY_REQUEST);
+export class RateLimiterError extends AppError {
+  constructor(options?: Partial<Options>) {
+    super({
+      code: 'rate_limiter',
+      statusCode: HttpStatusCode.MANY_REQUEST,
+      message: 'To many requests',
+      ...options,
+    });
 
     this.name = 'RateLimiterError';
-    this.code = 'rate_limiter';
   }
 }

@@ -1,12 +1,16 @@
 import { HttpStatusCode } from '@src/enums';
 
-import AppError from './app';
+import { AppError, Options } from './app';
 
-export default class UnauthorizedError extends AppError {
-  constructor(message = 'Unauthorized', code?: string) {
-    super(message, HttpStatusCode.UNAUTHORIZED);
+export class UnauthorizedError extends AppError {
+  constructor(options?: Partial<Options>) {
+    super({
+      code: 'unauthorized',
+      statusCode: HttpStatusCode.UNAUTHORIZED,
+      message: 'Unauthorized',
+      ...options,
+    });
 
     this.name = 'UnauthorizedError';
-    this.code = code ?? 'unauthorized';
   }
 }
