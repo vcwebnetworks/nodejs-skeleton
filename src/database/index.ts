@@ -1,5 +1,9 @@
+import 'reflect-metadata';
+
 import '../config/dotenv';
 import '../config/module-alias';
+import '../config/moment-timezone';
+import '../translations';
 
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 

@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import { ValidationError as YupValidationError } from 'yup';
 
 import logger from '@shared/logger';
@@ -59,7 +58,7 @@ export const errorToObject = (error: any): Response => {
     name: error.name,
     statusCode,
     code: error?.code ?? 'default',
-    message: message ? i18next.t(message) : error,
+    message: message ?? error,
     stack: error?.stack?.split('\n'),
     description: error?.description,
     originalError: error?.originalError,

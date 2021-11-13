@@ -31,6 +31,8 @@ export const errorHandlerMiddleware = (
 
   const errorObject = errorToObject(error);
 
+  errorObject.message = request.i18n.t(errorObject.message);
+
   response.statusCode = errorObject.statusCode;
 
   return response.json(errorObject);

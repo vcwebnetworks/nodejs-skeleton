@@ -1,9 +1,9 @@
 import 'reflect-metadata';
-import '../config/module-alias';
 
-import '@config/dotenv';
-import '@config/moment-timezone';
-import '@config/yup-locale';
+import '../config/dotenv';
+import '../config/module-alias';
+import '../config/moment-timezone';
+import '../translations';
 
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -20,7 +20,7 @@ import routes from '@server/routes';
 import {
   corsMiddleware,
   errorHandlerMiddleware,
-  i18nextMiddleware,
+  translationMiddleware,
   methodOverrideMiddleware,
   morganMiddleware,
   notFoundMiddleware,
@@ -71,7 +71,7 @@ export class App {
     this.app.use(cookieParser(configApp.appKey));
     this.app.use(helmet() as RequestHandler);
     this.app.use(morganMiddleware as RequestHandler);
-    this.app.use(i18nextMiddleware);
+    this.app.use(translationMiddleware);
     this.app.use(corsMiddleware);
     this.app.use(methodOverrideMiddleware);
     this.app.use(rateLimiterMiddleware);
