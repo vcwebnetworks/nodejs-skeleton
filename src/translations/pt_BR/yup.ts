@@ -1,7 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 /* https://github.com/arfurlaneto/yup-locale-pt/blob/master/src/locale.ts */
 
-import { setLocale } from 'yup';
 import printValue from 'yup/lib/util/printValue';
 
 export const mixed = {
@@ -78,7 +77,7 @@ export const array = {
     `${path} deve ter no máximo ${max} ${max === 1 ? 'item' : 'itens'}`,
 };
 
-setLocale({
+export default {
   mixed,
   string,
   number,
@@ -86,4 +85,4 @@ setLocale({
   object,
   array,
   boolean,
-});
+};
