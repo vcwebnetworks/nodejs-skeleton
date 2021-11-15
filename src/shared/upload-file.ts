@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { mkdirp } from '@src/utils';
+import { mkdirp } from '@/utils';
 
 interface RequestSave {
   file: Express.Multer.File;

@@ -1,7 +1,7 @@
 import { ValidationError as YupValidationError } from 'yup';
 
-import logger from '@shared/logger';
-import { HttpStatusCode } from '@src/enums';
+import { HttpStatusCode } from '@/enums';
+import logger from '@/shared/logger';
 
 interface ValidatorError {
   type: string;

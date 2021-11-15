@@ -1,4 +1,4 @@
-import { BadRequestError } from '@errors/bad-request';
+import { BadRequestError } from '@/errors/bad-request';
 
 import { Options } from './app';
 

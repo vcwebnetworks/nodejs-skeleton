@@ -1,6 +1,6 @@
 import { sign, SignOptions, verify, VerifyOptions } from 'jsonwebtoken';
 
-import configApp from '@config/app';
+import configApp from '@/config/app';
 
 export class Jwt {
   protected secretKey: string;

@@ -1,7 +1,7 @@
 import { DataTypes, QueryInterface } from 'sequelize';
 
-import configTables from '@config/tables';
-import { migrationAddDefaultColumns } from '@src/utils';
+import configTables from '@/config/tables';
+import { migrationAddDefaultColumns } from '@/utils';
 
 const tableName = configTables.user;
 

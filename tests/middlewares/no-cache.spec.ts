@@ -1,7 +1,6 @@
 import express from 'express';
 import supertest from 'supertest';
-
-import { noCacheMiddleware } from '@middlewares/no-cache';
+import { noCacheMiddleware } from '@/middlewares/no-cache';
 
 describe('Middleware -> no-cache', () => {
   it('should return the configured headers', async () => {

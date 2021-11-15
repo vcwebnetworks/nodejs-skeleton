@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import multer from 'multer';
 
-import { ForbiddenError } from '@src/errors';
+import { ForbiddenError } from '@/errors';
 
 export const multerFileFilter =
   (mimeTypes: string[]) =>

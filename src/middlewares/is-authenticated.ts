@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { UnauthorizedError } from '@src/errors';
-
-import { UserModel } from '@database/models';
+import { UserModel } from '@/database/models';
+import { UnauthorizedError } from '@/errors';
 
 const validateLoggedUser = async (request: Request) => {
   const rowUser = await UserModel.findOne({

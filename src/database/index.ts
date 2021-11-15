@@ -7,7 +7,7 @@ import '../translations';
 
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 
-import debug from '@shared/debug';
+import debug from '@/shared/debug';
 
 import sequelizeOptions from './config';
 import * as models from './models';

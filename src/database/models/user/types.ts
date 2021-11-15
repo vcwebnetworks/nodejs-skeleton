@@ -1,4 +1,4 @@
-import { TimestampWithSoftDelete } from '@src/@types/model-dates';
+import { TimestampWithSoftDelete } from '@/@types/model-dates';
 
 export interface UserDto {
   name: string;

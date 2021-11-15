@@ -1,6 +1,6 @@
 import IORedis, { Redis as RedisClient } from 'ioredis';
 
-import configRedis from '@config/redis';
+import configRedis from '@/config/redis';
 
 class Redis {
   protected prefix?: string;

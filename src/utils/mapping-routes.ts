@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { Route } from '@src/@types/route';
-import { isAdmin, isAuthenticated } from '@src/middlewares';
+import { Route } from '@/@types/route';
+import { isAdmin, isAuthenticated } from '@/middlewares';
 
 const mappingRoutes = (router: Router) => (route: Route) => {
   if (Array.isArray(route.path)) {

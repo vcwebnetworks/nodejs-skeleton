@@ -1,10 +1,9 @@
 import { Router } from 'express';
 
-import configRoutes from '@config/routes';
-import { isBearerToken } from '@src/middlewares';
-import swaggerRoutes from '@src/swagger';
-
-import mappingRoutes from '@utils/mapping-routes';
+import configRoutes from '@/config/routes';
+import { isBearerToken } from '@/middlewares';
+import swaggerRoutes from '@/swagger';
+import mappingRoutes from '@/utils/mapping-routes';
 
 const routes = Router({
   strict: true,

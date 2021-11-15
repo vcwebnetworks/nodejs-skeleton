@@ -1,4 +1,4 @@
-import authenticationLogin from '@src/swagger/paths/authentication/login';
+import authenticationLogin from '@/swagger/paths/authentication/login';
 
 const paths = {
   '/auth/login': authenticationLogin,

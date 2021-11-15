@@ -1,4 +1,4 @@
-import configApp from '@config/app';
+import configApp from '@/config/app';
 
 interface IRequest {
   args?: any[];

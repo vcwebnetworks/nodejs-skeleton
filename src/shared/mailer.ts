@@ -1,6 +1,6 @@
 import { createTransport } from 'nodemailer';
 
-import normalizeValue from '@src/utils/normalize-value';
+import normalizeValue from '@/utils/normalize-value';
 
 const mailer = createTransport({
   host: process.env.MAIL_HOST,

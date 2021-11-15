@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { UnauthorizedError } from '@src/errors';
+import { UnauthorizedError } from '@/errors';
 
 export const isAdmin = (request: Request, _: Response, next: NextFunction) => {
   if (request.bearerToken !== process.env.ADMIN_KEY) {

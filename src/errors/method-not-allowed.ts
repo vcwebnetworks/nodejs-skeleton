@@ -1,6 +1,6 @@
 import { Request } from 'express';
 
-import { HttpStatusCode } from '@src/enums';
+import { HttpStatusCode } from '@/enums';
 
 import { AppError } from './app';
 

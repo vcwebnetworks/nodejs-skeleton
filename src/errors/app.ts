@@ -1,4 +1,4 @@
-import { HttpStatusCode } from '@src/enums';
+import { HttpStatusCode } from '@/enums';
 
 export interface Options {
   code?: string;

@@ -1,4 +1,4 @@
-import swaggerSchemasUser from '@src/swagger/schemas/user';
+import swaggerSchemasUser from '@/swagger/schemas/user';
 
 import commonError from './schemas/common/error';
 

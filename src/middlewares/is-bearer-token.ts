@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { TokenExpiredError } from 'jsonwebtoken';
 
-import jwt from '@shared/jwt';
-import { UnauthorizedError } from '@src/errors';
+import { UnauthorizedError } from '@/errors';
+import jwt from '@/shared/jwt';
 
 const { API_KEY, ADMIN_KEY } = process.env;
 

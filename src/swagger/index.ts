@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import swagger from 'swagger-ui-express';
 
-import { noCacheMiddleware } from '@src/middlewares';
+import { noCacheMiddleware } from '@/middlewares';
 
 import components from './components';
 import info from './info';

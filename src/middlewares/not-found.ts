@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { MethodNotAllowedError, PageNotFoundError } from '@src/errors';
+import { MethodNotAllowedError, PageNotFoundError } from '@/errors';
 
 export const notFoundMiddleware = (
   request: Request,

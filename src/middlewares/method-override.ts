@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import configCors from '@config/cors';
+import configCors from '@/config/cors';
 
 export const methodOverrideMiddleware = (
   request: Request,

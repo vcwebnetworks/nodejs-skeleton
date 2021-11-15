@@ -1,8 +1,8 @@
-import swaggerComponentsErrorsBadRequest from '@src/swagger/components/errors/badRequest';
-import swaggerComponentsErrorsForbidden from '@src/swagger/components/errors/forbidden';
-import swaggerComponentsErrorsNotFound from '@src/swagger/components/errors/notFound';
-import swaggerComponentsErrorsServerError from '@src/swagger/components/errors/serverError';
-import swaggerComponentsErrorsUnauthorized from '@src/swagger/components/errors/unauthorized';
+import swaggerComponentsErrorsBadRequest from '@/swagger/components/errors/badRequest';
+import swaggerComponentsErrorsForbidden from '@/swagger/components/errors/forbidden';
+import swaggerComponentsErrorsNotFound from '@/swagger/components/errors/notFound';
+import swaggerComponentsErrorsServerError from '@/swagger/components/errors/serverError';
+import swaggerComponentsErrorsUnauthorized from '@/swagger/components/errors/unauthorized';
 
 const swaggerComponents = {
   errors: {

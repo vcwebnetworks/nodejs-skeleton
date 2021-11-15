@@ -1,6 +1,6 @@
 import { ParsedUrlQueryInput, stringify } from 'querystring';
 
-import hash from '@shared/hash';
+import hash from '@/shared/hash';
 
 const getImageGravatar = (email: string, params?: ParsedUrlQueryInput) => {
   const query = params ? `?${stringify(params)}` : '';

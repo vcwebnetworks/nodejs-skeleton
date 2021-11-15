@@ -60,12 +60,7 @@
       "warn",
       {
         "newlinesBetween": "always",
-        "groups": [
-          "module",
-          "/^@(src|server|config|shared|errors)/",
-          "/^@(utils|database|middlewares|modules)/",
-          ["parent", "sibling", "index"]
-        ],
+        "groups": ["module", "/^@//", ["parent", "sibling", "index"]],
         "alphabetize": {
           "order": "asc",
           "ignoreCase": true

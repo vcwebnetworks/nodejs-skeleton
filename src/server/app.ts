@@ -14,9 +14,8 @@ import helmet from 'helmet';
 import http from 'http';
 import httpGraceFullShutdown from 'http-graceful-shutdown';
 
-import configApp from '@config/app';
-import configSentry from '@config/sentry';
-import routes from '@server/routes';
+import configApp from '@/config/app';
+import configSentry from '@/config/sentry';
 import {
   corsMiddleware,
   errorHandlerMiddleware,
@@ -25,7 +24,8 @@ import {
   morganMiddleware,
   notFoundMiddleware,
   rateLimiterMiddleware,
-} from '@src/middlewares';
+} from '@/middlewares';
+import routes from '@/server/routes';
 
 export class App {
   protected app: express.Application;

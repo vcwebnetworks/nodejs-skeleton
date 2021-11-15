@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-import configApp from '@config/app';
+import configApp from '@/config/app';
 
 class Encryption {
   private readonly key: crypto.BinaryLike;

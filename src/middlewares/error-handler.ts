@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
-import logger from '@shared/logger';
-import { errorToObject, hideKeysFromAnObject } from '@src/utils';
+import logger from '@/shared/logger';
+import { errorToObject, hideKeysFromAnObject } from '@/utils';
 
 const loggerRequestInformation = (request: Request) => {
   logger.error('request information ->', {
