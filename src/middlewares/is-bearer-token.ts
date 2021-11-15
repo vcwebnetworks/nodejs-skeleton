@@ -46,9 +46,7 @@ export const extractTokenInRequest = (request: Request): string => {
 
 async function validateJwtToken(request: Request) {
   try {
-    request.jwtDecode = await jwt.decode<Request['jwtDecode']>(
-      request.bearerToken,
-    );
+    request.jwtDecode = await jwt.decode(request.bearerToken);
   } catch (e) {
     let errorCode = 'token.invalid';
 

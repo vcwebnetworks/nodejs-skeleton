@@ -25,7 +25,7 @@ import {
   notFoundMiddleware,
   rateLimiterMiddleware,
 } from '@/middlewares';
-import routes from '@/server/routes';
+import appRoutes from '@/server/routes';
 
 export class App {
   protected app: express.Application;
@@ -45,7 +45,7 @@ export class App {
           new Sentry.Integrations.Http({ tracing: true }),
           new Tracing.Integrations.Express({
             app: this.app,
-            router: routes,
+            router: appRoutes,
             methods: ['all'],
           }),
         ],
@@ -80,7 +80,7 @@ export class App {
       this.app.use('/uploads', express.static(configApp.uploadDir));
     }
 
-    this.app.use(routes);
+    this.app.use(appRoutes);
     this.app.use(notFoundMiddleware);
 
     if (configSentry.enable) {

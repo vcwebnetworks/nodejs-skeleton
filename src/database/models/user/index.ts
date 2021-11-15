@@ -1,3 +1,4 @@
+import { DataTypes } from 'sequelize';
 import { Column, Table } from 'sequelize-typescript';
 
 import configTables from '@/config/tables';
@@ -7,12 +8,12 @@ import { User, UserDto } from './types';
 
 @Table({ tableName: configTables.user })
 export class UserModel extends BaseModel<User, UserDto> {
-  @Column
-  public name: string;
+  @Column({ type: DataTypes.STRING })
+  public name: UserDto['name'];
 
-  @Column
-  public email: string;
+  @Column({ type: DataTypes.STRING })
+  public email: UserDto['email'];
 
-  @Column
-  public password: string;
+  @Column({ type: DataTypes.STRING })
+  public password: UserDto['password'];
 }

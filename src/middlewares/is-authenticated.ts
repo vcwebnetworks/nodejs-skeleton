@@ -2,10 +2,12 @@ import { NextFunction, Request, Response } from 'express';
 
 import { UserModel } from '@/database/models';
 import { UnauthorizedError } from '@/errors';
+import { findAttributesWithoutTimestamps } from '@/utils';
 
 const validateLoggedUser = async (request: Request) => {
   const rowUser = await UserModel.findOne({
     where: { id: request.jwtDecode.sub },
+    attributes: findAttributesWithoutTimestamps(),
   });
 
   if (!rowUser) {

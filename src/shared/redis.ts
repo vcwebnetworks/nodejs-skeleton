@@ -10,7 +10,7 @@ class Redis {
   constructor(options?: IORedis.RedisOptions) {
     this.prefix = options?.keyPrefix ?? '';
 
-    if (!this.prefix.endsWith(':')) {
+    if (this.prefix.length && !this.prefix.endsWith(':')) {
       this.prefix = `${this.prefix}:`;
     }
 
