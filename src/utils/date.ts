@@ -1,4 +1,4 @@
-import { AppError } from '@/errors/app';
+import { AppError } from '@/errors';
 
 class DateUtil {
   public parse(date: Date | string | number, check = true): Date {
