@@ -8,6 +8,7 @@ import '../translations';
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 
 import debug from '@/shared/debug';
+import logger from '@/shared/logger';
 
 import sequelizeOptions from './config';
 import * as models from './models';
@@ -45,6 +46,22 @@ const database = new Sequelize({
   },
 }) as Sequelize & {
   models: typeof models;
+};
+
+export const authenticateDatabase = async () => {
+  await database.authenticate();
+
+  if (database.options.timezone) {
+    await database.query(`SET timezone TO '${database.options.timezone}'`);
+  }
+
+  if (database.options.define?.charset) {
+    await database.query(
+      `SET client_encoding TO '${database.options.define?.charset}'`,
+    );
+  }
+
+  logger.info('database connection has been established successfully.');
 };
 
 export default database;

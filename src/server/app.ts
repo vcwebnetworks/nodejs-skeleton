@@ -3,7 +3,6 @@ import 'reflect-metadata';
 import '../config/dotenv';
 import '../config/module-alias';
 import '../config/moment-timezone';
-import '../translations';
 
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -54,10 +53,6 @@ export class App {
 
     this.app.set('trust proxy', true);
     this.app.set('x-powered-by', false);
-
-    this.server.on('listening', () => {
-      this.registerMiddlewares();
-    });
   }
 
   public registerMiddlewares(): void {
@@ -92,9 +87,11 @@ export class App {
 
   public async start(): Promise<http.Server> {
     return new Promise(resolve => {
-      this.server = this.server.listen(this.port);
-      httpGraceFullShutdown(this.server);
-      resolve(this.server);
+      this.server = this.server.listen(this.port, () => {
+        this.registerMiddlewares();
+        httpGraceFullShutdown(this.server);
+        resolve(this.server);
+      });
     });
   }
 
@@ -103,13 +100,11 @@ export class App {
       return;
     }
 
-    await new Promise((resolve, reject) => {
+    await new Promise((_, reject) => {
       this.server.close(err => {
         if (err) {
           reject(err);
         }
-
-        resolve(true);
       });
     });
   }
