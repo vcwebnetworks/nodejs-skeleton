@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import '../config/dotenv';
 import '../config/module-alias';
 import '../config/moment-timezone';
+import '../translations';
 
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
