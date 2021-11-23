@@ -6,11 +6,14 @@ export const hideKeysFromAnObject = (
 
   const allKeys = [...keys, 'password', 'password_confirm'];
 
-  for (const parameter of allKeys) {
-    if (payload[parameter]) {
-      payload[parameter] = '*';
+  Object.entries(payload).forEach(([key, value]) => {
+    if (
+      allKeys.includes(key) ||
+      String(value).match(/data:image\/(.+);/gm)
+    ) {
+      payload[key] = '******';
     }
-  }
+  });
 
   return payload;
 };
