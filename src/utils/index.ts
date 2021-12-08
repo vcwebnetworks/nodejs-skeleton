@@ -8,3 +8,4 @@ export { findAttributesWithoutTimestamps } from './find-attributes-without-times
 export { migrationAddDefaultColumns } from './migration-utils';
 export { errorToObject } from './error-to-object';
 export { hideKeysFromAnObject } from './hide-keys-from-an-object';
+export { runMigrations } from './run-migrations';

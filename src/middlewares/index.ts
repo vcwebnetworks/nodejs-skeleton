@@ -8,4 +8,4 @@ export { notFoundMiddleware } from './not-found';
 export { rateLimiterMiddleware } from './rate-limiter';
 export { isAuthenticated } from './is-authenticated';
 export { isAdmin } from './is-admin';
-export { translationMiddleware } from './translation';
+export { translationMiddleware, translationYupMiddleware } from './translation';

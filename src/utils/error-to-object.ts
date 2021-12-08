@@ -9,6 +9,12 @@ interface ValidatorError {
   message: string;
 }
 
+interface Metadata {
+  [key: string]: any;
+
+  validators: ValidatorError[];
+}
+
 interface Response {
   code: string;
   name: string;
@@ -16,7 +22,7 @@ interface Response {
   stack?: string[];
   statusCode: number;
   description?: string;
-  metadata: Record<string, any>;
+  metadata: Metadata;
   originalError?: any;
 }
 

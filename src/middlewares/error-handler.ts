@@ -33,6 +33,15 @@ export const errorHandlerMiddleware = (
 
   errorObject.message = request.i18n.t(errorObject.message);
 
+  if (errorObject.metadata?.validators?.length) {
+    errorObject.metadata.validators = errorObject.metadata.validators.map(
+      row => ({
+        ...row,
+        message: request.i18n.t(row.message),
+      }),
+    );
+  }
+
   response.statusCode = errorObject.statusCode;
 
   return response.json(errorObject);
