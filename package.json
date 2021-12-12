@@ -25,7 +25,9 @@
     "test:staged": "yarn test -o",
     "test:ci": "yarn test --coverage --no-cache",
     "updatelibs": "npm-check -s -u",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "changelog": "conventional-changelog -i CHANGELOG.md -s -r 0",
+    "generate-tag": "git tag --force v$(node -e \"console.log(require('./package.json').version)\") HEAD"
   },
   "dependencies": {
     "@sentry/node": "^6.14.1",
@@ -86,6 +88,9 @@
     "@types/yup": "^0.29.13",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
+    "commitizen": "^4.2.4",
+    "conventional-changelog-cli": "^2.1.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
@@ -93,7 +98,6 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-import-helpers": "^1.1.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "git-commit-msg-linter": "^3.2.8",
     "husky": "^7.0.4",
     "jest": "^27.3.1",
     "npm-check": "^5.9.2",
@@ -105,5 +109,10 @@
     "ts-jest": "^27.0.7",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
