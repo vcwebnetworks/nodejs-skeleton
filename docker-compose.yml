@@ -84,7 +84,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - .docker/postgres/dbdata:/var/lib/postgresql/data:z
+      - node.postgres:/var/lib/postgresql/data:z
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
@@ -99,7 +99,11 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - .docker/redis:/bitnami/redis/data:z
+      - node.redis:/bitnami/redis/data:z
     environment:
       REDIS_PASSWORD: redis
       ALLOW_EMPTY_PASSWORD: 'no'
+
+volumes:
+  node.postgres:
+  node.redis:

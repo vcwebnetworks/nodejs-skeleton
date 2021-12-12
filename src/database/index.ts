@@ -21,6 +21,10 @@ if (process.env.NODE_ENV === 'test') {
   (<any>sequelizeOptions).logging = false;
 }
 
+type SequelizeOptionsWithModels = Sequelize & {
+  models: typeof models;
+};
+
 const database = new Sequelize({
   ...(sequelizeOptions as SequelizeOptions),
   models: Object.values(models),
@@ -44,9 +48,7 @@ const database = new Sequelize({
     updatedAt: 'updated_at',
     deletedAt: 'deleted_at',
   },
-}) as Sequelize & {
-  models: typeof models;
-};
+}) as SequelizeOptionsWithModels;
 
 export const authenticateDatabase = async () => {
   await database.authenticate();

@@ -1,4 +1,10 @@
-import { DataTypes, literal, Model, ModelAttributes } from 'sequelize';
+import {
+  DataTypes,
+  literal,
+  Model,
+  ModelAttributes,
+  QueryInterface,
+} from 'sequelize';
 
 interface Params {
   mergeColumns: ModelAttributes<Model<any, any>, any>;
@@ -37,3 +43,21 @@ export const migrationAddDefaultColumns = ({
       }
     : {}),
 });
+
+export const migrationAddDefaultIndexes = async ({
+  tableName,
+  queryInterface,
+  softDelete = true,
+}: {
+  tableName: string;
+  queryInterface: QueryInterface;
+  softDelete?: boolean;
+}) => {
+  await queryInterface.addIndex(tableName, ['id']);
+  await queryInterface.addIndex(tableName, ['created_at']);
+  await queryInterface.addIndex(tableName, ['updated_at']);
+
+  if (softDelete) {
+    await queryInterface.addIndex(tableName, ['deleted_at']);
+  }
+};

@@ -11,7 +11,7 @@ src/uploads/*
 !.docker/mysql/data/.gitkeep
 
 .docker/postgres/dbdata/*
-!.docker/postgres/.gitkeep
+!.docker/postgres/dbdata/.gitkeep
 
 .docker/redis/*
 !.docker/redis/.gitkeep

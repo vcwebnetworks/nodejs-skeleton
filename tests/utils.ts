@@ -1,5 +1,6 @@
 import { Application, NextFunction, Request, Response } from 'express';
 import supertest from 'supertest';
+
 import app from '@/server/app';
 
 const injectHeaderAuthorizationInApp = (application: Application) => {
