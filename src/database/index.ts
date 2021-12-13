@@ -7,13 +7,14 @@ import '../translations';
 
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 
+import { DbType } from '@/enums';
 import debug from '@/shared/debug';
 import logger from '@/shared/logger';
 
 import sequelizeOptions from './config';
 import * as models from './models';
 
-if (process.env.DB_TYPE === 'sqlite') {
+if (process.env.DB_TYPE === DbType.SQLITE) {
   delete (<any>sequelizeOptions).timezone;
 }
 
@@ -21,12 +22,11 @@ if (process.env.NODE_ENV === 'test') {
   (<any>sequelizeOptions).logging = false;
 }
 
-type SequelizeOptionsWithModels = Sequelize & {
-  models: typeof models;
-};
+type SequelizeOptionsWithModels = Sequelize & { models: typeof models };
 
-const database = new Sequelize({
-  ...(sequelizeOptions as SequelizeOptions),
+let database: Sequelize;
+
+const connectionOptions: SequelizeOptions = {
   models: Object.values(models),
   dialect: process.env.DB_TYPE as SequelizeOptions['dialect'],
   minifyAliases: true,
@@ -48,7 +48,16 @@ const database = new Sequelize({
     updatedAt: 'updated_at',
     deletedAt: 'deleted_at',
   },
-}) as SequelizeOptionsWithModels;
+};
+
+if (`${process.env.DB_URI}`.length > 0) {
+  database = new Sequelize(`${process.env.DB_URI}`, connectionOptions);
+} else {
+  database = new Sequelize({
+    ...(sequelizeOptions as SequelizeOptions),
+    ...connectionOptions,
+  });
+}
 
 export const authenticateDatabase = async () => {
   await database.authenticate();
@@ -66,4 +75,4 @@ export const authenticateDatabase = async () => {
   logger.info('database connection has been established successfully.');
 };
 
-export default database;
+export default database as SequelizeOptionsWithModels;

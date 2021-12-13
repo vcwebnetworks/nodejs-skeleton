@@ -11,6 +11,7 @@ const logger = createLogger({
   levels: config.syslog.levels,
   transports: transportsList,
   exceptionHandlers: transportsList,
+  silent: process.env.NODE_ENV === 'test',
 });
 
 export default logger;

@@ -1,9 +1,9 @@
 import { DataTypes, QueryInterface } from 'sequelize';
 
-import configTables from '@/config/tables';
+import { Tables } from '@/enums';
 import { migrationAddDefaultColumns } from '@/utils';
 
-const tableName = configTables.user;
+const tableName = Tables.USER;
 
 export default {
   async up(queryInterface: QueryInterface) {

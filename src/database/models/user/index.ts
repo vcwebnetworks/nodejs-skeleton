@@ -1,19 +1,19 @@
 import { DataTypes } from 'sequelize';
 import { Column, Table } from 'sequelize-typescript';
 
-import configTables from '@/config/tables';
+import { Tables } from '@/enums';
 
 import { BaseModel } from '../base';
 import { User, UserDto } from './types';
 
-@Table({ tableName: configTables.user })
+@Table({ tableName: Tables.USER })
 export class UserModel extends BaseModel<User, UserDto> {
   @Column({ type: DataTypes.STRING })
-  public name: UserDto['name'];
+  public name: User['name'];
 
   @Column({ type: DataTypes.STRING })
-  public email: UserDto['email'];
+  public email: User['email'];
 
   @Column({ type: DataTypes.STRING })
-  public password: UserDto['password'];
+  public password: User['password'];
 }
