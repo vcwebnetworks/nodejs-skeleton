@@ -27,7 +27,7 @@
     "updatelibs": "npm-check -s -u",
     "prepare": "husky install",
     "changelog": "conventional-changelog -i CHANGELOG.md -s -r 0",
-    "generate-tag": "git tag --force v$(node -e \"console.log(require('./package.json').version)\") HEAD"
+    "generate-tag": "git tag -a --force v$(node -e \"console.log(require('./package.json').version)\") HEAD"
   },
   "dependencies": {
     "@sentry/node": "^6.14.1",
