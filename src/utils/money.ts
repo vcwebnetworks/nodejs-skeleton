@@ -33,6 +33,10 @@ class MoneyHelper {
 
     return Number((value * 100).toFixed());
   }
+
+  public convertsToDecimal(value: number): any {
+    return value / 100;
+  }
 }
 
 const money = new MoneyHelper();

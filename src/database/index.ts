@@ -13,6 +13,7 @@ import logger from '@/shared/logger';
 
 import sequelizeOptions from './config';
 import * as models from './models';
+import { DatabaseConnect } from './types';
 
 if (process.env.DB_TYPE === DbType.SQLITE) {
   delete (<any>sequelizeOptions).timezone;
@@ -21,10 +22,6 @@ if (process.env.DB_TYPE === DbType.SQLITE) {
 if (process.env.NODE_ENV === 'test') {
   (<any>sequelizeOptions).logging = false;
 }
-
-type SequelizeOptionsWithModels = Sequelize & { models: typeof models };
-
-let database: Sequelize;
 
 const connectionOptions: SequelizeOptions = {
   models: Object.values(models),
@@ -50,8 +47,10 @@ const connectionOptions: SequelizeOptions = {
   },
 };
 
-if (`${process.env.DB_URI}`.length > 0) {
-  database = new Sequelize(`${process.env.DB_URI}`, connectionOptions);
+let database: any;
+
+if (process.env.DB_URI) {
+  database = new Sequelize(process.env.DB_URI, connectionOptions);
 } else {
   database = new Sequelize({
     ...(sequelizeOptions as SequelizeOptions),
@@ -75,4 +74,4 @@ export const authenticateDatabase = async () => {
   logger.info('database connection has been established successfully.');
 };
 
-export default database as SequelizeOptionsWithModels;
+export default database as DatabaseConnect;

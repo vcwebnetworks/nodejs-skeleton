@@ -14,6 +14,8 @@ if (process.env.NODE_ENV === 'test' && !process.env.DB_URI) {
   });
 }
 
+const charset = process.env.DB_ENCODING || 'utf8';
+
 const sequelizeOptions = {
   dialect: process.env.DB_TYPE ?? 'postgres',
   host: process.env.DB_HOST,
@@ -24,6 +26,7 @@ const sequelizeOptions = {
   storage: process.env.DB_STORAGE ?? null,
   timezone: process.env.DB_TIMEZONE ?? '+00:00',
   migrationStorageTableName: process.env.DB_MIGRATION_NAME ?? 'migrations',
+  encoding: charset,
   define: {
     charset: process.env.DB_CHARSET ?? 'utf8',
     collate: process.env.DB_COLLATE ?? 'utf8_general_ci',

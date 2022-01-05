@@ -33,17 +33,10 @@ const mapperValidationError = (item: any): ValidatorError => ({
 });
 
 export const errorToObject = (error: any): Response => {
-  if (
-    process.env.NODE_ENV === 'production' ||
-    error?.name?.startsWith('Sequelize')
-  ) {
-    logger.error('original error information ->', error);
-  }
-
   let message = error?.message;
+  let isInternalServerError = error?.name === 'InternalServerError';
   let statusCode = error?.statusCode ?? HttpStatusCode.BAD_REQUEST;
   let validators: ValidatorError[] | undefined;
-
   const metadata = error?.metadata ?? {};
 
   if (error instanceof YupValidationError) {
@@ -53,10 +46,16 @@ export const errorToObject = (error: any): Response => {
 
   if (error?.name?.startsWith('Sequelize')) {
     message = 'Internal Server Error';
+    error.name = message.replace(/\s/g, '');
     validators = error?.errors?.map(mapperValidationError);
+    isInternalServerError = true;
+  }
+
+  if (isInternalServerError) {
+    logger.error('original error ->', error);
+
     statusCode = HttpStatusCode.INTERNAL_SERVER_ERROR;
 
-    error.name = message.replace(/\s/g, '');
     error.stack = null;
   }
 

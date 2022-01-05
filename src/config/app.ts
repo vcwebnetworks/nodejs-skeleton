@@ -1,8 +1,6 @@
 import path from 'path';
 
-const isDevelopment = ['development', 'test'].includes(
-  `${process.env.NODE_ENV}`,
-);
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 const uploadDir =
   process.env.UPLOAD_PATH ?? path.resolve(__dirname, '..', 'uploads');
