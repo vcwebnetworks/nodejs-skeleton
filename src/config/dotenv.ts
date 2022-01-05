@@ -6,21 +6,18 @@ import { resolve } from 'path';
 
 import logger from '@/shared/logger';
 
-const environments: { [key: string]: string } = {
-  test: '.env.test',
-  production: '.env.production',
-  development: '.env.development',
-};
-
-const envPath = environments[process.env.NODE_ENV ?? 'development'];
+const envPath = `.env.${process.env.NODE_ENV}`;
 const rootPath = resolve(__dirname, '..', '..');
 let envFinalPath = resolve(rootPath, envPath);
 
-if (!existsSync(envFinalPath)) {
+if (process.env.NODE_ENV !== 'test' && !existsSync(envFinalPath)) {
   envFinalPath = resolve(rootPath, '.env');
 }
 
-if (process.env.CHECK_ENVFILE === 'true' && !existsSync(envFinalPath)) {
+const checkEnvFile =
+  process.env.CHECK_ENVFILE === 'true' || process.env.NODE_ENV === 'test';
+
+if (checkEnvFile && !existsSync(envFinalPath)) {
   throw new Error(`File ${envFinalPath} doest not exists.`);
 }
 

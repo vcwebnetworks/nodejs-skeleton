@@ -3,6 +3,8 @@ import { NextFunction, Request, Response } from 'express';
 import logger from '@/shared/logger';
 import { errorToObject, hideKeysFromAnObject } from '@/utils';
 
+import { NodeEnv } from '../../../api-v1.powpay.com/src/enums';
+
 const loggerRequestInformation = (request: Request) => {
   logger.error('request information ->', {
     path: request.path,
@@ -25,7 +27,7 @@ export const errorHandlerMiddleware = (
     return next(error);
   }
 
-  if (request?.bearerToken && process.env.NODE_ENV === 'production') {
+  if (request?.bearerToken && process.env.NODE_ENV !== NodeEnv.LOCAL) {
     loggerRequestInformation(request);
   }
 

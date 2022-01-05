@@ -6,6 +6,8 @@ import {
   QueryInterface,
 } from 'sequelize';
 
+import { Tables } from '@/enums';
+
 interface Params {
   mergeColumns: ModelAttributes<Model<any, any>, any>;
   softDelete?: boolean;
@@ -49,7 +51,7 @@ export const migrationAddDefaultIndexes = async ({
   queryInterface,
   softDelete = true,
 }: {
-  tableName: string;
+  tableName: Tables;
   queryInterface: QueryInterface;
   softDelete?: boolean;
 }) => {

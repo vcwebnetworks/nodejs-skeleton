@@ -12,3 +12,5 @@ export {
 export { errorToObject } from './error-to-object';
 export { hideKeysFromAnObject } from './hide-keys-from-an-object';
 export { runMigrations } from './run-migrations';
+export { getFirstLastName } from './get-fist-last-name';
+export { stripTags } from './strip-tags';

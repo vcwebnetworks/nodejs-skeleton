@@ -13,6 +13,7 @@ import 'express-async-errors';
 import helmet from 'helmet';
 import http from 'http';
 import httpGraceFullShutdown from 'http-graceful-shutdown';
+import morgan from 'morgan';
 import responseTime from 'response-time';
 
 import configApp from '@/config/app';
@@ -20,11 +21,10 @@ import configSentry from '@/config/sentry';
 import {
   corsMiddleware,
   errorHandlerMiddleware,
-  translationMiddleware,
   methodOverrideMiddleware,
-  morganMiddleware,
   notFoundMiddleware,
   rateLimiterMiddleware,
+  translationMiddleware,
   translationYupMiddleware,
 } from '@/middlewares';
 import appRoutes from '@/server/routes';
@@ -69,7 +69,7 @@ export class App {
     this.app.use(express.urlencoded({ extended: true }) as RequestHandler);
     this.app.use(cookieParser(configApp.appKey));
     this.app.use(helmet() as RequestHandler);
-    this.app.use(morganMiddleware as RequestHandler);
+    this.app.use(morgan('combined'));
     this.app.use(translationMiddleware);
     this.app.use(translationYupMiddleware);
     this.app.use(corsMiddleware);
