@@ -1,16 +1,10 @@
-import crypto from 'crypto';
+import crypto, { randomUUID } from 'crypto';
 
 import number from './number';
 
 class Str {
-  public uuid(a?: string): string {
-    return a
-      ? // eslint-disable-next-line no-bitwise
-        (Number(a) ^ ((Math.random() * 16) >> (Number(a) / 4))).toString(16)
-      : (<string>([1e7] as never) + -1e3 + -4e3 + -8e3 + -1e11).replace(
-          /[018]/g,
-          this.uuid,
-        );
+  public uuid(): string {
+    return randomUUID();
   }
 
   public random(length = 16): string {

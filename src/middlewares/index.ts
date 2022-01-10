@@ -8,3 +8,4 @@ export { rateLimiterMiddleware } from './rate-limiter';
 export { isAuthenticated } from './is-authenticated';
 export { isAdmin } from './is-admin';
 export { translationMiddleware, translationYupMiddleware } from './translation';
+export { loggerUuid } from './logger-uuid';

@@ -21,6 +21,7 @@ import configSentry from '@/config/sentry';
 import {
   corsMiddleware,
   errorHandlerMiddleware,
+  loggerUuid,
   methodOverrideMiddleware,
   notFoundMiddleware,
   rateLimiterMiddleware,
@@ -70,6 +71,7 @@ export class App {
     this.app.use(cookieParser(configApp.appKey));
     this.app.use(helmet() as RequestHandler);
     this.app.use(morgan('combined'));
+    this.app.use(loggerUuid);
     this.app.use(translationMiddleware);
     this.app.use(translationYupMiddleware);
     this.app.use(corsMiddleware);
