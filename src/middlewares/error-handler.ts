@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 
+import { NodeEnv } from '@/enums';
 import logger from '@/shared/logger';
 import { errorToObject, hideKeysFromAnObject } from '@/utils';
-
-import { NodeEnv } from '../../../api-v1.powpay.com/src/enums';
 
 const loggerRequestInformation = (request: Request) => {
   logger.error('request information ->', {
