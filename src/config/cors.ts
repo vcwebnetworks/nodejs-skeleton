@@ -9,8 +9,10 @@ const configCors = {
     'Cache-Control',
     'X-Requested-With',
     'X-HTTP-Method-Override',
+    'Accept-Language',
     'X-Refresh-Token',
     'X-Aws-IdToken',
+    'X-Test',
   ],
 };
 

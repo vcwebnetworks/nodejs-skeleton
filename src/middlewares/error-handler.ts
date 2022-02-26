@@ -32,13 +32,13 @@ export const errorHandlerMiddleware = (
 
   const errorObject = errorToObject(error);
 
-  errorObject.message = request.i18n.t(errorObject.message);
+  errorObject.message = request.i18n.t(errorObject.message)?.trim();
 
   if (errorObject.metadata?.validators?.length) {
     errorObject.metadata.validators = errorObject.metadata.validators.map(
       row => ({
         ...row,
-        message: request.i18n.t(row.message),
+        message: request.i18n.t(row.message)?.trim(),
       }),
     );
   }

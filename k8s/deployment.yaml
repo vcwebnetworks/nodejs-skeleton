@@ -25,7 +25,7 @@ spec:
       serviceAccountName: backend
       containers:
         - name: backend
-          image: "IMAGE_NAME:TAG"
+          image: CONTAINER_IMAGE
           imagePullPolicy: Always
           ports:
             - name: backend

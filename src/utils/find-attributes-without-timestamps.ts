@@ -1,4 +1,4 @@
-import { ProjectionAlias } from 'sequelize/types/lib/model';
+import { ProjectionAlias } from 'sequelize';
 
 type Attributes = {
   include?: (string | ProjectionAlias)[];
