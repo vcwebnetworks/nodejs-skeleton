@@ -2,7 +2,7 @@ import IORedis, { Redis as RedisClient } from 'ioredis';
 
 import configRedis from '@/config/redis';
 
-class Redis {
+export class Redis {
   protected prefix?: string;
 
   protected client: RedisClient;

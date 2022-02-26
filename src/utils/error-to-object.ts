@@ -1,7 +1,7 @@
 import { ValidationError as YupValidationError } from 'yup';
 
 import { HttpStatusCode } from '@/enums';
-import logger from '@/shared/logger';
+import debug from '@/shared/debug';
 
 interface ValidatorError {
   type: string;
@@ -10,9 +10,9 @@ interface ValidatorError {
 }
 
 interface Metadata {
-  [key: string]: any;
-
   validators: ValidatorError[];
+
+  [key: string]: any;
 }
 
 interface Response {
@@ -24,6 +24,7 @@ interface Response {
   description?: string;
   metadata: Metadata;
   originalError?: any;
+  translateParams?: Record<string, any>;
 }
 
 const mapperValidationError = (item: any): ValidatorError => ({
@@ -35,7 +36,7 @@ const mapperValidationError = (item: any): ValidatorError => ({
 export const errorToObject = (error: any): Response => {
   let message = error?.message;
   let isInternalServerError = error?.name === 'InternalServerError';
-  let statusCode = error?.statusCode ?? HttpStatusCode.BAD_REQUEST;
+  const statusCode = error?.statusCode ?? HttpStatusCode.BAD_REQUEST;
   let validators: ValidatorError[] | undefined;
   const metadata = error?.metadata ?? {};
 
@@ -51,15 +52,7 @@ export const errorToObject = (error: any): Response => {
     isInternalServerError = true;
   }
 
-  if (isInternalServerError) {
-    logger.error('original error ->', error);
-
-    statusCode = HttpStatusCode.INTERNAL_SERVER_ERROR;
-
-    error.stack = null;
-  }
-
-  return {
+  const responseErrorToObject = {
     name: error.name,
     statusCode,
     code: error?.code ?? 'default',
@@ -67,6 +60,20 @@ export const errorToObject = (error: any): Response => {
     stack: error?.stack?.split('\n'),
     description: error?.description,
     originalError: error?.originalError,
+    translateParams: error?.translateParams,
     metadata: { validators, ...metadata },
   };
+
+  if (isInternalServerError) {
+    debug({
+      namespace: 'error-to-object',
+      message: responseErrorToObject,
+    });
+
+    responseErrorToObject.stack = null;
+    responseErrorToObject.originalError = null;
+    responseErrorToObject.statusCode = HttpStatusCode.INTERNAL_SERVER_ERROR;
+  }
+
+  return responseErrorToObject;
 };

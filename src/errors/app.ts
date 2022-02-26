@@ -3,6 +3,7 @@ import { HttpStatusCode } from '@/enums';
 export interface Options {
   code?: string;
   message: string;
+  translateParams?: Record<string, any>;
   description?: string;
   metadata?: Record<string, any>;
   statusCode?: HttpStatusCode;
@@ -21,6 +22,7 @@ export class AppError extends Error {
       metadata,
       originalError,
       statusCode = HttpStatusCode.BAD_REQUEST,
+      translateParams,
     } = options;
 
     this.name = 'AppError';
@@ -29,7 +31,13 @@ export class AppError extends Error {
     this.defineProperty('metadata', metadata);
     this.defineProperty('statusCode', statusCode);
     this.defineProperty('description', description);
-    this.defineProperty('originalError', originalError);
+    this.defineProperty('translateParams', translateParams);
+
+    this.defineProperty('originalError', {
+      name: originalError?.name,
+      message: originalError?.message,
+      stack: originalError?.stack?.split('\n'),
+    });
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -37,6 +45,7 @@ export class AppError extends Error {
   protected defineProperty(key: string, value: any) {
     Object.defineProperty(this, key, {
       writable: false,
+      enumerable: true,
       value,
     });
   }

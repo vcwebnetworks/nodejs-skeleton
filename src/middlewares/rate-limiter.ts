@@ -10,6 +10,7 @@ const {
   REDIS_RATE_LIMIT_PORT,
   REDIS_RATE_LIMIT_PASSWORD,
   REDIS_RATE_LIMIT_DATABASE,
+  REDIS_RATE_LIMIT_KEY_PREFIX,
 } = process.env;
 
 export const rateLimiterMiddleware = async (
@@ -26,6 +27,7 @@ export const rateLimiterMiddleware = async (
         port: Number(REDIS_RATE_LIMIT_PORT),
         password: REDIS_RATE_LIMIT_PASSWORD,
         db: Number(REDIS_RATE_LIMIT_DATABASE),
+        keyPrefix: REDIS_RATE_LIMIT_KEY_PREFIX,
       });
 
       storeClient.on('error', error => {

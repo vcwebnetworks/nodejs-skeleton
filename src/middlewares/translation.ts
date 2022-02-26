@@ -3,8 +3,6 @@ import i18next from 'i18next';
 import httpMiddleware from 'i18next-http-middleware';
 import { setLocale } from 'yup';
 
-import logger from '@/shared/logger';
-
 export const translationMiddleware = async (
   request: Request,
   response: Response,
@@ -21,7 +19,6 @@ export const translationYupMiddleware = async (
   try {
     setLocale((await import(`@/translations/${request.language}/yup`)).default);
   } catch (e) {
-    logger.error(`error loading yup from locale ${request.language}`);
     setLocale((await import('@/translations/pt_BR/yup')).default);
   }
 

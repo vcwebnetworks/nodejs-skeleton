@@ -2,15 +2,7 @@
 FROM node:16-alpine as builder
 
 ENV NPM_CONFIG_LOGLEVEL=warn
-
-RUN apk add \
-  --update \
-  --no-cache \
-  bash  \
-  tzdata  \
-  python3  \
-  alpine-sdk  \
-  && rm -rf /var/cache/apk/*
+RUN apk add --update --no-cache bash python3 alpine-sdk && rm -rf /var/cache/apk/*
 
 ENV WORKDIR=/home/app
 WORKDIR ${WORKDIR}
