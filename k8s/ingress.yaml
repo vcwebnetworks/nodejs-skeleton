@@ -24,4 +24,4 @@ spec:
   tls:
     - hosts:
         - api.domain.com
-      secretName: api.domain-cert
+      secretName: api-domain-cert
