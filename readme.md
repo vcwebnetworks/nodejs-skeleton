@@ -1,4 +1,6 @@
-# Skeleton to node with typescript
+Use this project [https://github.com/vagnercardosoweb/nodejs-structure-with-typescript](https://github.com/vagnercardosoweb/nodejs-structure-with-typescript)
+
+<!-- # Skeleton to node with typescript
 
 The architecture defined for the backend consists of defining a set of folders and files for better organization.
 
@@ -56,4 +58,4 @@ yarn db:migrate
 yarn db:seed
 ```
 
-after step up your server will be online on host [http://localhost](http://localhost)
+after step up your server will be online on host [http://localhost](http://localhost) -->
